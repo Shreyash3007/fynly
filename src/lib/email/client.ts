@@ -5,7 +5,14 @@
 
 import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+// Lazy initialization to avoid build-time errors
+let resendInstance: Resend | null = null
+const getResend = () => {
+  if (!resendInstance) {
+    resendInstance = new Resend(process.env.RESEND_API_KEY)
+  }
+  return resendInstance
+}
 
 /**
  * Send booking confirmation email to investor
@@ -20,7 +27,7 @@ export async function sendBookingConfirmationEmail(params: {
 }) {
   const { to, investorName, advisorName, meetingTime, meetingLink, amount } = params
 
-  return await resend.emails.send({
+  return await getResend().emails.send({
     from: process.env.NEXT_PUBLIC_EMAIL_FROM || 'Fynly <noreply@fynly.com>',
     to,
     subject: 'Booking Confirmed - Your Meeting with ' + advisorName,
@@ -80,7 +87,7 @@ export async function sendAdvisorBookingNotification(params: {
 }) {
   const { to, advisorName, investorName, meetingTime, meetingLink, amount } = params
 
-  return await resend.emails.send({
+  return await getResend().emails.send({
     from: process.env.NEXT_PUBLIC_EMAIL_FROM || 'Fynly <noreply@fynly.com>',
     to,
     subject: 'New Booking - Meeting with ' + investorName,
@@ -137,7 +144,7 @@ export async function sendAdvisorApprovalEmail(params: {
 }) {
   const { to, advisorName, approved, reason } = params
 
-  return await resend.emails.send({
+  return await getResend().emails.send({
     from: process.env.NEXT_PUBLIC_EMAIL_FROM || 'Fynly <noreply@fynly.com>',
     to,
     subject: approved ? 'Welcome to Fynly - Profile Approved!' : 'Fynly Application Update',
@@ -180,7 +187,7 @@ export async function sendReviewReminderEmail(params: {
 }) {
   const { to, investorName, advisorName, bookingId } = params
 
-  return await resend.emails.send({
+  return await getResend().emails.send({
     from: process.env.NEXT_PUBLIC_EMAIL_FROM || 'Fynly <noreply@fynly.com>',
     to,
     subject: 'How was your consultation with ' + advisorName + '?',

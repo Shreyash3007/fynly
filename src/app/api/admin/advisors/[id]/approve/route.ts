@@ -5,12 +5,12 @@
 
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
-import { sendAdvisorApprovalEmail } from '@/lib/email/client'
 import '@/types/supabase-override'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
 export const runtime = 'nodejs'
+export const fetchCache = 'force-no-store'
 
 export async function POST(
   _request: NextRequest,
@@ -72,6 +72,7 @@ export async function POST(
 
     // Send approval email
     try {
+      const { sendAdvisorApprovalEmail } = await import('@/lib/email/client')
       await sendAdvisorApprovalEmail({
         to: (advisor as any).users?.email || '',
         advisorName: (advisor as any).users?.full_name || 'Advisor',
