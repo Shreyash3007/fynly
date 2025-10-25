@@ -8,6 +8,10 @@ import { createClient } from '@/lib/supabase/server'
 import { createRazorpayOrder } from '@/lib/razorpay/client'
 import { nanoid } from 'nanoid'
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
+
 export async function POST(request: NextRequest) {
   try {
     const supabase = createClient()

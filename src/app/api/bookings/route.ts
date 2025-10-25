@@ -10,6 +10,10 @@ import { createDailyRoom, generateRoomName, getRoomUrl } from '@/lib/daily/clien
 import { sendBookingConfirmationEmail, sendAdvisorBookingNotification } from '@/lib/email/client'
 import '@/types/supabase-override'
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
+
 export async function POST(request: NextRequest) {
   try {
     const supabase = createClient()

@@ -8,6 +8,10 @@ import { createAdminClient } from '@/lib/supabase/server'
 import { verifyWebhookSignature } from '@/lib/razorpay/client'
 import '@/types/supabase-override'
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.text()

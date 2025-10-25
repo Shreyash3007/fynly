@@ -8,6 +8,10 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import '@/types/supabase-override'
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
+
 export async function GET(
   _request: NextRequest,
   { params }: { params: { id: string } }

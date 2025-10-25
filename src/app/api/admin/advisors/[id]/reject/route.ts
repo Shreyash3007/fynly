@@ -8,6 +8,10 @@ import { createClient } from '@/lib/supabase/server'
 import { sendAdvisorApprovalEmail } from '@/lib/email/client'
 import '@/types/supabase-override'
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
+
 export async function POST(
   request: NextRequest,
   { params }: { params: { id: string } }
