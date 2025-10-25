@@ -1,0 +1,277 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Neo-Finance Hybrid Design System - Global Styles */
+
+@layer base {
+  :root {
+    --font-inter: 'Inter', system-ui, sans-serif;
+    --font-poppins: 'Poppins', 'Inter', sans-serif;
+    
+    /* Color tokens */
+    --color-graphite: #1F1F1F;
+    --color-mint: #3AE2CE;
+    --color-smoke: #F7F8FA;
+    
+    /* Glass effects */
+    --glass-blur: 12px;
+    --glass-opacity: 0.8;
+  }
+
+  * {
+    @apply transition-colors duration-200;
+  }
+
+  body {
+    @apply bg-smoke text-graphite-800 antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-display font-semibold text-graphite-900;
+  }
+}
+
+@layer components {
+  /* Button Styles - Neo-Finance */
+  .btn {
+    @apply inline-flex items-center justify-center rounded-lg px-6 py-3 font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-primary {
+    @apply bg-gradient-mint text-white shadow-glow-mint hover:shadow-glow-mint-lg hover:scale-102 focus:ring-mint-500;
+  }
+
+  .btn-secondary {
+    @apply bg-transparent border-2 border-mint-500 text-mint-700 hover:bg-mint-50 focus:ring-mint-500;
+  }
+
+  .btn-outline {
+    @apply border-2 border-graphite-300 text-graphite-700 hover:bg-graphite-50 focus:ring-graphite-500;
+  }
+
+  .btn-danger {
+    @apply bg-error text-white hover:bg-red-600 focus:ring-red-500 shadow-neomorph-sm;
+  }
+
+  .btn-ghost {
+    @apply text-graphite-600 hover:text-mint-500 hover:bg-mint-50/50 focus:ring-mint-500;
+  }
+
+  /* Card Styles - Glassmorphism */
+  .card {
+    @apply rounded-2xl bg-white/80 backdrop-blur-md p-6 shadow-neomorph border border-graphite-100/50;
+  }
+
+  .card-glass {
+    @apply rounded-2xl bg-white/60 backdrop-blur-lg p-6 shadow-neomorph-lg border border-white/20;
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-neomorph-lg hover:-translate-y-1;
+  }
+
+  .card-glow {
+    @apply transition-all duration-300 hover:shadow-glow-mint-sm hover:border-mint-300;
+  }
+
+  /* Input Styles - Neumorphic */
+  .input {
+    @apply w-full rounded-lg border border-graphite-200 bg-white px-4 py-3 shadow-inner-soft 
+           focus:outline-none focus:border-mint-500 focus:ring-2 focus:ring-mint-500/20 
+           placeholder:text-graphite-400 transition-all duration-200;
+  }
+
+  .input-error {
+    @apply border-error focus:border-error focus:ring-red-200;
+  }
+
+  .input-mint {
+    @apply border-mint-300 bg-mint-50/30 focus:bg-white;
+  }
+
+  /* Badge Styles - Mint Accent */
+  .badge {
+    @apply inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-medium;
+  }
+
+  .badge-success {
+    @apply bg-mint-50 text-mint-700 ring-1 ring-mint-500/20;
+  }
+
+  .badge-verified {
+    @apply bg-mint-50 text-mint-700 ring-1 ring-mint-500/30;
+  }
+
+  .badge-warning {
+    @apply bg-warning/10 text-warning ring-1 ring-warning/30;
+  }
+
+  .badge-error {
+    @apply bg-error/10 text-error ring-1 ring-error/30;
+  }
+
+  .badge-info {
+    @apply bg-graphite-100 text-graphite-700 ring-1 ring-graphite-300;
+  }
+
+  /* Stats Card */
+  .stats-card {
+    @apply rounded-xl bg-white p-6 shadow-neomorph border-2 border-transparent
+           hover:border-mint-300 hover:shadow-glow-mint-sm transition-all duration-200;
+  }
+
+  /* Glass Modal Backdrop */
+  .modal-backdrop {
+    @apply fixed inset-0 bg-black/40 backdrop-blur-sm z-40 animate-fade-in;
+  }
+
+  .modal-content {
+    @apply bg-white/95 backdrop-blur-md rounded-2xl shadow-neomorph-xl animate-scale-in;
+  }
+
+  /* Container */
+  .container {
+    @apply mx-auto max-w-7xl px-4;
+  }
+
+  /* Advisor Card - Special styling */
+  .advisor-card {
+    @apply card card-glass card-hover cursor-pointer;
+  }
+
+  .advisor-card:hover {
+    @apply border-mint-300 shadow-glow-mint-sm;
+  }
+
+  /* Loading Skeleton with Shimmer */
+  .skeleton {
+    @apply bg-gradient-shimmer bg-[length:1000px_100%] animate-shimmer rounded-lg;
+  }
+
+  /* Tab Navigation */
+  .tabs {
+    @apply flex gap-6 border-b-2 border-graphite-100;
+  }
+
+  .tab {
+    @apply pb-3 px-1 text-sm font-medium text-graphite-600 hover:text-graphite-900 
+           border-b-3 border-transparent transition-all duration-200 cursor-pointer;
+  }
+
+  .tab-active {
+    @apply text-mint-700 border-mint-500;
+  }
+
+  /* Dashboard Sidebar */
+  .sidebar-link {
+    @apply flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-graphite-700
+           hover:bg-mint-50 hover:text-mint-700 transition-all duration-200;
+  }
+
+  .sidebar-link-active {
+    @apply bg-mint-50 text-mint-700 border-l-4 border-mint-500 pl-3.5;
+  }
+
+  /* Toast Notification */
+  .toast {
+    @apply fixed top-4 right-4 max-w-sm bg-white/90 backdrop-blur-md rounded-lg 
+           shadow-neomorph-lg border-l-4 p-4 animate-slide-in-right z-50;
+  }
+
+  .toast-success {
+    @apply border-mint-500;
+  }
+
+  .toast-error {
+    @apply border-error;
+  }
+
+  .toast-warning {
+    @apply border-warning;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Glassmorphism utility */
+  .glass {
+    @apply bg-white/80 backdrop-blur-md;
+  }
+
+  .glass-dark {
+    @apply bg-graphite-800/80 backdrop-blur-md;
+  }
+
+  /* Glow utilities */
+  .glow-mint {
+    box-shadow: 0 8px 20px rgba(58, 226, 206, 0.3);
+  }
+
+  .glow-mint-strong {
+    box-shadow: 0 12px 28px rgba(58, 226, 206, 0.5);
+  }
+
+  /* Gradient text */
+  .text-gradient-mint {
+    @apply bg-gradient-mint bg-clip-text text-transparent;
+  }
+
+  /* Hover lift effect */
+  .hover-lift {
+    @apply transition-transform duration-200 hover:-translate-y-1;
+  }
+
+  /* Smooth scrolling */
+  .scroll-smooth {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Custom Scrollbar - Mint themed */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-graphite-50;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply rounded-full bg-graphite-300 hover:bg-mint-500;
+}
+
+/* Loading Spinner - Mint accent */
+.spinner {
+  @apply inline-block h-5 w-5 animate-spin rounded-full border-2 border-mint-500 border-r-transparent;
+}
+
+.spinner-lg {
+  @apply h-8 w-8 border-4;
+}
+
+/* Focus visible for accessibility */
+*:focus-visible {
+  @apply outline-none ring-2 ring-mint-500 ring-offset-2;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
