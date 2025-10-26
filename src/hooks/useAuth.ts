@@ -8,7 +8,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { getSupabase } from '@/lib/supabase/client'
-import { Database } from '@/types/database'
+import { Database } from '@/types/database.types'
 
 type User = Database['public']['Tables']['users']['Row']
 

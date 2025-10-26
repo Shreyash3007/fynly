@@ -9,7 +9,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Button, Card, Input, Textarea } from '@/components/ui'
 import { useAuth } from '@/hooks'
-import { ExpertiseArea } from '@/types/database'
+import { ExpertiseArea } from '@/types/database.types'
 
 const expertiseOptions = [
   { value: 'mutual_funds', label: 'Mutual Funds' },

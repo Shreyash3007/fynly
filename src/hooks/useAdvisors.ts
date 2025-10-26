@@ -7,7 +7,7 @@
 
 import { useEffect, useState } from 'react'
 import { getSupabase } from '@/lib/supabase/client'
-import { Database } from '@/types/database'
+import { Database } from '@/types/database.types'
 
 type Advisor = Database['public']['Tables']['advisors']['Row']
 type ExpertiseArea = Database['public']['Enums']['expertise_area']

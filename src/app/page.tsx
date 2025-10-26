@@ -1,5 +1,5 @@
 /**
- * Landing Page - Neo-Finance Hybrid Design
+ * Landing Page - Enhanced Fintech UI
  * Modern fintech homepage with glassmorphism and mint accents
  */
 
@@ -12,18 +12,21 @@ export default function HomePage() {
       {/* Navigation */}
       <Navbar />
 
-      {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-subtle pt-32 pb-20 lg:pt-40 lg:pb-32">
-        {/* Subtle background pattern */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(58,226,206,0.05),transparent_50%)]" />
+      {/* Enhanced Hero Section */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-graphite-900 via-graphite-800 to-graphite-900 pt-32 pb-20 lg:pt-40 lg:pb-32">
+        {/* Animated Background */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-mint-500 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-mint-400 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+        </div>
         
         <div className="container relative mx-auto px-4 text-center">
-          <h1 className="mb-6 font-display text-4xl font-bold text-graphite-900 md:text-5xl lg:text-6xl">
+          <h1 className="mb-6 font-display text-4xl font-bold text-white md:text-5xl lg:text-6xl">
             Your financial future,
             <br />
             <span className="text-gradient-mint">one conversation away.</span>
           </h1>
-          <p className="mx-auto mb-10 max-w-2xl text-lg text-graphite-600 lg:text-xl">
+          <p className="mx-auto mb-10 max-w-2xl text-lg text-mint-100 lg:text-xl">
             Connect with SEBI-verified advisors for personalized guidance. 
             Book your free demo in 2 minutes.
           </p>
@@ -31,7 +34,7 @@ export default function HomePage() {
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link
               href="/signup"
-              className="group inline-flex items-center justify-center px-8 py-4 bg-gradient-mint text-white font-medium rounded-lg shadow-glow-mint hover:shadow-glow-mint-lg hover:scale-102 transition-all duration-200"
+              className="group inline-flex items-center justify-center px-8 py-4 bg-white text-graphite-900 font-semibold rounded-xl shadow-2xl hover:shadow-3xl hover:scale-105 transition-all duration-200"
             >
               Find Your Advisor
               <svg className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -40,28 +43,28 @@ export default function HomePage() {
             </Link>
             <Link
               href="/signup?role=advisor"
-              className="inline-flex items-center justify-center px-8 py-4 bg-transparent border-2 border-mint-500 text-mint-700 font-medium rounded-lg hover:bg-mint-50 transition-all duration-200"
+              className="inline-flex items-center justify-center px-8 py-4 bg-transparent border-2 border-white text-white font-semibold rounded-xl hover:bg-white/10 transition-all duration-200"
             >
               Become an Advisor
             </Link>
           </div>
 
           {/* Trust Signals */}
-          <div className="mt-16 flex flex-wrap items-center justify-center gap-8 text-sm text-graphite-600">
+          <div className="mt-16 flex flex-wrap items-center justify-center gap-8 text-sm text-mint-200">
             <div className="flex items-center gap-2">
-              <svg className="w-5 h-5 text-mint-500" fill="currentColor" viewBox="0 0 20 20">
+              <svg className="w-5 h-5 text-mint-400" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
               </svg>
               <span>SEBI Verified Advisors</span>
             </div>
             <div className="flex items-center gap-2">
-              <svg className="w-5 h-5 text-mint-500" fill="currentColor" viewBox="0 0 20 20">
+              <svg className="w-5 h-5 text-mint-400" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
               </svg>
               <span>Secure Payments</span>
             </div>
             <div className="flex items-center gap-2">
-              <svg className="w-5 h-5 text-mint-500" fill="currentColor" viewBox="0 0 20 20">
+              <svg className="w-5 h-5 text-mint-400" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
               </svg>
               <span>4.8 Average Rating</span>
@@ -70,8 +73,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-20 bg-white">
+      {/* Enhanced Features Section */}
+      <section className="py-20 bg-smoke">
         <div className="container mx-auto px-4">
           <h2 className="mb-4 text-center font-display text-3xl font-semibold text-graphite-900 lg:text-4xl">
             Why Choose Fynly?
@@ -82,9 +85,9 @@ export default function HomePage() {
           
           <div className="grid gap-8 md:grid-cols-3">
             {/* Feature 1 */}
-            <div className="group rounded-2xl bg-white/60 backdrop-blur-lg border border-graphite-100/50 p-8 shadow-neomorph hover:shadow-glow-mint-sm hover:border-mint-300 transition-all duration-300 hover:-translate-y-1">
-              <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-xl bg-mint-50 text-mint-600">
-                <svg className="w-7 h-7" fill="currentColor" viewBox="0 0 20 20">
+            <div className="group rounded-2xl bg-white/90 backdrop-blur-md border border-white/50 p-8 shadow-neomorph-lg hover:shadow-neomorph-xl hover:border-mint-300 transition-all duration-300 hover:-translate-y-1">
+              <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-mint-400 to-mint-600 text-white shadow-lg">
+                <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
               </div>
@@ -95,9 +98,9 @@ export default function HomePage() {
             </div>
 
             {/* Feature 2 */}
-            <div className="group rounded-2xl bg-white/60 backdrop-blur-lg border border-graphite-100/50 p-8 shadow-neomorph hover:shadow-glow-mint-sm hover:border-mint-300 transition-all duration-300 hover:-translate-y-1">
-              <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-xl bg-mint-50 text-mint-600">
-                <svg className="w-7 h-7" fill="currentColor" viewBox="0 0 20 20">
+            <div className="group rounded-2xl bg-white/90 backdrop-blur-md border border-white/50 p-8 shadow-neomorph-lg hover:shadow-neomorph-xl hover:border-mint-300 transition-all duration-300 hover:-translate-y-1">
+              <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-400 to-cyan-600 text-white shadow-lg">
+                <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z" />
                   <path d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z" />
                 </svg>
@@ -109,9 +112,9 @@ export default function HomePage() {
             </div>
 
             {/* Feature 3 */}
-            <div className="group rounded-2xl bg-white/60 backdrop-blur-lg border border-graphite-100/50 p-8 shadow-neomorph hover:shadow-glow-mint-sm hover:border-mint-300 transition-all duration-300 hover:-translate-y-1">
-              <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-xl bg-mint-50 text-mint-600">
-                <svg className="w-7 h-7" fill="currentColor" viewBox="0 0 20 20">
+            <div className="group rounded-2xl bg-white/90 backdrop-blur-md border border-white/50 p-8 shadow-neomorph-lg hover:shadow-neomorph-xl hover:border-mint-300 transition-all duration-300 hover:-translate-y-1">
+              <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-purple-400 to-purple-600 text-white shadow-lg">
+                <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
                 </svg>
               </div>
@@ -124,25 +127,200 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="relative overflow-hidden bg-gradient-subtle py-20">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,rgba(58,226,206,0.08),transparent_60%)]" />
-        
-        <div className="container relative mx-auto px-4 text-center">
-          <h2 className="mb-6 font-display text-3xl font-semibold text-graphite-900">Ready to Start?</h2>
-          <p className="mb-8 text-lg text-graphite-600 max-w-xl mx-auto">
-            Join thousands of investors finding the right financial guidance
-          </p>
-          <Link
-            href="/advisors"
-            className="inline-flex items-center justify-center px-8 py-4 bg-gradient-mint text-white font-medium rounded-lg shadow-glow-mint hover:shadow-glow-mint-lg hover:scale-102 transition-all duration-200"
-          >
-            Browse Advisors
-          </Link>
+      {/* Enhanced How It Works Section */}
+      <section id="how-it-works" className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="mb-4 font-display text-3xl font-semibold text-graphite-900 lg:text-4xl">
+              How Fynly Works
+            </h2>
+            <p className="text-graphite-600 max-w-2xl mx-auto">
+              Get expert financial guidance in three simple steps
+            </p>
+          </div>
+
+          <div className="grid gap-8 md:grid-cols-3 max-w-5xl mx-auto">
+            {/* Step 1 */}
+            <div className="text-center group">
+              <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-mint-400 to-mint-600 text-white font-display font-bold text-2xl mb-6 shadow-lg group-hover:scale-110 transition-transform">
+                1
+              </div>
+              <h3 className="font-display text-xl font-semibold text-graphite-900 mb-3">
+                Browse Advisors
+              </h3>
+              <p className="text-graphite-600 leading-relaxed">
+                Explore our curated list of SEBI-verified financial advisors with detailed profiles and ratings.
+              </p>
+            </div>
+
+            {/* Step 2 */}
+            <div className="text-center group">
+              <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-cyan-400 to-cyan-600 text-white font-display font-bold text-2xl mb-6 shadow-lg group-hover:scale-110 transition-transform">
+                2
+              </div>
+              <h3 className="font-display text-xl font-semibold text-graphite-900 mb-3">
+                Book Free Demo
+              </h3>
+              <p className="text-graphite-600 leading-relaxed">
+                Schedule a complimentary consultation with your chosen advisor at a time that works for you.
+              </p>
+            </div>
+
+            {/* Step 3 */}
+            <div className="text-center group">
+              <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-purple-400 to-purple-600 text-white font-display font-bold text-2xl mb-6 shadow-lg group-hover:scale-110 transition-transform">
+                3
+              </div>
+              <h3 className="font-display text-xl font-semibold text-graphite-900 mb-3">
+                Get Guidance
+              </h3>
+              <p className="text-graphite-600 leading-relaxed">
+                Receive personalized investment advice tailored to your financial goals and risk profile.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Footer */}
+      {/* Enhanced Stats Section */}
+      <section className="py-20 bg-gradient-to-br from-graphite-900 via-graphite-800 to-graphite-900">
+        <div className="container mx-auto px-4">
+          <div className="grid gap-8 md:grid-cols-4 max-w-5xl mx-auto text-center">
+            <div className="group">
+              <div className="text-5xl font-display font-bold text-white mb-2 group-hover:scale-110 transition-transform">500+</div>
+              <div className="text-mint-200">Verified Advisors</div>
+            </div>
+            <div className="group">
+              <div className="text-5xl font-display font-bold text-white mb-2 group-hover:scale-110 transition-transform">10,000+</div>
+              <div className="text-mint-200">Happy Investors</div>
+            </div>
+            <div className="group">
+              <div className="text-5xl font-display font-bold text-white mb-2 group-hover:scale-110 transition-transform">4.8★</div>
+              <div className="text-mint-200">Average Rating</div>
+            </div>
+            <div className="group">
+              <div className="text-5xl font-display font-bold text-white mb-2 group-hover:scale-110 transition-transform">₹500Cr+</div>
+              <div className="text-mint-200">Assets Managed</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Enhanced Testimonials Section */}
+      <section className="py-20 bg-smoke">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="mb-4 font-display text-3xl font-semibold text-graphite-900 lg:text-4xl">
+              What Our Users Say
+            </h2>
+            <p className="text-graphite-600 max-w-2xl mx-auto">
+              Real stories from investors who found the right guidance
+            </p>
+          </div>
+
+          <div className="grid gap-8 md:grid-cols-3 max-w-6xl mx-auto">
+            {/* Testimonial 1 */}
+            <div className="group rounded-2xl bg-white/90 backdrop-blur-md border border-white/50 p-6 shadow-neomorph-lg hover:shadow-neomorph-xl hover:border-mint-300 transition-all duration-300">
+              <div className="flex items-center gap-1 mb-4 text-mint-500">
+                {[...Array(5)].map((_, i) => (
+                  <svg key={i} className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                ))}
+              </div>
+              <p className="text-graphite-700 mb-6 leading-relaxed">
+                "Found an amazing advisor through Fynly. The platform made it so easy to compare options and book a consultation. My portfolio has grown 28% this year!"
+              </p>
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-mint-400 to-mint-600 flex items-center justify-center text-white font-semibold shadow-lg">
+                  PS
+                </div>
+                <div>
+                  <div className="font-semibold text-graphite-900">Priya Sharma</div>
+                  <div className="text-sm text-graphite-600">Software Engineer, Bangalore</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Testimonial 2 */}
+            <div className="group rounded-2xl bg-white/90 backdrop-blur-md border border-white/50 p-6 shadow-neomorph-lg hover:shadow-neomorph-xl hover:border-mint-300 transition-all duration-300">
+              <div className="flex items-center gap-1 mb-4 text-mint-500">
+                {[...Array(5)].map((_, i) => (
+                  <svg key={i} className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                ))}
+              </div>
+              <p className="text-graphite-700 mb-6 leading-relaxed">
+                "As a first-time investor, I was overwhelmed. My advisor helped me understand everything and build a solid investment strategy. Highly recommend!"
+              </p>
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-cyan-400 to-cyan-600 flex items-center justify-center text-white font-semibold shadow-lg">
+                  RK
+                </div>
+                <div>
+                  <div className="font-semibold text-graphite-900">Rahul Kumar</div>
+                  <div className="text-sm text-graphite-600">Marketing Manager, Mumbai</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Testimonial 3 */}
+            <div className="group rounded-2xl bg-white/90 backdrop-blur-md border border-white/50 p-6 shadow-neomorph-lg hover:shadow-neomorph-xl hover:border-mint-300 transition-all duration-300">
+              <div className="flex items-center gap-1 mb-4 text-mint-500">
+                {[...Array(5)].map((_, i) => (
+                  <svg key={i} className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                ))}
+              </div>
+              <p className="text-graphite-700 mb-6 leading-relaxed">
+                "The verification process gave me confidence. All advisors are SEBI-registered, and the platform is transparent about fees. Finally, a service I can trust!"
+              </p>
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center text-white font-semibold shadow-lg">
+                  AD
+                </div>
+                <div>
+                  <div className="font-semibold text-graphite-900">Anita Desai</div>
+                  <div className="text-sm text-graphite-600">Doctor, Delhi</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Enhanced CTA Section */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-graphite-900 via-graphite-800 to-graphite-900 py-20">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-mint-500 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-mint-400 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+        </div>
+        
+        <div className="container relative mx-auto px-4 text-center">
+          <h2 className="mb-6 font-display text-3xl font-semibold text-white">Ready to Start Your Investment Journey?</h2>
+          <p className="mb-8 text-lg text-mint-100 max-w-xl mx-auto">
+            Join thousands of investors who found the right financial guidance on Fynly
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              href="/advisors"
+              className="inline-flex items-center justify-center px-8 py-4 bg-white text-graphite-900 font-semibold rounded-xl shadow-2xl hover:shadow-3xl hover:scale-105 transition-all duration-200"
+            >
+              Browse Advisors
+            </Link>
+            <Link
+              href="/about"
+              className="inline-flex items-center justify-center px-8 py-4 bg-transparent border-2 border-white text-white font-semibold rounded-xl hover:bg-white/10 transition-all duration-200"
+            >
+              Learn More
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Enhanced Footer */}
       <footer className="bg-graphite-900 py-12 text-white">
         <div className="container mx-auto px-4">
           <div className="text-center">
@@ -172,4 +350,3 @@ export default function HomePage() {
     </div>
   )
 }
-

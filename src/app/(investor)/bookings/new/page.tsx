@@ -1,5 +1,5 @@
 /**
- * New Booking Page
+ * New Booking Page - Enhanced Fintech UI
  * Multi-step booking flow for consultations
  */
 
@@ -92,7 +92,7 @@ function BookingForm() {
           email: user?.email,
         },
         theme: {
-          color: '#0ea5e9',
+          color: '#3AE2CE',
         },
         handler: async (response: any) => {
           // Verify payment
@@ -123,8 +123,13 @@ function BookingForm() {
 
   if (!advisor) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="spinner" />
+      <div className="flex min-h-screen items-center justify-center bg-smoke">
+        <div className="rounded-2xl bg-white/90 backdrop-blur-md p-8 shadow-neomorph-lg">
+          <div className="flex items-center gap-4">
+            <div className="w-8 h-8 border-4 border-mint-500 border-r-transparent rounded-full animate-spin"></div>
+            <span className="text-graphite-700 font-medium">Loading advisor details...</span>
+          </div>
+        </div>
       </div>
     )
   }
@@ -132,58 +137,71 @@ function BookingForm() {
   const amount = (advisor.hourly_rate * duration) / 60
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
-      <div className="container mx-auto max-w-2xl px-4">
-        <Card>
-          <div className="mb-6">
-            <h1 className="font-display text-3xl font-bold">Book Consultation</h1>
-            <p className="mt-2 text-gray-600">
-              Schedule a session with {advisor.users.full_name}
-            </p>
-          </div>
+    <div className="min-h-screen bg-smoke py-12">
+      <div className="container mx-auto max-w-3xl px-4">
+        {/* Enhanced Header */}
+        <div className="text-center mb-8">
+          <h1 className="font-display text-4xl font-bold text-graphite-900 mb-2">
+            Book Consultation
+          </h1>
+          <p className="text-graphite-600 text-lg">
+            Schedule a session with {advisor.users.full_name}
+          </p>
+        </div>
 
-          {/* Progress Steps */}
-          <div className="mb-8 flex items-center justify-between">
-            <div className="flex-1">
-              <div
-                className={`h-2 rounded ${
-                  step >= 1 ? 'bg-primary-600' : 'bg-gray-200'
-                }`}
-              />
-              <p className="mt-2 text-sm">Date & Time</p>
-            </div>
-            <div className="flex-1 ml-2">
-              <div
-                className={`h-2 rounded ${
-                  step >= 2 ? 'bg-primary-600' : 'bg-gray-200'
-                }`}
-              />
-              <p className="mt-2 text-sm">Details</p>
-            </div>
-            <div className="flex-1 ml-2">
-              <div
-                className={`h-2 rounded ${
-                  step >= 3 ? 'bg-primary-600' : 'bg-gray-200'
-                }`}
-              />
-              <p className="mt-2 text-sm">Payment</p>
-            </div>
+        {/* Enhanced Progress Steps */}
+        <div className="mb-8">
+          <div className="flex items-center justify-between">
+            {[
+              { step: 1, title: 'Date & Time', icon: '📅' },
+              { step: 2, title: 'Details', icon: '📝' },
+              { step: 3, title: 'Payment', icon: '💳' }
+            ].map(({ step: stepNum, title, icon }) => (
+              <div key={stepNum} className="flex flex-col items-center">
+                <div className={`w-12 h-12 rounded-full flex items-center justify-center text-lg font-semibold transition-all duration-200 ${
+                  step >= stepNum 
+                    ? 'bg-gradient-to-r from-mint-500 to-mint-600 text-white shadow-lg' 
+                    : 'bg-graphite-100 text-graphite-500'
+                }`}>
+                  {step > stepNum ? '✓' : icon}
+                </div>
+                <span className={`mt-2 text-sm font-medium ${
+                  step >= stepNum ? 'text-graphite-900' : 'text-graphite-500'
+                }`}>
+                  {title}
+                </span>
+              </div>
+            ))}
           </div>
+          <div className="mt-4 h-1 bg-graphite-200 rounded-full overflow-hidden">
+            <div 
+              className="h-full bg-gradient-to-r from-mint-500 to-mint-600 rounded-full transition-all duration-300"
+              style={{ width: `${(step / 3) * 100}%` }}
+            />
+          </div>
+        </div>
 
+        {/* Enhanced Booking Card */}
+        <div className="rounded-3xl bg-white/90 backdrop-blur-md border border-white/50 p-8 shadow-neomorph-xl">
           {/* Step 1: Date & Time */}
           {step === 1 && (
-            <div className="space-y-4">
-              <Input
-                type="datetime-local"
-                label="Meeting Date & Time"
-                value={meetingTime}
-                onChange={(e) => setMeetingTime(e.target.value)}
-                required
-                min={new Date().toISOString().slice(0, 16)}
-              />
+            <div className="space-y-6">
+              <div>
+                <label className="block text-sm font-semibold text-graphite-700 mb-3">
+                  Meeting Date & Time
+                </label>
+                <input
+                  type="datetime-local"
+                  value={meetingTime}
+                  onChange={(e) => setMeetingTime(e.target.value)}
+                  required
+                  min={new Date().toISOString().slice(0, 16)}
+                  className="w-full rounded-xl border border-graphite-200 bg-white px-4 py-3 shadow-inner-soft focus:outline-none focus:border-mint-500 focus:ring-2 focus:ring-mint-500/20 transition-all duration-200"
+                />
+              </div>
 
               <div>
-                <label className="mb-2 block font-medium text-gray-700">
+                <label className="block text-sm font-semibold text-graphite-700 mb-3">
                   Duration
                 </label>
                 <div className="grid grid-cols-3 gap-4">
@@ -192,14 +210,17 @@ function BookingForm() {
                       key={d}
                       type="button"
                       onClick={() => setDuration(d)}
-                      className={`rounded-xl border-2 p-4 text-center transition ${
+                      className={`rounded-xl border-2 p-6 text-center transition-all duration-200 ${
                         duration === d
-                          ? 'border-primary-600 bg-primary-50'
-                          : 'border-gray-200 hover:border-gray-300'
+                          ? 'border-mint-500 bg-mint-50 shadow-glow-mint-sm'
+                          : 'border-graphite-200 hover:border-mint-300 hover:bg-mint-50/50'
                       }`}
                     >
-                      <div className="text-2xl font-bold">{d}</div>
-                      <div className="text-sm text-gray-600">minutes</div>
+                      <div className="text-3xl font-bold text-graphite-900">{d}</div>
+                      <div className="text-sm text-graphite-600 mt-1">minutes</div>
+                      <div className="text-xs text-mint-600 mt-1">
+                        ₹{((advisor.hourly_rate * d) / 60).toFixed(0)}
+                      </div>
                     </button>
                   ))}
                 </div>
@@ -208,30 +229,42 @@ function BookingForm() {
               <Button
                 onClick={() => setStep(2)}
                 disabled={!meetingTime}
-                className="w-full"
+                className="w-full py-4 text-lg font-semibold"
               >
-                Continue
+                Continue to Details
               </Button>
             </div>
           )}
 
           {/* Step 2: Details */}
           {step === 2 && (
-            <div className="space-y-4">
-              <Textarea
-                label="Notes (Optional)"
-                placeholder="What would you like to discuss?"
-                value={notes}
-                onChange={(e) => setNotes(e.target.value)}
-                rows={4}
-              />
+            <div className="space-y-6">
+              <div>
+                <label className="block text-sm font-semibold text-graphite-700 mb-3">
+                  Notes (Optional)
+                </label>
+                <textarea
+                  placeholder="What would you like to discuss? Share your financial goals, questions, or any specific topics you'd like to cover..."
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
+                  rows={4}
+                  className="w-full rounded-xl border border-graphite-200 bg-white px-4 py-3 shadow-inner-soft focus:outline-none focus:border-mint-500 focus:ring-2 focus:ring-mint-500/20 transition-all duration-200 resize-none"
+                />
+              </div>
 
               <div className="flex gap-4">
-                <Button variant="outline" onClick={() => setStep(1)} className="flex-1">
-                  Back
+                <Button 
+                  variant="outline" 
+                  onClick={() => setStep(1)} 
+                  className="flex-1 py-4 text-lg font-semibold"
+                >
+                  ← Back
                 </Button>
-                <Button onClick={() => setStep(3)} className="flex-1">
-                  Continue to Payment
+                <Button 
+                  onClick={() => setStep(3)} 
+                  className="flex-1 py-4 text-lg font-semibold"
+                >
+                  Continue to Payment →
                 </Button>
               </div>
             </div>
@@ -240,48 +273,84 @@ function BookingForm() {
           {/* Step 3: Payment */}
           {step === 3 && (
             <div className="space-y-6">
-              <div className="rounded-xl bg-gray-50 p-6">
-                <h3 className="mb-4 font-semibold">Booking Summary</h3>
-                <div className="space-y-2">
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Advisor</span>
-                    <span className="font-medium">{advisor.users.full_name}</span>
+              <div className="rounded-2xl bg-gradient-to-br from-mint-50 to-mint-100 p-6 border border-mint-200">
+                <h3 className="font-display text-xl font-semibold text-graphite-900 mb-4">
+                  Booking Summary
+                </h3>
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center">
+                    <span className="text-graphite-600">Advisor</span>
+                    <span className="font-semibold text-graphite-900">{advisor.users.full_name}</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Date & Time</span>
-                    <span className="font-medium">
-                      {new Date(meetingTime).toLocaleString()}
+                  <div className="flex justify-between items-center">
+                    <span className="text-graphite-600">Date & Time</span>
+                    <span className="font-semibold text-graphite-900">
+                      {new Date(meetingTime).toLocaleString('en-IN', {
+                        weekday: 'short',
+                        month: 'short',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                      })}
                     </span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Duration</span>
-                    <span className="font-medium">{duration} minutes</span>
+                  <div className="flex justify-between items-center">
+                    <span className="text-graphite-600">Duration</span>
+                    <span className="font-semibold text-graphite-900">{duration} minutes</span>
                   </div>
-                  <div className="border-t border-gray-200 pt-2 mt-2 flex justify-between">
-                    <span className="font-semibold">Total Amount</span>
-                    <span className="text-2xl font-bold text-primary-600">
-                      ₹{amount.toFixed(2)}
+                  <div className="border-t border-mint-200 pt-3 mt-3 flex justify-between items-center">
+                    <span className="font-display text-lg font-semibold text-graphite-900">Total Amount</span>
+                    <span className="font-display text-3xl font-bold text-mint-600">
+                      ₹{amount.toFixed(0)}
                     </span>
                   </div>
                 </div>
               </div>
 
+              <div className="bg-mint-50 rounded-xl p-4 border border-mint-200">
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 rounded-full bg-mint-500 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-mint-800">
+                      First 10 minutes are free!
+                    </p>
+                    <p className="text-xs text-mint-600 mt-1">
+                      You'll only be charged for the extended session time beyond the free demo.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
               <div className="flex gap-4">
-                <Button variant="outline" onClick={() => setStep(2)} className="flex-1">
-                  Back
+                <Button 
+                  variant="outline" 
+                  onClick={() => setStep(2)} 
+                  className="flex-1 py-4 text-lg font-semibold"
+                >
+                  ← Back
                 </Button>
                 <Button
                   onClick={handleCreateBooking}
                   disabled={loading}
-                  isLoading={loading}
-                  className="flex-1"
+                  className="flex-1 py-4 text-lg font-semibold"
                 >
-                  Pay & Confirm
+                  {loading ? (
+                    <div className="flex items-center gap-3">
+                      <div className="w-5 h-5 border-2 border-white border-r-transparent rounded-full animate-spin" />
+                      <span>Processing...</span>
+                    </div>
+                  ) : (
+                    'Pay & Confirm Booking'
+                  )}
                 </Button>
               </div>
             </div>
           )}
-        </Card>
+        </div>
       </div>
 
       {/* Load Razorpay script */}
@@ -292,9 +361,17 @@ function BookingForm() {
 
 export default function NewBookingPage() {
   return (
-    <Suspense fallback={<div className="flex min-h-screen items-center justify-center"><div className="spinner" /></div>}>
+    <Suspense fallback={
+      <div className="flex min-h-screen items-center justify-center bg-smoke">
+        <div className="rounded-2xl bg-white/90 backdrop-blur-md p-8 shadow-neomorph-lg">
+          <div className="flex items-center gap-4">
+            <div className="w-8 h-8 border-4 border-mint-500 border-r-transparent rounded-full animate-spin"></div>
+            <span className="text-graphite-700 font-medium">Loading...</span>
+          </div>
+        </div>
+      </div>
+    }>
       <BookingForm />
     </Suspense>
   )
 }
-

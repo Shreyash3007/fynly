@@ -7,7 +7,7 @@
 
 import { useEffect, useState } from 'react'
 import { getSupabase } from '@/lib/supabase/client'
-import { Database } from '@/types/database'
+import { Database } from '@/types/database.types'
 
 type Booking = Database['public']['Tables']['bookings']['Row']
 

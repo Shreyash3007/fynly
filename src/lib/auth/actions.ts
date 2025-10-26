@@ -8,7 +8,7 @@
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
-import { UserRole } from '@/types/database'
+import { UserRole } from '@/types/database.types'
 
 export interface AuthError {
   error: string

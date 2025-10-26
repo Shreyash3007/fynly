@@ -14,6 +14,22 @@ export type Tables<T extends keyof Database['public']['Tables']> = Database['pub
 export type Inserts<T extends keyof Database['public']['Tables']> = Database['public']['Tables'][T]['Insert']
 export type Updates<T extends keyof Database['public']['Tables']> = Database['public']['Tables'][T]['Update']
 
+// Export individual types for easier imports
+export type UserRole = 'investor' | 'advisor' | 'admin'
+export type AdvisorStatus = 'pending' | 'approved' | 'rejected' | 'suspended'
+export type PaymentStatus = 'pending' | 'completed' | 'failed' | 'refunded'
+export type BookingStatus = 'pending' | 'confirmed' | 'completed' | 'cancelled' | 'no_show'
+export type ExpertiseArea =
+  | 'mutual_funds'
+  | 'stocks'
+  | 'tax_planning'
+  | 'retirement_planning'
+  | 'insurance'
+  | 'real_estate'
+  | 'portfolio_management'
+  | 'debt_management'
+  | 'wealth_management'
+
 export interface Database {
   public: {
     Tables: {
@@ -350,6 +366,7 @@ export interface Database {
       advisor_status: 'pending' | 'approved' | 'rejected' | 'suspended'
       booking_status: 'pending' | 'confirmed' | 'completed' | 'cancelled'
       payment_status: 'created' | 'completed' | 'failed' | 'refunded'
+      expertise_area: ExpertiseArea
     }
   }
 }

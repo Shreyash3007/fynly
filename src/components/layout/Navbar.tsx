@@ -37,13 +37,13 @@ export function Navbar() {
               href="/about"
               className="text-sm font-medium text-graphite-700 hover:text-mint-600 transition-colors"
             >
-              How It Works
+              About
             </Link>
             <Link
-              href="/pricing"
+              href="/#how-it-works"
               className="text-sm font-medium text-graphite-700 hover:text-mint-600 transition-colors"
             >
-              Pricing
+              How It Works
             </Link>
           </div>
 
@@ -110,14 +110,14 @@ export function Navbar() {
                 className="text-sm font-medium text-graphite-700 hover:text-mint-600 transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
-                How It Works
+                About
               </Link>
               <Link
-                href="/pricing"
+                href="/#how-it-works"
                 className="text-sm font-medium text-graphite-700 hover:text-mint-600 transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Pricing
+                How It Works
               </Link>
               <div className="pt-4 border-t border-graphite-100 flex flex-col gap-3">
                 <Link

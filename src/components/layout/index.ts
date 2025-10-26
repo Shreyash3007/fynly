@@ -4,4 +4,6 @@
  */
 
 export { Navbar } from './Navbar'
+export { AuthenticatedNavbar } from './AuthenticatedNavbar'
+export { LayoutWrapper } from './LayoutWrapper'
 
