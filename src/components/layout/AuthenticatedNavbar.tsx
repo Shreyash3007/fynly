@@ -12,7 +12,8 @@ import { useAuth } from '@/hooks'
 export function AuthenticatedNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isProfileOpen, setIsProfileOpen] = useState(false)
-  const { user, profile, signOut } = useAuth()
+  const { user, signOut } = useAuth()
+  const profile = user
 
   const handleSignOut = async () => {
     await signOut()
@@ -20,7 +21,7 @@ export function AuthenticatedNavbar() {
 
   const initials = profile?.full_name
     ?.split(' ')
-    .map(n => n[0])
+    .map((n: any) => n[0])
     .join('')
     .toUpperCase()
     .slice(0, 2) || 'U'

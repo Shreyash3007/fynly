@@ -33,7 +33,7 @@ export async function GET(request: Request) {
 
       if (profile) {
         // Redirect based on role
-        switch (profile.role) {
+        switch ((profile as any).role) {
           case 'advisor':
             return NextResponse.redirect(`${origin}/advisor/dashboard`)
           case 'admin':

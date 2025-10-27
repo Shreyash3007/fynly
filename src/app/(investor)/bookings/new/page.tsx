@@ -7,7 +7,7 @@
 
 import { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { Button, Card, Input, Textarea } from '@/components/ui'
+import { Button } from '@/components/ui'
 import { useAuth } from '@/hooks'
 
 declare global {

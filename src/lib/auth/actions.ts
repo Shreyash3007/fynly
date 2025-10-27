@@ -9,6 +9,7 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { UserRole } from '@/types/database.types'
+import { createUpdateData } from '@/lib/supabase/types'
 
 export interface AuthError {
   error: string
@@ -186,7 +187,7 @@ export async function updateProfile(updates: {
   const updateData: any = updates
   const { error } = await supabase
     .from('users')
-    .update(updateData as any)
+    .update(createUpdateData(updateData))
     .eq('id', user.id)
 
   if (error) {

@@ -6,7 +6,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/server'
 import { verifyWebhookSignature } from '@/lib/razorpay/client'
-import '@/types/supabase-override'
+import { createUpdateData } from '@/lib/supabase/types'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
@@ -48,12 +48,12 @@ export async function POST(request: NextRequest) {
           // Update payment status
           await supabase
             .from('payments')
-            .update({
+            .update(createUpdateData({
               status: 'completed',
               razorpay_payment_id: payment.id,
               payment_method: payment.method,
               webhook_processed_at: new Date().toISOString(),
-            } as any)
+            }))
             .eq('razorpay_order_id', payment.order_id)
         }
         break
@@ -64,12 +64,12 @@ export async function POST(request: NextRequest) {
 
           await supabase
             .from('payments')
-            .update({
+            .update(createUpdateData({
               status: 'failed',
               error_code: payment.error_code,
               error_description: payment.error_description,
               webhook_processed_at: new Date().toISOString(),
-            } as any)
+            }))
             .eq('razorpay_order_id', payment.order_id)
         }
         break
@@ -80,11 +80,11 @@ export async function POST(request: NextRequest) {
 
           await supabase
             .from('payments')
-            .update({
+            .update(createUpdateData({
               status: 'refunded',
               refund_amount: refund.amount / 100,
               refunded_at: new Date().toISOString(),
-            } as any)
+            }))
             .eq('razorpay_payment_id', refund.payment_id)
         }
         break

@@ -60,7 +60,7 @@ export default async function AdvisorProfilePage({
     },
   ]
 
-  const advisorName = advisor.user?.full_name || 'Financial Advisor'
+  const advisorName = (advisor as any).user?.full_name || 'Financial Advisor'
   const initials = advisorName.split(' ').map((n: string) => n[0]).join('').toUpperCase().slice(0, 2)
 
   return (
@@ -98,11 +98,11 @@ export default async function AdvisorProfilePage({
                   <h1 className="font-display text-4xl font-bold text-white">
                     {advisorName}
                   </h1>
-                  <VerifiedBadge>SEBI: {advisor.sebi_registration}</VerifiedBadge>
+                  <VerifiedBadge>SEBI: {(advisor as any).sebi_reg_no}</VerifiedBadge>
                 </div>
 
                 <p className="text-xl text-mint-100 mb-4">
-                  {advisor.specialization || 'Financial Planning Expert'}
+                  {(advisor as any).specialization || 'Financial Planning Expert'}
                 </p>
 
                 <div className="flex flex-wrap items-center gap-6 mb-6">
@@ -112,10 +112,10 @@ export default async function AdvisorProfilePage({
                       <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                     </svg>
                     <span className="font-semibold text-white text-lg">
-                      {advisor.average_rating?.toFixed(1) || '5.0'}
+                      {(advisor as any).average_rating?.toFixed(1) || '5.0'}     
                     </span>
                     <span className="text-mint-200">
-                      ({advisor.total_reviews || 0} reviews)
+                      ({(advisor as any).total_reviews || 0} reviews)
                     </span>
                   </div>
 
@@ -124,13 +124,13 @@ export default async function AdvisorProfilePage({
                     <svg className="w-5 h-5 text-mint-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
-                    <span className="text-mint-100">{advisor.experience_years} years experience</span>
+                    <span className="text-mint-100">{(advisor as any).experience_years} years experience</span>
                   </div>
                 </div>
 
                 {/* Enhanced Tags */}
                 <div className="flex flex-wrap gap-2 mb-6">
-                  {advisor.specialization && advisor.specialization.split(',').map((spec: string, i: number) => (
+                  {(advisor as any).specialization && (advisor as any).specialization.split(',').map((spec: string, i: number) => (
                     <span
                       key={i}
                       className="px-3 py-1 bg-white/10 backdrop-blur-sm text-mint-100 text-sm font-medium rounded-full border border-white/20"
@@ -178,7 +178,7 @@ export default async function AdvisorProfilePage({
                     <div>
                       <p className="text-sm text-mint-200 font-medium">Session Fee</p>
                       <p className="text-3xl font-display font-bold text-white">
-                        ₹{advisor.consultation_fee?.toLocaleString('en-IN') || '999'}
+                        ₹{(advisor as any).consultation_fee?.toLocaleString('en-IN') || '999'}
                       </p>
                     </div>
                     <div className="text-right">
@@ -205,7 +205,7 @@ export default async function AdvisorProfilePage({
                   About
                 </h2>
                 <p className="text-graphite-700 leading-relaxed whitespace-pre-line text-lg">
-                  {advisor.bio || 'Experienced financial advisor helping clients achieve their investment goals through personalized strategies and expert guidance.'}
+                  {(advisor as any).bio || 'Experienced financial advisor helping clients achieve their investment goals through personalized strategies and expert guidance.'}
                 </p>
               </div>
 
@@ -220,7 +220,7 @@ export default async function AdvisorProfilePage({
                       <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                     </svg>
                     <span className="font-semibold text-graphite-900 text-lg">
-                      {advisor.average_rating?.toFixed(1) || '5.0'}
+                      {(advisor as any).average_rating?.toFixed(1) || '5.0'}
                     </span>
                   </div>
                 </div>
@@ -277,7 +277,7 @@ export default async function AdvisorProfilePage({
                     </div>
                     <div>
                       <p className="font-semibold text-graphite-900">SEBI Registered</p>
-                      <p className="text-sm text-graphite-600">ID: {advisor.sebi_registration}</p>
+                      <p className="text-sm text-graphite-600">ID: {(advisor as any).sebi_reg_no}</p>
                     </div>
                   </div>
 
@@ -288,7 +288,7 @@ export default async function AdvisorProfilePage({
                       </svg>
                     </div>
                     <div>
-                      <p className="font-semibold text-graphite-900">{advisor.experience_years}+ Years</p>
+                      <p className="font-semibold text-graphite-900">{(advisor as any).experience_years}+ Years</p>
                       <p className="text-sm text-graphite-600">Professional Experience</p>
                     </div>
                   </div>
@@ -316,7 +316,7 @@ export default async function AdvisorProfilePage({
                   <div>
                     <p className="text-sm text-graphite-600 mb-1">Total Sessions</p>
                     <p className="text-3xl font-display font-bold text-graphite-900">
-                      {advisor.total_reviews || 0}+
+                      {(advisor as any).total_reviews || 0}+
                     </p>
                   </div>
                   <div>

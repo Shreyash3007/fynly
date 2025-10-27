@@ -54,8 +54,6 @@ export default async function AdminDashboardPage() {
   // Mock platform metrics
   const platformRevenue = 125000
   const monthlyGrowth = 8.5
-  const activeUsers = totalUsers || 0
-  const conversionRate = 12.3
 
   return (
     <div className="min-h-screen bg-smoke">

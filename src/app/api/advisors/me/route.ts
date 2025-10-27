@@ -54,7 +54,7 @@ export async function PATCH(request: NextRequest) {
     }
 
     // Update advisor profile
-    const { data, error } = await supabase
+    const { data, error } = await (supabase as any)
       .from('advisors')
       .update({
         bio: body.bio,

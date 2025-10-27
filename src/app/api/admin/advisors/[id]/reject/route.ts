@@ -5,7 +5,6 @@
 
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
-import '@/types/supabase-override'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
@@ -51,12 +50,12 @@ export async function POST(
     }
 
     // Reject advisor
-    const { error: updateError } = await supabase
+    const { error: updateError } = await (supabase as any)
       .from('advisors')
       .update({
         status: 'rejected',
         rejection_reason: body.reason || null,
-      } as any)
+      })
       .eq('id', params.id)
 
     if (updateError) {

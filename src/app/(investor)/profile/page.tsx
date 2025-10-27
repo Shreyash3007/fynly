@@ -7,15 +7,15 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Button, Input, Card } from '@/components/ui'
+import { Button, Input } from '@/components/ui'
 import { LayoutWrapper } from '@/components/layout'
 import { useAuth } from '@/hooks'
 import { updateProfile } from '@/lib/auth/actions'
 
 export default function InvestorProfilePage() {
   const router = useRouter()
-  const { user, profile, isAuthenticated } = useAuth()
-  const [loading, setLoading] = useState(false)
+  const { user, isAuthenticated } = useAuth()
+  const [loading] = useState(false)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
@@ -33,15 +33,15 @@ export default function InvestorProfilePage() {
       return
     }
 
-    if (profile) {
+    if (user) {
       setFormData({
-        full_name: profile.full_name || '',
-        email: profile.email || '',
-        phone: profile.phone || '',
-        avatar_url: profile.avatar_url || '',
+        full_name: user.full_name || '',
+        email: user.email || '',
+        phone: user.phone || '',
+        avatar_url: user.avatar_url || '',
       })
     }
-  }, [profile, isAuthenticated, router])
+  }, [user, isAuthenticated, router])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -86,7 +86,7 @@ export default function InvestorProfilePage() {
     )
   }
 
-  if (!isAuthenticated || !profile) {
+  if (!isAuthenticated || !user) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-smoke">
         <div className="rounded-2xl bg-white/90 backdrop-blur-md p-8 shadow-neomorph-lg text-center">
@@ -155,7 +155,7 @@ export default function InvestorProfilePage() {
                 <div className="flex items-center justify-between p-3 rounded-xl bg-mint-50">
                   <span className="text-sm text-graphite-600">Member Since</span>
                   <span className="font-semibold text-graphite-900">
-                    {new Date(profile.created_at).toLocaleDateString('en-IN', { 
+                    {new Date(user.created_at).toLocaleDateString('en-IN', { 
                       month: 'short', 
                       year: 'numeric' 
                     })}

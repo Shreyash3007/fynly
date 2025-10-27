@@ -6,18 +6,16 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { OnboardingFlow } from '@/components/auth'
-import { UserRole } from '@/types/database.types'
 
 export default function SignupPage() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const defaultRole = (searchParams.get('role') as UserRole) || 'investor'
+  const defaultRole = (searchParams.get('role') as 'investor' | 'advisor') || 'investor'
   const redirectTo = searchParams.get('redirect')
 
-  const [showOnboarding, setShowOnboarding] = useState(true)
+  const [showOnboarding] = useState(true)
 
   const handleOnboardingComplete = () => {
     // Redirect to appropriate dashboard or intended destination

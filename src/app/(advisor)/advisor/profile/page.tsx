@@ -7,13 +7,13 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Button, Input, Card, Textarea } from '@/components/ui'
+import { Button, Input, Textarea } from '@/components/ui'
 import { LayoutWrapper } from '@/components/layout'
 import { useAuth } from '@/hooks'
 
 export default function AdvisorProfilePage() {
   const router = useRouter()
-  const { user, profile, isAuthenticated } = useAuth()
+  const { user, isAuthenticated } = useAuth()
   const [loading, setLoading] = useState(false)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
@@ -46,13 +46,13 @@ export default function AdvisorProfilePage() {
     setLoading(true)
     try {
       // Fetch user profile
-      if (profile) {
+      if (user) {
         setFormData(prev => ({
           ...prev,
-          full_name: profile.full_name || '',
-          email: profile.email || '',
-          phone: profile.phone || '',
-          avatar_url: profile.avatar_url || '',
+          full_name: user.full_name || '',
+          email: user.email || '',
+          phone: user.phone || '',
+          avatar_url: user.avatar_url || '',
         }))
       }
 
@@ -141,7 +141,7 @@ export default function AdvisorProfilePage() {
     )
   }
 
-  if (!isAuthenticated || !profile) {
+  if (!isAuthenticated || !user) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-smoke">
         <div className="rounded-2xl bg-white/90 backdrop-blur-md p-8 shadow-neomorph-lg text-center">

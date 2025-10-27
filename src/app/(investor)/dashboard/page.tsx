@@ -38,8 +38,8 @@ export default async function InvestorDashboardPage() {
     `)
     .eq('investor_id', (profile as any).id)
     .eq('status', 'confirmed')
-    .gte('scheduled_at', new Date().toISOString())
-    .order('scheduled_at', { ascending: true })
+    .gte('meeting_time', new Date().toISOString())
+    .order('meeting_time', { ascending: true })
     .limit(3)
 
   // Fetch recent chats
@@ -181,7 +181,7 @@ export default async function InvestorDashboardPage() {
             <p className="text-3xl font-display font-bold text-graphite-900 mb-1">
               {bookings?.length || 0}
             </p>
-            <p className="text-xs text-graphite-500">Next: {bookings?.[0] ? new Date(bookings[0].scheduled_at).toLocaleDateString('en-IN', {month: 'short', day: 'numeric'}) : 'None scheduled'}</p>
+            <p className="text-xs text-graphite-500">Next: {bookings?.[0] ? new Date((bookings[0] as any).meeting_time).toLocaleDateString('en-IN', {month: 'short', day: 'numeric'}) : 'None scheduled'}</p>
           </div>
 
           {/* Chats Card */}

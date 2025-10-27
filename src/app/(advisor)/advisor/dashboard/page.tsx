@@ -139,8 +139,8 @@ export default async function AdvisorDashboardPage() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
                     </svg>
                     <span className="text-white font-semibold text-sm">+{weeklyGrowth}%</span>
-                  </div>
-                </div>
+              </div>
+            </div>
                 <p className="text-mint-100 text-sm">+₹{(weekEarnings * weeklyGrowth / 100).toLocaleString('en-IN')} vs last week</p>
               </div>
               <button className="w-12 h-12 rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-center hover:bg-white/20 transition-all">
@@ -186,9 +186,9 @@ export default async function AdvisorDashboardPage() {
                   </svg>
                 </div>
                 <span className="text-white text-sm font-medium">Manage Clients</span>
-              </Link>
-            </div>
+            </Link>
           </div>
+        </div>
         </div>
       </div>
 
@@ -272,7 +272,7 @@ export default async function AdvisorDashboardPage() {
 
         {/* Main Content Grid */}
         <div className="grid gap-6 lg:grid-cols-2 mb-8">
-          {/* Upcoming Sessions */}
+        {/* Upcoming Sessions */}
           <div className="rounded-2xl bg-white/90 backdrop-blur-md p-6 shadow-neomorph border border-white/50">
             <div className="flex items-center justify-between mb-6">
               <h2 className="font-display text-xl font-bold text-graphite-900">
@@ -332,14 +332,14 @@ export default async function AdvisorDashboardPage() {
                         >
                           Join
                         </Link>
-                        <Link
+                          <Link
                           href={`/chat/${booking.id}`}
                           className="p-2 rounded-lg bg-graphite-100 text-graphite-600 hover:bg-mint-100 hover:text-mint-600 transition-all"
-                        >
+                          >
                           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                           </svg>
-                        </Link>
+                          </Link>
                       </div>
                     </div>
                   </div>
@@ -375,7 +375,7 @@ export default async function AdvisorDashboardPage() {
               <h2 className="font-display text-xl font-bold text-graphite-900">
                 Recent Bookings
               </h2>
-            </div>
+        </div>
 
             {recentBookings && recentBookings.length > 0 ? (
               <div className="space-y-3">

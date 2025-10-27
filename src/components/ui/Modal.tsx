@@ -5,7 +5,7 @@
 
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import clsx from 'clsx'
 
@@ -26,7 +26,15 @@ export function Modal({
   size = 'md',
   showCloseButton = true,
 }: ModalProps) {
+  const [mounted, setMounted] = useState(false)
+
   useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  useEffect(() => {
+    if (!mounted) return
+    
     if (isOpen) {
       document.body.style.overflow = 'hidden'
     } else {
@@ -36,9 +44,11 @@ export function Modal({
     return () => {
       document.body.style.overflow = 'unset'
     }
-  }, [isOpen])
+  }, [isOpen, mounted])
 
   useEffect(() => {
+    if (!mounted) return
+    
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && isOpen) {
         onClose()
@@ -47,9 +57,9 @@ export function Modal({
 
     document.addEventListener('keydown', handleEscape)
     return () => document.removeEventListener('keydown', handleEscape)
-  }, [isOpen, onClose])
+  }, [isOpen, onClose, mounted])
 
-  if (!isOpen) return null
+  if (!isOpen || !mounted) return null
 
   const sizes = {
     sm: 'max-w-md',
@@ -114,7 +124,7 @@ export function Modal({
     </div>
   )
 
-  return createPortal(modalContent, document.body)
+  return mounted ? createPortal(modalContent, document.body) : null
 }
 
 // Booking Modal specific styling

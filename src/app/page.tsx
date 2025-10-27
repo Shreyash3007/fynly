@@ -127,6 +127,253 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* New: Investment Solutions Section */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="mb-4 font-display text-3xl font-semibold text-graphite-900 lg:text-4xl">
+              Investment Solutions for Every Goal
+            </h2>
+            <p className="text-graphite-600 max-w-2xl mx-auto">
+              From retirement planning to wealth creation, our advisors specialize in diverse investment strategies
+            </p>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 max-w-7xl mx-auto">
+            {/* Solution 1 */}
+            <div className="bg-smoke/50 rounded-2xl p-6 shadow-neomorph-lg hover:shadow-neomorph-xl transition-all duration-300 group">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-mint-400 to-mint-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+                </svg>
+              </div>
+              <h3 className="font-display text-lg font-semibold text-graphite-900 mb-2">
+                Retirement Planning
+              </h3>
+              <p className="text-sm text-graphite-600 leading-relaxed">
+                Build a secure retirement fund with expert guidance on pension plans, EPF, and NPS.
+              </p>
+            </div>
+
+            {/* Solution 2 */}
+            <div className="bg-smoke/50 rounded-2xl p-6 shadow-neomorph-lg hover:shadow-neomorph-xl transition-all duration-300 group">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-400 to-cyan-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                </svg>
+              </div>
+              <h3 className="font-display text-lg font-semibold text-graphite-900 mb-2">
+                Wealth Creation
+              </h3>
+              <p className="text-sm text-graphite-600 leading-relaxed">
+                Grow your wealth through strategic investments in mutual funds, stocks, and real estate.
+              </p>
+            </div>
+
+            {/* Solution 3 */}
+            <div className="bg-smoke/50 rounded-2xl p-6 shadow-neomorph-lg hover:shadow-neomorph-xl transition-all duration-300 group">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <h3 className="font-display text-lg font-semibold text-graphite-900 mb-2">
+                Tax Planning
+              </h3>
+              <p className="text-sm text-graphite-600 leading-relaxed">
+                Optimize your tax liability with smart investment strategies and tax-saving instruments.
+              </p>
+            </div>
+
+            {/* Solution 4 */}
+            <div className="bg-smoke/50 rounded-2xl p-6 shadow-neomorph-lg hover:shadow-neomorph-xl transition-all duration-300 group">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+              </div>
+              <h3 className="font-display text-lg font-semibold text-graphite-900 mb-2">
+                Insurance Planning
+              </h3>
+              <p className="text-sm text-graphite-600 leading-relaxed">
+                Protect your family's future with comprehensive life and health insurance strategies.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* New: Pricing Section */}
+      <section className="py-20 bg-smoke">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="mb-4 font-display text-3xl font-semibold text-graphite-900 lg:text-4xl">
+              Transparent Pricing
+            </h2>
+            <p className="text-graphite-600 max-w-2xl mx-auto">
+              No hidden fees, no surprises. Pay only for the value you receive.
+            </p>
+          </div>
+
+          <div className="grid gap-8 md:grid-cols-3 max-w-5xl mx-auto">
+            {/* Free Demo */}
+            <div className="bg-white/80 backdrop-blur-md rounded-2xl p-8 shadow-neomorph-lg hover:shadow-neomorph-xl transition-all duration-300 border-2 border-mint-200">
+              <div className="text-center">
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-mint-400 to-mint-600 text-white mb-6 shadow-lg">
+                  <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <h3 className="font-display text-2xl font-semibold text-graphite-900 mb-2">
+                  Free Demo
+                </h3>
+                <div className="text-4xl font-bold text-mint-600 mb-4">
+                  ₹0
+                </div>
+                <p className="text-graphite-600 mb-6">
+                  Get started with a complimentary 10-minute consultation
+                </p>
+                <ul className="text-left space-y-3 mb-8">
+                  <li className="flex items-center gap-2">
+                    <svg className="w-5 h-5 text-mint-500" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-sm text-graphite-600">10-minute consultation</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <svg className="w-5 h-5 text-mint-500" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-sm text-graphite-600">Basic financial assessment</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <svg className="w-5 h-5 text-mint-500" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-sm text-graphite-600">No commitment required</span>
+                  </li>
+                </ul>
+                <Link
+                  href="/advisors"
+                  className="block w-full px-6 py-3 bg-gradient-mint text-white font-semibold rounded-lg shadow-glow-mint hover:shadow-glow-mint-lg transition-all duration-200"
+                >
+                  Start Free Demo
+                </Link>
+              </div>
+            </div>
+
+            {/* Standard Consultation */}
+            <div className="bg-white/80 backdrop-blur-md rounded-2xl p-8 shadow-neomorph-lg hover:shadow-neomorph-xl transition-all duration-300 border-2 border-cyan-200 relative">
+              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                <span className="bg-gradient-to-r from-cyan-400 to-cyan-600 text-white px-4 py-1 rounded-full text-sm font-semibold">
+                  Most Popular
+                </span>
+              </div>
+              <div className="text-center">
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-400 to-cyan-600 text-white mb-6 shadow-lg">
+                  <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <h3 className="font-display text-2xl font-semibold text-graphite-900 mb-2">
+                  Standard Consultation
+                </h3>
+                <div className="text-4xl font-bold text-cyan-600 mb-4">
+                  ₹999
+                </div>
+                <p className="text-graphite-600 mb-6">
+                  Comprehensive 60-minute financial planning session
+                </p>
+                <ul className="text-left space-y-3 mb-8">
+                  <li className="flex items-center gap-2">
+                    <svg className="w-5 h-5 text-cyan-500" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-sm text-graphite-600">60-minute detailed consultation</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <svg className="w-5 h-5 text-cyan-500" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-sm text-graphite-600">Personalized investment plan</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <svg className="w-5 h-5 text-cyan-500" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-sm text-graphite-600">Follow-up support for 7 days</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <svg className="w-5 h-5 text-cyan-500" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-sm text-graphite-600">Written recommendations</span>
+                  </li>
+                </ul>
+                <Link
+                  href="/advisors"
+                  className="block w-full px-6 py-3 bg-gradient-to-r from-cyan-400 to-cyan-600 text-white font-semibold rounded-lg shadow-glow-cyan hover:shadow-glow-cyan-lg transition-all duration-200"
+                >
+                  Book Consultation
+                </Link>
+              </div>
+            </div>
+
+            {/* Premium Package */}
+            <div className="bg-white/80 backdrop-blur-md rounded-2xl p-8 shadow-neomorph-lg hover:shadow-neomorph-xl transition-all duration-300 border-2 border-purple-200">
+              <div className="text-center">
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-400 to-purple-600 text-white mb-6 shadow-lg">
+                  <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                  </svg>
+                </div>
+                <h3 className="font-display text-2xl font-semibold text-graphite-900 mb-2">
+                  Premium Package
+                </h3>
+                <div className="text-4xl font-bold text-purple-600 mb-4">
+                  ₹2,999
+                </div>
+                <p className="text-graphite-600 mb-6">
+                  Complete financial planning with ongoing support
+                </p>
+                <ul className="text-left space-y-3 mb-8">
+                  <li className="flex items-center gap-2">
+                    <svg className="w-5 h-5 text-purple-500" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-sm text-graphite-600">90-minute comprehensive session</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <svg className="w-5 h-5 text-purple-500" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-sm text-graphite-600">Complete financial roadmap</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <svg className="w-5 h-5 text-purple-500" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-sm text-graphite-600">30-day follow-up support</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <svg className="w-5 h-5 text-purple-500" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-sm text-graphite-600">Portfolio review & rebalancing</span>
+                  </li>
+                </ul>
+                <Link
+                  href="/advisors"
+                  className="block w-full px-6 py-3 bg-gradient-to-r from-purple-400 to-purple-600 text-white font-semibold rounded-lg shadow-glow-purple hover:shadow-glow-purple-lg transition-all duration-200"
+                >
+                  Get Premium Plan
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Enhanced How It Works Section */}
       <section id="how-it-works" className="py-20 bg-white">
         <div className="container mx-auto px-4">
@@ -304,12 +551,12 @@ export default function HomePage() {
             Join thousands of investors who found the right financial guidance on Fynly
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/advisors"
+          <Link
+            href="/advisors"
               className="inline-flex items-center justify-center px-8 py-4 bg-white text-graphite-900 font-semibold rounded-xl shadow-2xl hover:shadow-3xl hover:scale-105 transition-all duration-200"
-            >
-              Browse Advisors
-            </Link>
+          >
+            Browse Advisors
+          </Link>
             <Link
               href="/about"
               className="inline-flex items-center justify-center px-8 py-4 bg-transparent border-2 border-white text-white font-semibold rounded-xl hover:bg-white/10 transition-all duration-200"
@@ -332,14 +579,14 @@ export default function HomePage() {
             </p>
             <div className="flex flex-wrap justify-center gap-6 text-sm">
               <Link href="/privacy" className="text-graphite-400 hover:text-mint-400 transition-colors">
-                Privacy Policy
-              </Link>
+              Privacy Policy
+            </Link>
               <Link href="/terms" className="text-graphite-400 hover:text-mint-400 transition-colors">
-                Terms of Service
-              </Link>
+              Terms of Service
+            </Link>
               <Link href="/contact" className="text-graphite-400 hover:text-mint-400 transition-colors">
-                Contact Us
-              </Link>
+              Contact Us
+            </Link>
             </div>
             <p className="mt-8 text-sm text-graphite-500">
               © {new Date().getFullYear()} Fynly. All rights reserved.

@@ -10,7 +10,7 @@ import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { LayoutWrapper } from '@/components/layout'
 import { createClient } from '@/lib/supabase/client'
-import { VerifiedBadge, Button, Input, Select, Badge } from '@/components/ui'
+import { Button, Input, Select, Badge } from '@/components/ui'
 import { AdvisorCard } from '@/components/advisor'
 
 export default function AdvisorsPage() {
@@ -145,9 +145,8 @@ export default function AdvisorsPage() {
 
   return (
     <div className="min-h-screen bg-smoke">
-      <LayoutWrapper />
-
-      {/* Enhanced Hero Section */}
+      <LayoutWrapper>
+        {/* Enhanced Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-graphite-900 via-graphite-800 to-graphite-900 pt-32 pb-20">
         {/* Animated Background */}
         <div className="absolute inset-0 opacity-10">
@@ -181,23 +180,23 @@ export default function AdvisorsPage() {
                   value={selectedSpecialization}
                   onChange={(e) => setSelectedSpecialization(e.target.value)}
                   className="bg-white/10 border-white/20 text-white"
-                >
-                  <option value="">All Specializations</option>
-                  {specializations.map((spec) => (
-                    <option key={spec} value={spec} className="text-graphite-900">{spec}</option>
-                  ))}
-                </Select>
+                  options={[
+                    { value: '', label: 'All Specializations' },
+                    ...specializations.map(spec => ({ value: spec, label: spec }))
+                  ]}
+                />
                 <Select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
                   className="bg-white/10 border-white/20 text-white"
-                >
-                  <option value="rating" className="text-graphite-900">Sort by Rating</option>
-                  <option value="experience" className="text-graphite-900">Sort by Experience</option>
-                  <option value="price_low" className="text-graphite-900">Price: Low to High</option>
-                  <option value="price_high" className="text-graphite-900">Price: High to Low</option>
-                  <option value="reviews" className="text-graphite-900">Most Reviews</option>
-                </Select>
+                  options={[
+                    { value: 'rating', label: 'Sort by Rating' },
+                    { value: 'experience', label: 'Sort by Experience' },
+                    { value: 'price_low', label: 'Price: Low to High' },
+                    { value: 'price_high', label: 'Price: High to Low' },
+                    { value: 'reviews', label: 'Most Reviews' }
+                  ]}
+                />
               </div>
               
               {/* Advanced Filters */}
@@ -206,34 +205,37 @@ export default function AdvisorsPage() {
                   value={priceRange}
                   onChange={(e) => setPriceRange(e.target.value)}
                   className="bg-white/10 border-white/20 text-white"
-                >
-                  <option value="" className="text-graphite-900">Any Price</option>
-                  <option value="0-500" className="text-graphite-900">Under ₹500</option>
-                  <option value="500-1000" className="text-graphite-900">₹500 - ₹1000</option>
-                  <option value="1000-2000" className="text-graphite-900">₹1000 - ₹2000</option>
-                  <option value="2000-" className="text-graphite-900">Above ₹2000</option>
-                </Select>
+                  options={[
+                    { value: '', label: 'Any Price' },
+                    { value: '0-500', label: 'Under ₹500' },
+                    { value: '500-1000', label: '₹500 - ₹1000' },
+                    { value: '1000-2000', label: '₹1000 - ₹2000' },
+                    { value: '2000-', label: 'Above ₹2000' }
+                  ]}
+                />
                 <Select
                   value={experience}
                   onChange={(e) => setExperience(e.target.value)}
                   className="bg-white/10 border-white/20 text-white"
-                >
-                  <option value="" className="text-graphite-900">Any Experience</option>
-                  <option value="0-2" className="text-graphite-900">0-2 years</option>
-                  <option value="2-5" className="text-graphite-900">2-5 years</option>
-                  <option value="5-10" className="text-graphite-900">5-10 years</option>
-                  <option value="10-" className="text-graphite-900">10+ years</option>
-                </Select>
+                  options={[
+                    { value: '', label: 'Any Experience' },
+                    { value: '0-2', label: '0-2 years' },
+                    { value: '2-5', label: '2-5 years' },
+                    { value: '5-10', label: '5-10 years' },
+                    { value: '10-', label: '10+ years' }
+                  ]}
+                />
                 <Select
                   value={availability}
                   onChange={(e) => setAvailability(e.target.value)}
                   className="bg-white/10 border-white/20 text-white"
-                >
-                  <option value="" className="text-graphite-900">Any Time</option>
-                  <option value="now" className="text-graphite-900">Available Now</option>
-                  <option value="today" className="text-graphite-900">Available Today</option>
-                  <option value="week" className="text-graphite-900">This Week</option>
-                </Select>
+                  options={[
+                    { value: '', label: 'Any Time' },
+                    { value: 'now', label: 'Available Now' },
+                    { value: 'today', label: 'Available Today' },
+                    { value: 'week', label: 'This Week' }
+                  ]}
+                />
               </div>
               
               {/* Quick Filter Tags */}
@@ -380,8 +382,7 @@ export default function AdvisorsPage() {
                   experienceYears={advisor.experience_years || 0}
                   sessionFee={advisor.hourly_rate || 999}
                   bio={advisor.bio || 'Experienced financial advisor ready to help you achieve your goals.'}
-                  onQuickBook={handleQuickBook}
-                  variant="full"
+                  onQuickBook={() => handleQuickBook(advisor.id)}
                 />
               ))}
             </div>
@@ -434,6 +435,7 @@ export default function AdvisorsPage() {
           </div>
         </div>
       </footer>
+      </LayoutWrapper>
     </div>
   )
 }

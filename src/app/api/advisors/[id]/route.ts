@@ -6,7 +6,6 @@
 
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
-import '@/types/supabase-override'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
@@ -78,9 +77,9 @@ export async function PATCH(
     const { status, ...updateData } = body
 
     const updateDataAny: any = updateData
-    const { data, error } = await supabase
+    const { data, error } = await (supabase as any)
       .from('advisors')
-      .update(updateDataAny as any)
+      .update(updateDataAny)
       .eq('id', params.id)
       .select()
       .single()
