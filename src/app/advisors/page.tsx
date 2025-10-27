@@ -163,6 +163,34 @@ export default function AdvisorsPage() {
             Browse SEBI-verified financial advisors and book a free consultation
           </p>
 
+          {/* Trust Indicators */}
+          <div className="flex flex-wrap justify-center gap-6 mb-8 text-sm text-mint-200">
+            <div className="flex items-center gap-2">
+              <svg className="w-5 h-5 text-mint-400" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+              </svg>
+              <span>SEBI Verified</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <svg className="w-5 h-5 text-mint-400" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+              </svg>
+              <span>Secure Payments</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <svg className="w-5 h-5 text-mint-400" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span>Money Back Guarantee</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <svg className="w-5 h-5 text-mint-400" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+              </svg>
+              <span>24/7 Support</span>
+            </div>
+          </div>
+
           {/* Enhanced Search & Filter */}
           <div className="mx-auto max-w-4xl">
             <div className="rounded-2xl bg-white/10 backdrop-blur-md p-6 border border-white/20">
@@ -240,18 +268,21 @@ export default function AdvisorsPage() {
               
               {/* Quick Filter Tags */}
               <div className="flex flex-wrap gap-2 mt-4">
-                {['Available Now', 'Top Rated', 'Most Experienced', 'Budget Friendly'].map((tag) => (
+                {[
+                  { label: 'Available Now', action: () => setAvailability('now'), icon: '🟢' },
+                  { label: 'Top Rated', action: () => setSortBy('rating'), icon: '⭐' },
+                  { label: 'Most Experienced', action: () => setSortBy('experience'), icon: '👨‍💼' },
+                  { label: 'Budget Friendly', action: () => setPriceRange('0-1000'), icon: '💰' },
+                  { label: 'SEBI Verified', action: () => setSearchQuery('SEBI'), icon: '✅' },
+                  { label: 'Free Consultation', action: () => setPriceRange('0-500'), icon: '🎁' }
+                ].map((tag) => (
                   <button
-                    key={tag}
-                    onClick={() => {
-                      if (tag === 'Available Now') setAvailability('now')
-                      else if (tag === 'Top Rated') setSortBy('rating')
-                      else if (tag === 'Most Experienced') setSortBy('experience')
-                      else if (tag === 'Budget Friendly') setPriceRange('0-1000')
-                    }}
-                    className="px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-sm text-mint-200 text-sm hover:bg-white/20 transition-all"
+                    key={tag.label}
+                    onClick={tag.action}
+                    className="px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-sm text-mint-200 text-sm hover:bg-white/20 hover:scale-105 transition-all duration-200 flex items-center gap-1.5"
                   >
-                    {tag}
+                    <span>{tag.icon}</span>
+                    <span>{tag.label}</span>
                   </button>
                 ))}
               </div>
@@ -271,6 +302,28 @@ export default function AdvisorsPage() {
               <p className="text-graphite-600 mt-1">
                 {loading ? 'Loading...' : `${filteredAdvisors.length} advisors found`}
               </p>
+              
+              {/* Platform Stats */}
+              <div className="flex items-center gap-6 mt-4 text-sm text-graphite-500">
+                <div className="flex items-center gap-1">
+                  <svg className="w-4 h-4 text-mint-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span>500+ SEBI Verified</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <svg className="w-4 h-4 text-mint-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  <span>4.8/5 Average Rating</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <svg className="w-4 h-4 text-mint-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z" />
+                  </svg>
+                  <span>10,000+ Happy Clients</span>
+                </div>
+              </div>
             </div>
             <div className="flex items-center gap-4">
               {/* Active Filters Display */}

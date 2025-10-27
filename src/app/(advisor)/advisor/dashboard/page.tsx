@@ -64,6 +64,9 @@ export default async function AdvisorDashboardPage() {
   const monthEarnings = 45000
   const totalSessions = recentBookings?.length || 0
   const weeklyGrowth = 15.2
+  const averageRating = 4.8
+  const responseTime = '2.5 hours'
+  const clientSatisfaction = 96
 
   return (
     <div className="min-h-screen bg-smoke">
@@ -267,6 +270,40 @@ export default async function AdvisorDashboardPage() {
               {totalSessions}
             </p>
             <p className="text-xs text-graphite-500">Lifetime consultations</p>
+          </div>
+        </div>
+
+        {/* Performance Insights Section */}
+        <div className="rounded-2xl bg-gradient-to-r from-mint-50 to-cyan-50 p-6 mb-8 border border-mint-200">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-mint-500 to-cyan-500 flex items-center justify-center">
+              <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+              </svg>
+            </div>
+            <h2 className="font-display text-xl font-bold text-graphite-900">Performance Insights</h2>
+          </div>
+          <div className="grid gap-4 md:grid-cols-4">
+            <div className="text-center">
+              <div className="text-2xl font-bold text-mint-600 mb-1">{averageRating}/5</div>
+              <div className="text-sm text-graphite-600">Average Rating</div>
+              <div className="text-xs text-mint-500">Excellent!</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-cyan-600 mb-1">{responseTime}</div>
+              <div className="text-sm text-graphite-600">Avg Response Time</div>
+              <div className="text-xs text-cyan-500">Very fast</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-purple-600 mb-1">{clientSatisfaction}%</div>
+              <div className="text-sm text-graphite-600">Client Satisfaction</div>
+              <div className="text-xs text-purple-500">Outstanding</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-orange-600 mb-1">₹{Math.round(weekEarnings / 7).toLocaleString('en-IN')}</div>
+              <div className="text-sm text-graphite-600">Daily Average</div>
+              <div className="text-xs text-orange-500">This week</div>
+            </div>
           </div>
         </div>
 

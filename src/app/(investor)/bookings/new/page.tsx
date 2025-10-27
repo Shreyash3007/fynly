@@ -28,6 +28,11 @@ function BookingForm() {
   const [duration, setDuration] = useState(60)
   const [notes, setNotes] = useState('')
   const [loading, setLoading] = useState(false)
+  const [availableSlots, setAvailableSlots] = useState<any[]>([])
+  const [selectedDate, setSelectedDate] = useState('')
+  const [selectedTime, setSelectedTime] = useState('')
+  const [consentRecording, setConsentRecording] = useState(false)
+  const [consentTerms, setConsentTerms] = useState(false)
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -48,9 +53,57 @@ function BookingForm() {
       const response = await fetch(`/api/advisors/${advisorId}`)
       const data = await response.json()
       setAdvisor(data.advisor)
+      generateAvailableSlots()
     } catch (error) {
       console.error('Failed to fetch advisor:', error)
     }
+  }
+
+  const generateAvailableSlots = () => {
+    const slots = []
+    const today = new Date()
+    const nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000)
+    
+    // Generate slots for the next 7 days
+    for (let d = new Date(today); d <= nextWeek; d.setDate(d.getDate() + 1)) {
+      const daySlots = []
+      const startHour = 9 // 9 AM
+      const endHour = 18 // 6 PM
+      
+      for (let hour = startHour; hour < endHour; hour++) {
+        for (let minute = 0; minute < 60; minute += 30) { // 30-minute intervals
+          const slotTime = new Date(d)
+          slotTime.setHours(hour, minute, 0, 0)
+          
+          // Only show future slots
+          if (slotTime > today) {
+            daySlots.push({
+              time: slotTime,
+              available: Math.random() > 0.3, // Mock availability
+              formatted: slotTime.toLocaleTimeString('en-IN', {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
+              })
+            })
+          }
+        }
+      }
+      
+      if (daySlots.length > 0) {
+        slots.push({
+          date: d.toISOString().split('T')[0],
+          formatted: d.toLocaleDateString('en-IN', {
+            weekday: 'long',
+            month: 'short',
+            day: 'numeric'
+          }),
+          slots: daySlots
+        })
+      }
+    }
+    
+    setAvailableSlots(slots)
   }
 
   const handleCreateBooking = async () => {
@@ -65,6 +118,8 @@ function BookingForm() {
           meetingTime,
           duration,
           notes,
+          consentRecording,
+          consentTerms,
         }),
       })
 
@@ -188,16 +243,60 @@ function BookingForm() {
             <div className="space-y-6">
               <div>
                 <label className="block text-sm font-semibold text-graphite-700 mb-3">
-                  Meeting Date & Time
+                  Select Date & Time
                 </label>
-                <input
-                  type="datetime-local"
-                  value={meetingTime}
-                  onChange={(e) => setMeetingTime(e.target.value)}
-                  required
-                  min={new Date().toISOString().slice(0, 16)}
-                  className="w-full rounded-xl border border-graphite-200 bg-white px-4 py-3 shadow-inner-soft focus:outline-none focus:border-mint-500 focus:ring-2 focus:ring-mint-500/20 transition-all duration-200"
-                />
+                
+                {/* Date Selection */}
+                <div className="mb-4">
+                  <div className="flex gap-2 overflow-x-auto pb-2">
+                    {availableSlots.map((day) => (
+                      <button
+                        key={day.date}
+                        onClick={() => setSelectedDate(day.date)}
+                        className={`px-4 py-3 rounded-xl border-2 text-sm font-medium whitespace-nowrap transition-all duration-200 ${
+                          selectedDate === day.date
+                            ? 'border-mint-500 bg-mint-50 text-mint-700 shadow-glow-mint-sm'
+                            : 'border-graphite-200 hover:border-mint-300 hover:bg-mint-50/50'
+                        }`}
+                      >
+                        <div className="text-center">
+                          <div className="font-semibold">{day.formatted.split(',')[0]}</div>
+                          <div className="text-xs text-graphite-600">{day.formatted.split(',')[1]}</div>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Time Selection */}
+                {selectedDate && (
+                  <div>
+                    <div className="grid grid-cols-4 gap-2">
+                      {availableSlots
+                        .find(day => day.date === selectedDate)
+                        ?.slots.filter((slot: any) => slot.available)
+                        .map((slot: any, index: number) => (
+                          <button
+                            key={index}
+                            onClick={() => {
+                              setSelectedTime(slot.formatted)
+                              setMeetingTime(slot.time.toISOString())
+                            }}
+                            className={`px-3 py-2 rounded-lg border text-sm font-medium transition-all duration-200 ${
+                              selectedTime === slot.formatted
+                                ? 'border-mint-500 bg-mint-50 text-mint-700 shadow-glow-mint-sm'
+                                : 'border-graphite-200 hover:border-mint-300 hover:bg-mint-50/50'
+                            }`}
+                          >
+                            {slot.formatted}
+                          </button>
+                        ))}
+                    </div>
+                    {!availableSlots.find(day => day.date === selectedDate)?.slots.filter((slot: any) => slot.available).length && (
+                      <p className="text-sm text-graphite-500 mt-2">No available slots for this date</p>
+                    )}
+                  </div>
+                )}
               </div>
 
               <div>
@@ -228,7 +327,7 @@ function BookingForm() {
 
               <Button
                 onClick={() => setStep(2)}
-                disabled={!meetingTime}
+                disabled={!meetingTime || !selectedTime}
                 className="w-full py-4 text-lg font-semibold"
               >
                 Continue to Details
@@ -252,6 +351,45 @@ function BookingForm() {
                 />
               </div>
 
+              {/* Consent Checkboxes */}
+              <div className="space-y-4">
+                <h3 className="text-sm font-semibold text-graphite-700">Consent & Agreements</h3>
+                
+                <div className="space-y-3">
+                  <label className="flex items-start gap-3 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={consentRecording}
+                      onChange={(e) => setConsentRecording(e.target.checked)}
+                      className="mt-1 rounded text-mint-500 focus:ring-mint-500 focus:ring-offset-0"
+                    />
+                    <div className="text-sm text-graphite-600">
+                      <span className="font-medium">Recording Consent:</span> I consent to the session being recorded for quality assurance and training purposes. The recording will be securely stored and only used internally.
+                    </div>
+                  </label>
+
+                  <label className="flex items-start gap-3 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={consentTerms}
+                      onChange={(e) => setConsentTerms(e.target.checked)}
+                      className="mt-1 rounded text-mint-500 focus:ring-mint-500 focus:ring-offset-0"
+                    />
+                    <div className="text-sm text-graphite-600">
+                      <span className="font-medium">Terms & Conditions:</span> I agree to the{' '}
+                      <a href="/terms" className="text-mint-600 hover:text-mint-700 font-medium">
+                        Terms of Service
+                      </a>
+                      {' '}and{' '}
+                      <a href="/privacy" className="text-mint-600 hover:text-mint-700 font-medium">
+                        Privacy Policy
+                      </a>
+                      . I understand that this is a paid consultation service.
+                    </div>
+                  </label>
+                </div>
+              </div>
+
               <div className="flex gap-4">
                 <Button 
                   variant="outline" 
@@ -262,6 +400,7 @@ function BookingForm() {
                 </Button>
                 <Button 
                   onClick={() => setStep(3)} 
+                  disabled={!consentTerms}
                   className="flex-1 py-4 text-lg font-semibold"
                 >
                   Continue to Payment →
@@ -307,20 +446,58 @@ function BookingForm() {
                 </div>
               </div>
 
-              <div className="bg-mint-50 rounded-xl p-4 border border-mint-200">
-                <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 rounded-full bg-mint-500 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
+              <div className="space-y-3">
+                <div className="bg-mint-50 rounded-xl p-4 border border-mint-200">
+                  <div className="flex items-start gap-3">
+                    <div className="w-6 h-6 rounded-full bg-mint-500 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-mint-800">
+                        First 10 minutes are free!
+                      </p>
+                      <p className="text-xs text-mint-600 mt-1">
+                        You'll only be charged for the extended session time beyond the free demo.
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-sm font-medium text-mint-800">
-                      First 10 minutes are free!
-                    </p>
-                    <p className="text-xs text-mint-600 mt-1">
-                      You'll only be charged for the extended session time beyond the free demo.
-                    </p>
+                </div>
+
+                {/* Security & Trust Indicators */}
+                <div className="bg-graphite-50 rounded-xl p-4 border border-graphite-200">
+                  <div className="flex items-center gap-3 mb-3">
+                    <svg className="w-5 h-5 text-success" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-sm font-semibold text-graphite-900">Secure Payment</span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4 text-xs text-graphite-600">
+                    <div className="flex items-center gap-2">
+                      <svg className="w-4 h-4 text-success" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <span>SSL Encrypted</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <svg className="w-4 h-4 text-success" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <span>Razorpay Secure</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <svg className="w-4 h-4 text-success" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <span>Money Back Guarantee</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <svg className="w-4 h-4 text-success" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <span>PCI DSS Compliant</span>
+                    </div>
                   </div>
                 </div>
               </div>

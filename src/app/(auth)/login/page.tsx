@@ -16,6 +16,7 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [showEmailForm, setShowEmailForm] = useState(false)
+  const [rememberMe, setRememberMe] = useState(false)
   
   const redirectUrl = searchParams.get('redirect') || '/dashboard'
   const errorParam = searchParams.get('error')
@@ -29,9 +30,14 @@ export default function LoginPage() {
   const handleGoogleSignIn = async () => {
     setLoading(true)
     setError('')
-    const result = await signInWithGoogle()
-    if ('error' in result) {
-      setError(result.error)
+    try {
+      const result = await signInWithGoogle()
+      if ('error' in result) {
+        setError(result.error)
+        setLoading(false)
+      }
+    } catch (err) {
+      setError('Something went wrong. Please try again.')
       setLoading(false)
     }
   }
@@ -41,17 +47,22 @@ export default function LoginPage() {
     setLoading(true)
     setError('')
 
-    const formData = new FormData(e.currentTarget)
-    const email = formData.get('email') as string
-    const password = formData.get('password') as string
+    try {
+      const formData = new FormData(e.currentTarget)
+      const email = formData.get('email') as string
+      const password = formData.get('password') as string
 
-    const result = await signIn(email, password)
+      const result = await signIn(email, password)
 
-    if ('error' in result) {
-      setError(result.error)
+      if ('error' in result) {
+        setError(result.error)
+        setLoading(false)
+      } else {
+        router.push(result.redirectTo || redirectUrl)
+      }
+    } catch (err) {
+      setError('Something went wrong. Please try again.')
       setLoading(false)
-    } else {
-      router.push(result.redirectTo || redirectUrl)
     }
   }
 
@@ -216,10 +227,15 @@ export default function LoginPage() {
 
                 <div className="flex items-center justify-between text-sm">
                   <label className="flex items-center gap-2 cursor-pointer">
-                    <input type="checkbox" className="rounded text-mint-500 focus:ring-mint-500" />
+                    <input 
+                      type="checkbox" 
+                      checked={rememberMe}
+                      onChange={(e) => setRememberMe(e.target.checked)}
+                      className="rounded text-mint-500 focus:ring-mint-500 focus:ring-offset-0" 
+                    />
                     <span className="text-graphite-600">Remember me</span>
                   </label>
-                  <Link href="/forgot-password" className="text-mint-600 hover:text-mint-700 font-semibold">
+                  <Link href="/forgot-password" className="text-mint-600 hover:text-mint-700 font-semibold transition-colors">
                     Forgot password?
                   </Link>
                 </div>

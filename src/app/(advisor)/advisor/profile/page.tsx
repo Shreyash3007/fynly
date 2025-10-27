@@ -32,6 +32,8 @@ export default function AdvisorProfilePage() {
     consultation_fee: '',
     specialization: '',
   })
+  const [_avatarFile, setAvatarFile] = useState<File | null>(null)
+  const [avatarPreview, setAvatarPreview] = useState<string>('')
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -128,6 +130,24 @@ export default function AdvisorProfilePage() {
     setFormData(prev => ({ ...prev, [field]: value }))
   }
 
+  const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      setAvatarFile(file)
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        setAvatarPreview(e.target?.result as string)
+      }
+      reader.readAsDataURL(file)
+    }
+  }
+
+  const removeAvatar = () => {
+    setAvatarFile(null)
+    setAvatarPreview('')
+    setFormData(prev => ({ ...prev, avatar_url: '' }))
+  }
+
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-smoke">
@@ -181,9 +201,9 @@ export default function AdvisorProfilePage() {
               {/* Avatar */}
               <div className="text-center mb-6">
                 <div className="relative inline-block">
-                  {formData.avatar_url ? (
+                  {avatarPreview || formData.avatar_url ? (
                     <img
-                      src={formData.avatar_url}
+                      src={avatarPreview || formData.avatar_url}
                       alt={formData.full_name}
                       className="w-24 h-24 rounded-full object-cover mx-auto shadow-lg"
                     />
@@ -192,17 +212,34 @@ export default function AdvisorProfilePage() {
                       {initials}
                     </div>
                   )}
-                  <button className="absolute -bottom-2 -right-2 w-8 h-8 rounded-full bg-mint-500 border-4 border-white flex items-center justify-center hover:bg-mint-600 transition-colors">
+                  <label className="absolute -bottom-2 -right-2 w-8 h-8 rounded-full bg-mint-500 border-4 border-white flex items-center justify-center hover:bg-mint-600 transition-colors cursor-pointer">
                     <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
-                  </button>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleAvatarChange}
+                      className="hidden"
+                    />
+                  </label>
+                  {(avatarPreview || formData.avatar_url) && (
+                    <button
+                      onClick={removeAvatar}
+                      className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-error border-2 border-white flex items-center justify-center hover:bg-error/80 transition-colors"
+                    >
+                      <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  )}
                 </div>
                 <h2 className="font-display text-xl font-bold text-graphite-900 mt-4">
                   {formData.full_name}
                 </h2>
                 <p className="text-mint-600 font-medium">Financial Advisor</p>
+                <p className="text-xs text-graphite-500 mt-1">Click camera icon to upload photo</p>
               </div>
 
               {/* Status Badge */}
@@ -297,6 +334,9 @@ export default function AdvisorProfilePage() {
                       onChange={(e) => handleInputChange('avatar_url', e.target.value)}
                       placeholder="https://example.com/photo.jpg"
                     />
+                    <p className="text-xs text-graphite-500 mt-1">
+                      Or upload a file using the camera icon above
+                    </p>
                   </div>
                 </div>
               </div>

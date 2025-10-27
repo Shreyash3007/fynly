@@ -54,6 +54,9 @@ export default async function AdminDashboardPage() {
   // Mock platform metrics
   const platformRevenue = 125000
   const monthlyGrowth = 8.5
+  const activeUsers = Math.round((totalUsers || 0) * 0.75)
+  const conversionRate = 12.5
+  const avgSessionValue = 2500
 
   return (
     <div className="min-h-screen bg-smoke">
@@ -246,6 +249,40 @@ export default async function AdminDashboardPage() {
               {totalBookings || 0}
             </p>
             <p className="text-xs text-graphite-500">All-time consultations</p>
+          </div>
+        </div>
+
+        {/* Platform Insights Section */}
+        <div className="rounded-2xl bg-gradient-to-r from-mint-50 to-cyan-50 p-6 mb-8 border border-mint-200">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-mint-500 to-cyan-500 flex items-center justify-center">
+              <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+            </div>
+            <h2 className="font-display text-xl font-bold text-graphite-900">Platform Insights</h2>
+          </div>
+          <div className="grid gap-4 md:grid-cols-4">
+            <div className="text-center">
+              <div className="text-2xl font-bold text-mint-600 mb-1">{activeUsers}</div>
+              <div className="text-sm text-graphite-600">Active Users</div>
+              <div className="text-xs text-mint-500">This month</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-cyan-600 mb-1">{conversionRate}%</div>
+              <div className="text-sm text-graphite-600">Conversion Rate</div>
+              <div className="text-xs text-cyan-500">Demo to paid</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-purple-600 mb-1">₹{avgSessionValue.toLocaleString('en-IN')}</div>
+              <div className="text-sm text-graphite-600">Avg Session Value</div>
+              <div className="text-xs text-purple-500">Per booking</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-orange-600 mb-1">{Math.round((totalBookings || 0) * 0.85)}%</div>
+              <div className="text-sm text-graphite-600">Completion Rate</div>
+              <div className="text-xs text-orange-500">Sessions completed</div>
+            </div>
           </div>
         </div>
 

@@ -33,6 +33,10 @@ export function CallInterface({
   const [elapsed, setElapsed] = useState(0) // seconds
   const [isMuted, setIsMuted] = useState(false)
   const [isVideoOff, setIsVideoOff] = useState(false)
+  const [isScreenSharing, setIsScreenSharing] = useState(false)
+  const [isChatOpen, setIsChatOpen] = useState(false)
+  const [chatMessages, setChatMessages] = useState<Array<{id: string, sender: string, message: string, timestamp: string}>>([])
+  const [newMessage, setNewMessage] = useState('')
 
   // Countdown before call starts (5 seconds)
   useEffect(() => {
@@ -67,6 +71,26 @@ export function CallInterface({
     const mins = Math.floor(seconds / 60)
     const secs = seconds % 60
     return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`
+  }
+
+  const sendMessage = () => {
+    if (newMessage.trim()) {
+      const message = {
+        id: Date.now().toString(),
+        sender: userRole === 'investor' ? investorName : advisorName,
+        message: newMessage.trim(),
+        timestamp: new Date().toLocaleTimeString()
+      }
+      setChatMessages(prev => [...prev, message])
+      setNewMessage('')
+    }
+  }
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault()
+      sendMessage()
+    }
   }
 
   // Pre-call Waiting Screen
@@ -139,20 +163,104 @@ export function CallInterface({
       </div>
 
       {/* Video/Content Area */}
-      <div className="flex-1 relative bg-graphite-900">
-        {/* Video placeholder - will be replaced with actual video component */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center">
-            <div className="w-32 h-32 rounded-full bg-gradient-mint mx-auto mb-4 flex items-center justify-center">
-              <span className="text-5xl font-display font-bold text-white">
-                {userRole === 'investor' ? advisorName[0] : investorName[0]}
-              </span>
+      <div className="flex-1 relative bg-graphite-900 flex">
+        {/* Main Video Area */}
+        <div className="flex-1 relative">
+          {/* Video placeholder - will be replaced with actual video component */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="text-center">
+              <div className="w-32 h-32 rounded-full bg-gradient-mint mx-auto mb-4 flex items-center justify-center">
+                <span className="text-5xl font-display font-bold text-white">
+                  {userRole === 'investor' ? advisorName[0] : investorName[0]}
+                </span>
+              </div>
+              <p className="text-graphite-400">
+                {userRole === 'investor' ? advisorName : investorName}
+              </p>
+              {isVideoOff && (
+                <p className="text-sm text-graphite-500 mt-2">Camera is off</p>
+              )}
             </div>
-            <p className="text-graphite-400">
-              {userRole === 'investor' ? advisorName : investorName}
-            </p>
           </div>
+
+          {/* Screen Sharing Indicator */}
+          {isScreenSharing && (
+            <div className="absolute top-4 left-4 bg-graphite-800/90 backdrop-blur-md rounded-lg px-3 py-2 flex items-center gap-2">
+              <div className="w-2 h-2 bg-mint-500 rounded-full animate-pulse"></div>
+              <span className="text-sm text-white font-medium">Screen Sharing</span>
+            </div>
+          )}
         </div>
+
+        {/* Chat Sidebar */}
+        {isChatOpen && (
+          <div className="w-80 bg-graphite-800/90 backdrop-blur-md border-l border-graphite-700 flex flex-col">
+            {/* Chat Header */}
+            <div className="p-4 border-b border-graphite-700">
+              <div className="flex items-center justify-between">
+                <h3 className="font-semibold text-white">Chat</h3>
+                <button
+                  onClick={() => setIsChatOpen(false)}
+                  className="text-graphite-400 hover:text-white transition-colors"
+                >
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            {/* Chat Messages */}
+            <div className="flex-1 overflow-y-auto p-4 space-y-3">
+              {chatMessages.length === 0 ? (
+                <div className="text-center text-graphite-400 py-8">
+                  <svg className="w-8 h-8 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                  </svg>
+                  <p className="text-sm">No messages yet</p>
+                </div>
+              ) : (
+                chatMessages.map((msg) => (
+                  <div key={msg.id} className="flex flex-col">
+                    <div className={`flex ${msg.sender === (userRole === 'investor' ? investorName : advisorName) ? 'justify-end' : 'justify-start'}`}>
+                      <div className={`max-w-xs px-3 py-2 rounded-lg ${
+                        msg.sender === (userRole === 'investor' ? investorName : advisorName)
+                          ? 'bg-mint-500 text-white'
+                          : 'bg-graphite-700 text-white'
+                      }`}>
+                        <p className="text-sm">{msg.message}</p>
+                        <p className="text-xs opacity-70 mt-1">{msg.timestamp}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+
+            {/* Chat Input */}
+            <div className="p-4 border-t border-graphite-700">
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={newMessage}
+                  onChange={(e) => setNewMessage(e.target.value)}
+                  onKeyPress={handleKeyPress}
+                  placeholder="Type a message..."
+                  className="flex-1 bg-graphite-700 text-white placeholder-graphite-400 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-mint-500"
+                />
+                <button
+                  onClick={sendMessage}
+                  disabled={!newMessage.trim()}
+                  className="px-3 py-2 bg-mint-500 text-white rounded-lg hover:bg-mint-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                >
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Payment Prompt Overlay (shows at 10 min for investors) */}
         {callState === 'payment-prompt' && userRole === 'investor' && (
@@ -248,6 +356,41 @@ export function CallInterface({
               <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
               </svg>
+            )}
+          </button>
+
+          {/* Screen Share Button */}
+          <button
+            onClick={() => setIsScreenSharing(!isScreenSharing)}
+            className={`w-14 h-14 rounded-full flex items-center justify-center transition-all ${
+              isScreenSharing
+                ? 'bg-mint-500 hover:bg-mint-600'
+                : 'bg-graphite-700 hover:bg-graphite-600'
+            }`}
+            aria-label={isScreenSharing ? 'Stop sharing' : 'Share screen'}
+          >
+            <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+          </button>
+
+          {/* Chat Button */}
+          <button
+            onClick={() => setIsChatOpen(!isChatOpen)}
+            className={`w-14 h-14 rounded-full flex items-center justify-center transition-all relative ${
+              isChatOpen
+                ? 'bg-cyan-500 hover:bg-cyan-600'
+                : 'bg-graphite-700 hover:bg-graphite-600'
+            }`}
+            aria-label={isChatOpen ? 'Close chat' : 'Open chat'}
+          >
+            <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            </svg>
+            {chatMessages.length > 0 && !isChatOpen && (
+              <span className="absolute -top-1 -right-1 h-5 w-5 bg-mint-500 text-white text-xs font-bold rounded-full flex items-center justify-center">
+                {chatMessages.length}
+              </span>
             )}
           </button>
 

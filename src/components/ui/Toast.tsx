@@ -50,23 +50,23 @@ export function ToastComponent({
   const typeConfig = {
     success: {
       icon: CheckCircle,
-      className: 'bg-green-50 border-green-200 text-green-800',
-      iconClassName: 'text-green-500'
+      className: 'bg-mint-50 border-mint-200 text-mint-800 shadow-glow-mint-sm',
+      iconClassName: 'text-mint-500'
     },
     error: {
       icon: AlertCircle,
-      className: 'bg-red-50 border-red-200 text-red-800',
-      iconClassName: 'text-red-500'
+      className: 'bg-error/10 border-error/20 text-error shadow-glow-error-sm',
+      iconClassName: 'text-error'
     },
     warning: {
       icon: AlertTriangle,
-      className: 'bg-yellow-50 border-yellow-200 text-yellow-800',
-      iconClassName: 'text-yellow-500'
+      className: 'bg-warning/10 border-warning/20 text-warning shadow-glow-warning-sm',
+      iconClassName: 'text-warning'
     },
     info: {
       icon: Info,
-      className: 'bg-blue-50 border-blue-200 text-blue-800',
-      iconClassName: 'text-blue-500'
+      className: 'bg-info/10 border-info/20 text-info shadow-glow-info-sm',
+      iconClassName: 'text-info'
     }
   }
 
@@ -76,25 +76,27 @@ export function ToastComponent({
   return (
     <div
       className={cn(
-        'rounded-lg border p-4 shadow-lg transition-all duration-300 transform',
+        'rounded-2xl border p-4 shadow-neomorph-lg backdrop-blur-md transition-all duration-300 transform max-w-sm',
         config.className,
-        isVisible ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'
+        isVisible ? 'translate-x-0 opacity-100 scale-100' : 'translate-x-full opacity-0 scale-95'
       )}
       role="alert"
       aria-live="polite"
     >
       <div className="flex items-start">
-        <Icon className={cn('h-5 w-5 mt-0.5 mr-3', config.iconClassName)} />
-        <div className="flex-1">
-          {title && <h4 className="font-medium text-sm">{title}</h4>}
-          <p className="text-sm mt-1">{message}</p>
+        <div className="flex-shrink-0">
+          <Icon className={cn('h-5 w-5', config.iconClassName)} />
+        </div>
+        <div className="flex-1 ml-3">
+          {title && <h4 className="font-semibold text-sm mb-1">{title}</h4>}
+          <p className="text-sm leading-relaxed">{message}</p>
         </div>
         <button
           onClick={() => {
             setIsVisible(false)
             setTimeout(() => onRemove(id), 300)
           }}
-          className="ml-3 text-gray-400 hover:text-gray-600"
+          className="ml-3 text-graphite-400 hover:text-graphite-600 transition-colors p-1 rounded-full hover:bg-graphite-100"
           aria-label="Dismiss notification"
         >
           <X className="h-4 w-4" />
@@ -109,7 +111,7 @@ export function ToastContainer({ toasts, onRemove }: {
   onRemove: (id: string) => void 
 }) {
   return (
-    <div className="fixed top-4 right-4 z-50 space-y-2">
+    <div className="fixed top-4 right-4 z-50 space-y-3 max-w-sm">
       {toasts.map((toast) => (
         <ToastComponent
           key={toast.id}

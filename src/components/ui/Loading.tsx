@@ -188,3 +188,114 @@ export function FormSkeleton() {
   )
 }
 
+// Dashboard-specific skeletons
+export function DashboardHeroSkeleton() {
+  return (
+    <div className="relative overflow-hidden bg-gradient-to-br from-graphite-900 via-graphite-800 to-graphite-900 rounded-3xl p-8 animate-pulse">
+      <div className="flex items-center justify-between mb-8">
+        <div>
+          <div className="h-4 bg-graphite-700 rounded w-48 mb-2"></div>
+          <div className="h-10 bg-graphite-700 rounded w-64"></div>
+        </div>
+        <div className="h-12 bg-graphite-700 rounded-xl w-32"></div>
+      </div>
+      <div className="rounded-2xl bg-graphite-700/50 p-6">
+        <div className="h-6 bg-graphite-700 rounded w-32 mb-4"></div>
+        <div className="h-16 bg-graphite-700 rounded w-48 mb-4"></div>
+        <div className="grid grid-cols-3 gap-3">
+          <div className="h-16 bg-graphite-700/50 rounded-xl"></div>
+          <div className="h-16 bg-graphite-700/50 rounded-xl"></div>
+          <div className="h-16 bg-graphite-700/50 rounded-xl"></div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export function StatsCardSkeleton() {
+  return (
+    <div className="rounded-2xl bg-white/90 backdrop-blur-md p-6 shadow-neomorph-lg border border-white/50 animate-pulse">
+      <div className="flex items-center justify-between mb-4">
+        <div className="w-14 h-14 rounded-2xl bg-graphite-200"></div>
+        <div className="h-6 bg-graphite-200 rounded-full w-16"></div>
+      </div>
+      <div className="h-4 bg-graphite-200 rounded w-24 mb-2"></div>
+      <div className="h-8 bg-graphite-200 rounded w-20 mb-1"></div>
+      <div className="h-3 bg-graphite-200 rounded w-32"></div>
+    </div>
+  )
+}
+
+export function BookingCardSkeleton() {
+  return (
+    <div className="rounded-xl bg-graphite-50/50 p-4 border border-graphite-100 animate-pulse">
+      <div className="flex items-center gap-4">
+        <div className="w-14 h-14 rounded-full bg-graphite-200"></div>
+        <div className="flex-1">
+          <div className="h-5 bg-graphite-200 rounded w-32 mb-2"></div>
+          <div className="h-4 bg-graphite-200 rounded w-24"></div>
+        </div>
+        <div className="h-8 bg-graphite-200 rounded-lg w-16"></div>
+      </div>
+    </div>
+  )
+}
+
+export function InsightsSkeleton() {
+  return (
+    <div className="rounded-2xl bg-gradient-to-r from-mint-50 to-cyan-50 p-6 border border-mint-200 animate-pulse">
+      <div className="flex items-center gap-3 mb-4">
+        <div className="w-10 h-10 rounded-xl bg-graphite-200"></div>
+        <div className="h-6 bg-graphite-200 rounded w-32"></div>
+      </div>
+      <div className="grid gap-4 md:grid-cols-4">
+        {[1, 2, 3, 4].map((i) => (
+          <div key={i} className="text-center">
+            <div className="h-8 bg-graphite-200 rounded w-16 mx-auto mb-2"></div>
+            <div className="h-4 bg-graphite-200 rounded w-20 mx-auto mb-1"></div>
+            <div className="h-3 bg-graphite-200 rounded w-16 mx-auto"></div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+export function AdvisorGridSkeleton({ count = 6 }: { count?: number }) {
+  return (
+    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {Array.from({ length: count }).map((_, i) => (
+        <AdvisorCardSkeleton key={i} />
+      ))}
+    </div>
+  )
+}
+
+export function BookingFlowSkeleton() {
+  return (
+    <div className="max-w-2xl mx-auto p-6 animate-pulse">
+      <div className="rounded-2xl bg-white/90 backdrop-blur-md p-8 shadow-neomorph border border-white/50">
+        <div className="h-8 bg-graphite-200 rounded w-48 mb-6"></div>
+        <div className="space-y-6">
+          <div>
+            <div className="h-5 bg-graphite-200 rounded w-32 mb-4"></div>
+            <div className="grid grid-cols-4 gap-2 mb-4">
+              {[1, 2, 3, 4].map((i) => (
+                <div key={i} className="h-16 bg-graphite-200 rounded-xl"></div>
+              ))}
+            </div>
+            <div className="grid grid-cols-4 gap-2">
+              {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+                <div key={i} className="h-10 bg-graphite-200 rounded-lg"></div>
+              ))}
+            </div>
+          </div>
+          <div className="h-12 bg-graphite-200 rounded-lg w-full"></div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// All components are already exported individually with 'export function'
+
