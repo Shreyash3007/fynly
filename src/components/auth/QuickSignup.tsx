@@ -75,15 +75,27 @@ export function QuickSignup({ onSuccess, redirectTo, role = 'investor' }: QuickS
       
       if ('error' in result) {
         setError(result.error)
-      } else {
-        onSuccess?.()
-        if (redirectTo) {
-          router.push(redirectTo)
-        }
+        setLoading(false)
+        return
       }
-    } catch (err) {
-      setError('Something went wrong. Please try again.')
-    } finally {
+      
+      // Success - handle redirect
+      console.log('[QuickSignup] Signup successful, redirecting to:', result.redirectTo)
+      
+      if (result.redirectTo) {
+        // Use router.push for client-side navigation
+        router.push(result.redirectTo)
+      } else if (onSuccess) {
+        onSuccess()
+      } else if (redirectTo) {
+        router.push(redirectTo)
+      } else {
+        // Default redirect
+        router.push('/verify-email?email=' + encodeURIComponent(email))
+      }
+    } catch (err: any) {
+      console.error('[QuickSignup] Signup error:', err)
+      setError(err.message || 'Something went wrong. Please try again.')
       setLoading(false)
     }
   }

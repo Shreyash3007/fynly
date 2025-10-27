@@ -107,22 +107,39 @@ export async function createUserProfile(
       email_verified: profileData.email_verified
     })
 
-    // Use upsert to handle race conditions
-    const { data, error } = await (supabase as any)
+    // First try to insert, if it fails due to conflict, try to update
+    let { data, error } = await (supabase as any)
       .from('users')
-      .upsert(profileData, { 
-        onConflict: 'id',
-        ignoreDuplicates: false 
-      })
+      .insert(profileData)
       .select('id, email, full_name, avatar_url, role, email_verified')
       .single()
 
+    // If insert fails due to conflict, try update
+    if (error && error.code === '23505') {
+      console.log('[Profile Helper] Profile exists, updating instead')
+      const updateResult = await (supabase as any)
+        .from('users')
+        .update({
+          full_name: profileData.full_name,
+          avatar_url: profileData.avatar_url,
+          role: profileData.role,
+          email_verified: profileData.email_verified,
+          updated_at: profileData.updated_at
+        })
+        .eq('id', user.id)
+        .select('id, email, full_name, avatar_url, role, email_verified')
+        .single()
+      
+      data = updateResult.data
+      error = updateResult.error
+    }
+
     if (error) {
-      console.error('[Profile Helper] Error creating profile:', error)
+      console.error('[Profile Helper] Error creating/updating profile:', error)
       return { profile: null, error: error.message }
     }
 
-    console.log('[Profile Helper] Profile created successfully')
+    console.log('[Profile Helper] Profile created/updated successfully')
     return { profile: data as ProfileData, error: null }
   } catch (error) {
     console.error('[Profile Helper] Exception in createUserProfile:', error)
