@@ -1,26 +1,267 @@
 /**
- * Mobile Optimized Layout Component
- * Responsive design optimizations for mobile devices
+ * Mobile Optimized Layout Components
+ * Responsive design components for mobile devices
  */
 
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Button } from '@/components/ui'
+import { Menu, X, Search, Bell, User } from 'lucide-react'
+import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/Button'
+import { Input } from '@/components/ui/Input'
+import { useAuth } from '@/hooks/useAuth'
 
-export interface MobileOptimizedLayoutProps {
-  children: React.ReactNode
-  showMobileNav?: boolean
-  onMobileNavToggle?: () => void
+interface MobileHeaderProps {
+  title: string
+  onMenuClick?: () => void
+  onSearchClick?: () => void
+  onNotificationClick?: () => void
+  showSearch?: boolean
+  showNotifications?: boolean
 }
 
-export function MobileOptimizedLayout({ 
-  children, 
-  showMobileNav = false,
-  onMobileNavToggle 
-}: MobileOptimizedLayoutProps) {
+export function MobileHeader({
+  title,
+  onMenuClick,
+  onSearchClick,
+  onNotificationClick,
+  showSearch = true,
+  showNotifications = true
+}: MobileHeaderProps) {
+  return (
+    <header className="sticky top-0 z-50 bg-white border-b border-gray-200 px-4 py-3 md:hidden">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center space-x-3">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={onMenuClick}
+            className="p-2"
+            aria-label="Open menu"
+          >
+            <Menu className="h-5 w-5" />
+          </Button>
+          <h1 className="text-lg font-semibold text-gray-900 truncate">{title}</h1>
+        </div>
+        
+        <div className="flex items-center space-x-2">
+          {showSearch && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={onSearchClick}
+              className="p-2"
+              aria-label="Search"
+            >
+              <Search className="h-5 w-5" />
+            </Button>
+          )}
+          {showNotifications && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={onNotificationClick}
+              className="p-2 relative"
+              aria-label="Notifications"
+            >
+              <Bell className="h-5 w-5" />
+              <span className="absolute -top-1 -right-1 h-3 w-3 bg-red-500 rounded-full"></span>
+            </Button>
+          )}
+        </div>
+      </div>
+    </header>
+  )
+}
+
+interface MobileSidebarProps {
+  isOpen: boolean
+  onClose: () => void
+  children: React.ReactNode
+}
+
+export function MobileSidebar({ isOpen, onClose, children }: MobileSidebarProps) {
+  const { user, signOut } = useAuth()
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [isOpen])
+
+  return (
+    <>
+      {/* Backdrop */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
+          onClick={onClose}
+        />
+      )}
+      
+      {/* Sidebar */}
+      <div
+        className={cn(
+          'fixed top-0 left-0 h-full w-80 bg-white shadow-xl transform transition-transform duration-300 ease-in-out z-50 md:hidden',
+          isOpen ? 'translate-x-0' : '-translate-x-full'
+        )}
+      >
+        <div className="flex flex-col h-full">
+          {/* Header */}
+          <div className="flex items-center justify-between p-4 border-b border-gray-200">
+            <h2 className="text-lg font-semibold text-gray-900">Menu</h2>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={onClose}
+              className="p-2"
+              aria-label="Close menu"
+            >
+              <X className="h-5 w-5" />
+            </Button>
+          </div>
+          
+          {/* Content */}
+          <div className="flex-1 overflow-y-auto p-4">
+            {children}
+          </div>
+          
+          {/* Footer */}
+          {user && (
+            <div className="p-4 border-t border-gray-200">
+              <div className="flex items-center space-x-3 mb-3">
+                <div className="h-8 w-8 bg-gray-300 rounded-full flex items-center justify-center">
+                  <User className="h-4 w-4 text-gray-600" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-gray-900 truncate">
+                    {user.full_name || user.email}
+                  </p>
+                  <p className="text-xs text-gray-500 capitalize">{user.role}</p>
+                </div>
+              </div>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={signOut}
+                className="w-full"
+              >
+                Sign Out
+              </Button>
+            </div>
+          )}
+        </div>
+      </div>
+    </>
+  )
+}
+
+interface MobileCardProps {
+  children: React.ReactNode
+  className?: string
+  onClick?: () => void
+}
+
+export function MobileCard({ children, className, onClick }: MobileCardProps) {
+  return (
+    <div
+      className={cn(
+        'bg-white rounded-lg border border-gray-200 p-4 shadow-sm',
+        'active:scale-95 transition-transform duration-150',
+        onClick && 'cursor-pointer hover:shadow-md',
+        className
+      )}
+      onClick={onClick}
+    >
+      {children}
+    </div>
+  )
+}
+
+interface MobileSearchProps {
+  placeholder?: string
+  onSearch: (query: string) => void
+  className?: string
+}
+
+export function MobileSearch({ 
+  placeholder = "Search...", 
+  onSearch, 
+  className 
+}: MobileSearchProps) {
+  const [query, setQuery] = useState('')
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    onSearch(query)
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className={cn('w-full', className)}>
+      <div className="relative">
+        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+        <Input
+          type="text"
+          placeholder={placeholder}
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          className="pl-10 pr-4 py-2 w-full"
+        />
+      </div>
+    </form>
+  )
+}
+
+interface MobileBottomNavProps {
+  activeTab: string
+  onTabChange: (tab: string) => void
+  tabs: Array<{
+    id: string
+    label: string
+    icon: React.ComponentType<{ className?: string }>
+    href?: string
+  }>
+}
+
+export function MobileBottomNav({ activeTab, onTabChange, tabs }: MobileBottomNavProps) {
+  return (
+    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2 md:hidden">
+      <div className="flex justify-around">
+        {tabs.map((tab) => {
+          const Icon = tab.icon
+          const isActive = activeTab === tab.id
+          
+          return (
+            <button
+              key={tab.id}
+              onClick={() => onTabChange(tab.id)}
+              className={cn(
+                'flex flex-col items-center py-2 px-3 rounded-lg transition-colors',
+                isActive
+                  ? 'text-blue-600 bg-blue-50'
+                  : 'text-gray-500 hover:text-gray-700'
+              )}
+            >
+              <Icon className={cn('h-5 w-5', isActive ? 'text-blue-600' : 'text-gray-500')} />
+              <span className="text-xs mt-1 font-medium">{tab.label}</span>
+            </button>
+          )
+        })}
+      </div>
+    </nav>
+  )
+}
+
+// Hook for mobile detection
+export function useMobile() {
   const [isMobile, setIsMobile] = useState(false)
-  const [isScrolled, setIsScrolled] = useState(false)
 
   useEffect(() => {
     const checkMobile = () => {
@@ -29,124 +270,9 @@ export function MobileOptimizedLayout({
 
     checkMobile()
     window.addEventListener('resize', checkMobile)
-
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10)
-    }
-
-    window.addEventListener('scroll', handleScroll)
-
-    return () => {
-      window.removeEventListener('resize', checkMobile)
-      window.removeEventListener('scroll', handleScroll)
-    }
+    
+    return () => window.removeEventListener('resize', checkMobile)
   }, [])
 
-  return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Mobile Header */}
-      {isMobile && (
-        <header className={`fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200 transition-all ${
-          isScrolled ? 'shadow-sm' : ''
-        }`}>
-          <div className="flex items-center justify-between px-4 py-3">
-            <div className="flex items-center space-x-3">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={onMobileNavToggle}
-                className="p-2"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              </Button>
-              <h1 className="text-lg font-semibold text-gray-900">Fynly</h1>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Button variant="ghost" size="sm" className="p-2">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-5 5-5-5h5v-5a7.5 7.5 0 1 0-15 0v5h5l-5 5-5-5h5v-5a7.5 7.5 0 1 1 15 0v5z" />
-                </svg>
-              </Button>
-            </div>
-          </div>
-        </header>
-      )}
-
-      {/* Mobile Navigation Overlay */}
-      {isMobile && showMobileNav && (
-        <div className="fixed inset-0 z-40 bg-black bg-opacity-50" onClick={onMobileNavToggle}>
-          <div className="fixed left-0 top-0 bottom-0 w-64 bg-white shadow-lg">
-            <div className="p-4">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-lg font-semibold text-gray-900">Menu</h2>
-                <Button variant="ghost" size="sm" onClick={onMobileNavToggle}>
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </Button>
-              </div>
-              <nav className="space-y-2">
-                <a href="/dashboard" className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
-                  Dashboard
-                </a>
-                <a href="/advisors" className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
-                  Browse Advisors
-                </a>
-                <a href="/bookings" className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
-                  My Bookings
-                </a>
-                <a href="/profile" className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
-                  Profile
-                </a>
-              </nav>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Main Content */}
-      <main className={`${isMobile ? 'pt-16' : ''}`}>
-        {children}
-      </main>
-
-      {/* Mobile Bottom Navigation */}
-      {isMobile && (
-        <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
-          <div className="flex items-center justify-around">
-            <a href="/dashboard" className="flex flex-col items-center space-y-1 p-2">
-              <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z" />
-              </svg>
-              <span className="text-xs text-gray-600">Dashboard</span>
-            </a>
-            <a href="/advisors" className="flex flex-col items-center space-y-1 p-2">
-              <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-              </svg>
-              <span className="text-xs text-gray-600">Advisors</span>
-            </a>
-            <a href="/bookings" className="flex flex-col items-center space-y-1 p-2">
-              <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-              <span className="text-xs text-gray-600">Bookings</span>
-            </a>
-            <a href="/profile" className="flex flex-col items-center space-y-1 p-2">
-              <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-              </svg>
-              <span className="text-xs text-gray-600">Profile</span>
-            </a>
-          </div>
-        </nav>
-      )}
-
-      {/* Mobile Content Padding */}
-      {isMobile && (
-        <div className="h-16"></div>
-      )}
-    </div>
-  )
+  return isMobile
 }

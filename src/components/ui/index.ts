@@ -44,5 +44,81 @@ export type { LoadingProps } from './Loading'
 export { EmptyState, EmptyStates } from './EmptyState'
 export type { EmptyStateProps } from './EmptyState'
 
+export { LoadingSpinner, SkeletonLoader, PageLoader } from './LoadingSpinner'
+export type { LoadingSpinnerProps } from './LoadingSpinner'
+
+export { 
+  ErrorMessage, 
+  NetworkError, 
+  NotFoundError, 
+  PaymentError, 
+  AuthError 
+} from './ErrorMessage'
+
+export { 
+  ToastComponent, 
+  ToastContainer, 
+  useToast 
+} from './Toast'
+export type { Toast } from './Toast'
+
+export { 
+  AccessibilityEnhancer, 
+  useKeyboardNavigation, 
+  useFocusManagement, 
+  useScreenReader, 
+  ScreenReaderAnnouncements, 
+  FocusIndicator 
+} from './AccessibilityEnhancer'
+
+// Mobile Components
+export {
+  MobileHeader,
+  MobileSidebar,
+  MobileCard,
+  MobileSearch,
+  MobileBottomNav,
+  useMobile
+} from '../mobile/MobileOptimizedLayout'
+
+// Performance Components
+export {
+  OptimizedImage,
+  OptimizedAvatar,
+  ResponsiveImageGallery
+} from '../performance/ImageOptimizer'
+
+export {
+  LazyLoadWrapper,
+  LazyImage,
+  LazyList,
+  VirtualList,
+  createLazyComponent,
+  useIntersectionObserver,
+  useVirtualScrolling
+} from '../performance/LazyLoader'
+
+// Search Components
+export {
+  AdvancedSearch,
+  SearchResults
+} from '../search/AdvancedSearch'
+
+// Validation Components
+export {
+  ValidatedInput,
+  ValidationSummary,
+  useValidation,
+  useRealTimeValidation,
+  validationRules
+} from '../validation/FormValidation'
+
+// Upload Components
+export {
+  FileUpload,
+  ImageUpload,
+  DocumentUpload
+} from '../upload/FileUpload'
+
 
 
