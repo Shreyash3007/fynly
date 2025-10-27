@@ -69,7 +69,7 @@ export function SkeletonLoader({
   )
 }
 
-export function PageLoader({ text = 'Loading...' }: { text?: string }) {
+export function FullPageLoader({ text = 'Loading...' }: { text?: string }) {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="text-center">
