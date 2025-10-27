@@ -98,6 +98,7 @@ export function useFocusManagement() {
       const cleanup = trapFocus(trapRef.current)
       return cleanup
     }
+    return undefined
   }, [isTrapActive])
 
   return {

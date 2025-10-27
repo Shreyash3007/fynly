@@ -47,7 +47,6 @@ export { EmptyState, EmptyStates } from './EmptyState'
 export type { EmptyStateProps } from './EmptyState'
 
 export { LoadingSpinner, SkeletonLoader, FullPageLoader } from './LoadingSpinner'
-export type { LoadingSpinnerProps } from './LoadingSpinner'
 
 export { 
   ErrorMessage, 

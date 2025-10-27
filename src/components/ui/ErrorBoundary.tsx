@@ -43,8 +43,8 @@ export class ErrorBoundary extends Component<Props, State> {
     this.props.onError?.(error, errorInfo)
 
     // Log to error reporting service
-    if (typeof window !== 'undefined' && window.gtag) {
-      window.gtag('event', 'exception', {
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('event', 'exception', {
         description: error.toString(),
         fatal: false
       })
@@ -110,7 +110,7 @@ export class ErrorBoundary extends Component<Props, State> {
               <Button
                 onClick={this.handleReset}
                 className="w-full"
-                variant="default"
+                variant="primary"
               >
                 <RefreshCw className="h-4 w-4 mr-2" />
                 Try Again
@@ -187,8 +187,8 @@ export function setupGlobalErrorHandlers() {
     console.error('Unhandled promise rejection:', event.reason)
     
     // Log to error reporting service
-    if (window.gtag) {
-      window.gtag('event', 'exception', {
+    if ((window as any).gtag) {
+      (window as any).gtag('event', 'exception', {
         description: `Unhandled promise rejection: ${event.reason}`,
         fatal: false
       })
@@ -200,8 +200,8 @@ export function setupGlobalErrorHandlers() {
     console.error('Uncaught error:', event.error)
     
     // Log to error reporting service
-    if (window.gtag) {
-      window.gtag('event', 'exception', {
+    if ((window as any).gtag) {
+      (window as any).gtag('event', 'exception', {
         description: `Uncaught error: ${event.error?.message || 'Unknown error'}`,
         fatal: true
       })

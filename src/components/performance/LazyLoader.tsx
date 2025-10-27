@@ -14,7 +14,7 @@ export function useIntersectionObserver(
 ) {
   const [isIntersecting, setIsIntersecting] = useState(false)
   const [hasIntersected, setHasIntersected] = useState(false)
-  const ref = useRef<HTMLElement>(null)
+  const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const element = ref.current
@@ -231,9 +231,13 @@ export function VirtualList<T>({
     setScrollTop(e.currentTarget.scrollTop)
   }
 
+  const combineClasses = (classes: string) => {
+    return `overflow-auto ${classes || ''}`
+  }
+
   return (
     <div
-      className={cn('overflow-auto', className)}
+      className={combineClasses(className || '')}
       style={{ height: containerHeight }}
       onScroll={handleScroll}
     >

@@ -6,10 +6,9 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import { AlertCircle, CheckCircle, Eye, EyeOff } from 'lucide-react'
+import { AlertCircle, Eye, EyeOff } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Input } from '@/components/ui/Input'
-import { Button } from '@/components/ui/Button'
 
 // Validation Rules
 export const validationRules = {
@@ -198,7 +197,7 @@ export function ValidatedInput({
             'pr-10',
             hasError && 'border-red-300 focus:border-red-500 focus:ring-red-500'
           )}
-          aria-invalid={hasError}
+          aria-invalid={hasError ? 'true' : 'false'}
           aria-describedby={hasError ? `${name}-error` : undefined}
         />
         

@@ -5,8 +5,8 @@
 
 'use client'
 
-import { useState, useEffect, useMemo } from 'react'
-import { Search, Filter, X, ChevronDown, Star, Clock, DollarSign } from 'lucide-react'
+import { useState, useMemo } from 'react'
+import { Search, Filter, Star, DollarSign } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
@@ -165,7 +165,7 @@ export function AdvancedSearch({
               {EXPERTISE_OPTIONS.map((expertise) => (
                 <Badge
                   key={expertise}
-                  variant={filters.expertise.includes(expertise) ? 'default' : 'outline'}
+                  variant={filters.expertise.includes(expertise) ? 'default' : 'info'}
                   className="cursor-pointer"
                   onClick={() => toggleExpertise(expertise)}
                 >
