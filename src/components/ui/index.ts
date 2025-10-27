@@ -6,6 +6,8 @@
 export { Button } from './Button'
 export type { ButtonProps } from './Button'
 
+export { Progress, CircularProgress } from './Progress'
+
 export { Card, CardHeader, CardTitle, CardContent } from './Card'
 export type { CardProps } from './Card'
 

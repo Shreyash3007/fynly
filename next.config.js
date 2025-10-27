@@ -25,6 +25,34 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  // Optimize font loading
+  optimizeFonts: true,
+  // Webpack optimizations
+  webpack: (config, { isServer }) => {
+    // Optimize bundle size
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        net: false,
+        tls: false,
+      }
+    }
+    
+    // Handle font loading issues
+    config.module.rules.push({
+      test: /\.(woff|woff2|eot|ttf|otf)$/,
+      use: {
+        loader: 'file-loader',
+        options: {
+          publicPath: '/_next/static/fonts/',
+          outputPath: 'static/fonts/',
+        },
+      },
+    })
+    
+    return config
+  },
   // Security headers
   async headers() {
     return [
