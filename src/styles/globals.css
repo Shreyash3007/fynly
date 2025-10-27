@@ -161,7 +161,7 @@
 
   .tab {
     @apply pb-3 px-1 text-sm font-medium text-graphite-600 hover:text-graphite-900 
-           border-b-3 border-transparent transition-all duration-200 cursor-pointer;
+           border-b-2 border-transparent transition-all duration-200 cursor-pointer;
   }
 
   .tab-active {
