@@ -7,7 +7,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { createDailyRoom, generateRoomName, getRoomUrl } from '@/lib/daily/client'
-import { createUpdateData } from '@/lib/supabase/types'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
@@ -83,12 +82,12 @@ export async function POST(request: NextRequest) {
       })
 
       // Update booking with meeting link
-      await supabase
+      await (supabase as any)
         .from('bookings')
-        .update(createUpdateData({
+        .update({
           meeting_link: getRoomUrl(room),
           daily_room_name: room.name,
-        }))
+        })
         .eq('id', (booking as any).id)
 
       // Send confirmation emails

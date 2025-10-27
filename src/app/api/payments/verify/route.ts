@@ -6,7 +6,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { verifyPaymentSignature } from '@/lib/razorpay/client'
-import { createUpdateData } from '@/lib/supabase/types'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
@@ -50,13 +49,13 @@ export async function POST(request: NextRequest) {
     }
 
     // Update payment record
-    const { data: payment, error: paymentError } = await supabase
+    const { data: payment, error: paymentError } = await (supabase as any)
       .from('payments')
-      .update(createUpdateData({
+      .update({
         razorpay_payment_id,
         razorpay_signature,
         status: 'completed',
-      }))
+      })
       .eq('razorpay_order_id', razorpay_order_id)
       .select('*, bookings(*)')
       .single()
@@ -66,9 +65,9 @@ export async function POST(request: NextRequest) {
     }
 
     // Update booking status to confirmed
-    await supabase
+    await (supabase as any)
       .from('bookings')
-      .update(createUpdateData({ status: 'confirmed' }))
+      .update({ status: 'confirmed' })
       .eq('id', (payment as any).booking_id)
 
     // Update advisor stats - using increment in application code
@@ -82,12 +81,12 @@ export async function POST(request: NextRequest) {
       .single()
 
     if (advisorData) {
-      await supabase
+      await (supabase as any)
         .from('advisors')
-        .update(createUpdateData({
+        .update({
           total_bookings: (advisorData as any).total_bookings + 1,
           total_revenue: (advisorData as any).total_revenue + ((payment as any).advisor_payout || 0)
-        }))
+        })
         .eq('id', advisorId)
     }
     }
