@@ -9,6 +9,7 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { UserRole } from '@/types/database.types'
+import { getOrCreateProfile, getDashboardUrl } from './profile-helper'
 
 export interface AuthError {
   error: string
@@ -30,7 +31,9 @@ export async function signUp(
 ): Promise<AuthSuccess | AuthError> {
   const supabase = createClient()
 
-  const { error } = await supabase.auth.signUp({
+  console.log('[Auth] Signing up user:', email, 'as', role)
+
+  const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
@@ -38,18 +41,42 @@ export async function signUp(
         full_name: fullName,
         role,
       },
+      emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback`,
     },
   })
 
   if (error) {
+    console.error('[Auth] Sign up error:', error)
     return { error: error.message }
+  }
+
+  if (!data.user) {
+    console.error('[Auth] No user returned from signup')
+    return { error: 'Failed to create user' }
+  }
+
+  console.log('[Auth] User signed up:', data.user.id)
+
+  // Create user profile immediately (fallback if trigger fails)
+  const { error: profileError } = await getOrCreateProfile(
+    supabase,
+    data.user,
+    role
+  )
+
+  if (profileError) {
+    console.error('[Auth] Profile creation error:', profileError)
+    // Don't fail signup, but log the error
   }
 
   revalidatePath('/', 'layout')
   
-  // Redirect based on role
-  const redirectPath = role === 'advisor' ? '/advisor/onboarding' : '/investor/dashboard'
-  return { success: true, redirectTo: redirectPath }
+  // Redirect to email verification page
+  console.log('[Auth] Redirecting to email verification')
+  return { 
+    success: true, 
+    redirectTo: `/verify-email?email=${encodeURIComponent(email)}` 
+  }
 }
 
 /**
@@ -61,31 +88,51 @@ export async function signIn(
 ): Promise<AuthSuccess | AuthError> {
   const supabase = createClient()
 
+  console.log('[Auth] Signing in user:', email)
+
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password,
   })
 
   if (error) {
+    console.error('[Auth] Sign in error:', error)
     return { error: error.message }
   }
 
-  // Get user role to determine redirect
-  const { data: userData } = await supabase
-    .from('users')
-    .select('role')
-    .eq('id', data.user.id)
-    .single<{ role: string }>()
+  console.log('[Auth] User signed in:', data.user.id)
+
+  // Get or create user profile (fallback if trigger failed)
+  const { profile, error: profileError, needsOnboarding } = await getOrCreateProfile(
+    supabase,
+    data.user,
+    'investor'
+  )
+
+  if (profileError || !profile) {
+    console.error('[Auth] Profile error:', profileError)
+    return { error: profileError || 'Failed to load profile' }
+  }
+
+  console.log('[Auth] Profile loaded:', { role: profile.role, needsOnboarding })
 
   revalidatePath('/', 'layout')
 
-  const role = (userData?.role as 'investor' | 'advisor' | 'admin') || 'investor'
-  const redirectPath =
-    role === 'admin'
-      ? '/admin/dashboard'
-      : role === 'advisor'
-      ? '/advisor/dashboard'
-      : '/investor/dashboard'
+  // Check if email verification is required
+  if (!profile.email_verified) {
+    console.log('[Auth] Email not verified')
+    return { success: true, redirectTo: `/verify-email?email=${encodeURIComponent(email)}` }
+  }
+
+  // Check if user needs onboarding
+  if (needsOnboarding || !profile.role) {
+    console.log('[Auth] User needs onboarding')
+    return { success: true, redirectTo: '/onboarding' }
+  }
+
+  // Redirect to appropriate dashboard
+  const redirectPath = getDashboardUrl(profile.role)
+  console.log('[Auth] Redirecting to:', redirectPath)
 
   return { success: true, redirectTo: redirectPath }
 }

@@ -68,8 +68,23 @@ export async function updateSession(request: NextRequest) {
   const path = request.nextUrl.pathname
 
   // Public routes that don't require authentication
-  const publicRoutes = ['/', '/login', '/signup', '/auth/callback']
-  const isPublicRoute = publicRoutes.includes(path)
+  const publicRoutes = [
+    '/',
+    '/login',
+    '/signup',
+    '/auth/callback',
+    '/verify-email',
+    '/onboarding',
+    '/advisors',
+    '/about',
+    '/contact',
+    '/pricing',
+    '/terms',
+    '/privacy'
+  ]
+  const isPublicRoute = publicRoutes.some(route => 
+    path === route || path.startsWith(route + '/')
+  )
 
   // API routes and static files
   if (
@@ -87,14 +102,24 @@ export async function updateSession(request: NextRequest) {
 
   // Redirect authenticated users away from auth pages
   if (user && (path === '/login' || path === '/signup')) {
-    // Get user role to redirect to correct dashboard
+    // Get user profile to check if they need onboarding
     const { data: profile } = await supabase
       .from('users')
-      .select('role')
+      .select('role, email_verified')
       .eq('id', user.id)
-      .single<{ role: string }>()
+      .single<{ role: string; email_verified: boolean }>()
 
-    const role = (profile?.role as 'investor' | 'advisor' | 'admin') || 'investor'
+    // If no profile or no role, send to onboarding
+    if (!profile || !profile.role) {
+      return NextResponse.redirect(new URL('/onboarding', request.url))
+    }
+
+    // If email not verified, send to verification
+    if (!profile.email_verified) {
+      return NextResponse.redirect(new URL(`/verify-email?email=${encodeURIComponent(user.email || '')}`, request.url))
+    }
+
+    const role = profile.role as 'investor' | 'advisor' | 'admin'
     const dashboardUrl =
       role === 'admin'
         ? '/admin/dashboard'
