@@ -247,8 +247,8 @@ export function getDashboardUrl(role: UserRole | null | undefined): string {
     case 'advisor':
       return '/advisor/dashboard'
     case 'investor':
-      return '/investor/dashboard'
+      return '/dashboard'  // Fixed: route group (investor) creates /dashboard not /investor/dashboard
     default:
-      return '/investor/dashboard'
+      return '/dashboard'
   }
 }

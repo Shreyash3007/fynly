@@ -13,6 +13,8 @@ CREATE TABLE IF NOT EXISTS public.users (
   role TEXT DEFAULT 'investor' CHECK (role IN ('investor', 'advisor', 'admin')),
   email_verified BOOLEAN DEFAULT FALSE,
   phone TEXT,
+  onboarding_completed BOOLEAN DEFAULT FALSE,
+  onboarding_data JSONB DEFAULT '{}'::jsonb,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
