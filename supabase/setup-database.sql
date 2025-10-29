@@ -129,6 +129,24 @@ ALTER TABLE public.payments ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.reviews ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.notifications ENABLE ROW LEVEL SECURITY;
 
+-- Drop existing policies if they exist (clean slate)
+DROP POLICY IF EXISTS "Users can read own profile" ON public.users;
+DROP POLICY IF EXISTS "Users can update own profile" ON public.users;
+DROP POLICY IF EXISTS "Users can insert own profile" ON public.users;
+DROP POLICY IF EXISTS "Anyone can view approved advisors" ON public.advisors;
+DROP POLICY IF EXISTS "Advisors can view own profile" ON public.advisors;
+DROP POLICY IF EXISTS "Advisors can update own profile" ON public.advisors;
+DROP POLICY IF EXISTS "Users can create advisor profile" ON public.advisors;
+DROP POLICY IF EXISTS "Users can view own bookings" ON public.bookings;
+DROP POLICY IF EXISTS "Investors can create bookings" ON public.bookings;
+DROP POLICY IF EXISTS "Users can update own bookings" ON public.bookings;
+DROP POLICY IF EXISTS "Users can view own payments" ON public.payments;
+DROP POLICY IF EXISTS "Anyone can read reviews" ON public.reviews;
+DROP POLICY IF EXISTS "Investors can create reviews" ON public.reviews;
+DROP POLICY IF EXISTS "Users can update own reviews" ON public.reviews;
+DROP POLICY IF EXISTS "Users can view own notifications" ON public.notifications;
+DROP POLICY IF EXISTS "Users can update own notifications" ON public.notifications;
+
 -- USERS TABLE POLICIES
 CREATE POLICY "Users can read own profile" ON public.users
 FOR SELECT USING (auth.uid() = id);
