@@ -185,13 +185,7 @@ export default function LoginPage() {
                   )}
                 </button>
 
-                <button
-                  type="button"
-                  onClick={() => setShowEmailForm(false)}
-                  className="w-full text-center text-sm text-graphite-600 hover:text-graphite-800 font-medium"
-                >
-                  ← Back to other options
-                </button>
+                {/* Back to other options button removed - email-only auth */}
               </form>
             )}
 
