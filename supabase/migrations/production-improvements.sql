@@ -37,57 +37,129 @@ ON public.notifications(user_id, read, created_at DESC);
 -- =====================================================
 
 -- Phone number validation (E.164 format)
-ALTER TABLE public.users 
-ADD CONSTRAINT IF NOT EXISTS valid_phone CHECK (
-  phone IS NULL OR 
-  phone ~ '^\+?[1-9]\d{1,14}$'
-);
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_constraint 
+    WHERE conname = 'valid_phone' 
+      AND conrelid = 'public.users'::regclass
+  ) THEN
+    ALTER TABLE public.users 
+    ADD CONSTRAINT valid_phone CHECK (
+      phone IS NULL OR 
+      phone ~ '^\+?[1-9]\d{1,14}$'
+    );
+  END IF;
+END $$;
 
 -- Email validation (basic)
-ALTER TABLE public.users 
-ADD CONSTRAINT IF NOT EXISTS valid_email CHECK (
-  email ~ '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}$'
-);
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_constraint 
+    WHERE conname = 'valid_email' 
+      AND conrelid = 'public.users'::regclass
+  ) THEN
+    ALTER TABLE public.users 
+    ADD CONSTRAINT valid_email CHECK (
+      email ~ '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}$'
+    );
+  END IF;
+END $$;
 
 -- SEBI registration format validation
-ALTER TABLE public.advisors 
-ADD CONSTRAINT IF NOT EXISTS valid_sebi_reg CHECK (
-  sebi_reg_no IS NULL OR
-  sebi_reg_no ~ '^IN[A-Z]{1}[0-9]{9}$'
-);
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_constraint 
+    WHERE conname = 'valid_sebi_reg' 
+      AND conrelid = 'public.advisors'::regclass
+  ) THEN
+    ALTER TABLE public.advisors 
+    ADD CONSTRAINT valid_sebi_reg CHECK (
+      sebi_reg_no IS NULL OR
+      sebi_reg_no ~ '^IN[A-Z]{1}[0-9]{9}$'
+    );
+  END IF;
+END $$;
 
 -- Hourly rate validation (reasonable range)
-ALTER TABLE public.advisors 
-ADD CONSTRAINT IF NOT EXISTS valid_hourly_rate CHECK (
-  hourly_rate >= 500 AND hourly_rate <= 50000
-);
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_constraint 
+    WHERE conname = 'valid_hourly_rate' 
+      AND conrelid = 'public.advisors'::regclass
+  ) THEN
+    ALTER TABLE public.advisors 
+    ADD CONSTRAINT valid_hourly_rate CHECK (
+      hourly_rate >= 500 AND hourly_rate <= 50000
+    );
+  END IF;
+END $$;
 
 -- Years of experience validation
-ALTER TABLE public.advisors 
-ADD CONSTRAINT IF NOT EXISTS valid_years_experience CHECK (
-  years_experience >= 0 AND years_experience <= 60
-);
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_constraint 
+    WHERE conname = 'valid_years_experience' 
+      AND conrelid = 'public.advisors'::regclass
+  ) THEN
+    ALTER TABLE public.advisors 
+    ADD CONSTRAINT valid_years_experience CHECK (
+      years_experience >= 0 AND years_experience <= 60
+    );
+  END IF;
+END $$;
 
 -- Rating validation
 ALTER TABLE public.reviews 
 DROP CONSTRAINT IF EXISTS reviews_rating_check;
 
-ALTER TABLE public.reviews 
-ADD CONSTRAINT valid_rating CHECK (
-  rating >= 1 AND rating <= 5
-);
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_constraint 
+    WHERE conname = 'valid_rating' 
+      AND conrelid = 'public.reviews'::regclass
+  ) THEN
+    ALTER TABLE public.reviews 
+    ADD CONSTRAINT valid_rating CHECK (
+      rating >= 1 AND rating <= 5
+    );
+  END IF;
+END $$;
 
 -- Booking duration validation
-ALTER TABLE public.bookings 
-ADD CONSTRAINT IF NOT EXISTS valid_duration CHECK (
-  duration_minutes >= 15 AND duration_minutes <= 240
-);
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_constraint 
+    WHERE conname = 'valid_duration' 
+      AND conrelid = 'public.bookings'::regclass
+  ) THEN
+    ALTER TABLE public.bookings 
+    ADD CONSTRAINT valid_duration CHECK (
+      duration_minutes >= 15 AND duration_minutes <= 240
+    );
+  END IF;
+END $$;
 
 -- Meeting date must be in future
-ALTER TABLE public.bookings 
-ADD CONSTRAINT IF NOT EXISTS future_meeting_date CHECK (
-  meeting_date > NOW()
-);
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_constraint 
+    WHERE conname = 'future_meeting_date' 
+      AND conrelid = 'public.bookings'::regclass
+  ) THEN
+    ALTER TABLE public.bookings 
+    ADD CONSTRAINT future_meeting_date CHECK (
+      meeting_date > NOW()
+    );
+  END IF;
+END $$;
 
 -- =====================================================
 -- 3. CREATE ADVISOR AVAILABILITY SYSTEM
@@ -211,11 +283,9 @@ BEGIN
   
   -- If under limit, increment counter
   IF v_attempts < p_max_attempts THEN
+    -- Record attempt (no upsert to avoid unique index requirement)
     INSERT INTO public.rate_limits (user_id, action, attempts, window_start)
-    VALUES (p_user_id, p_action, 1, NOW())
-    ON CONFLICT (user_id, action, window_start) DO UPDATE
-    SET attempts = rate_limits.attempts + 1;
-    
+    VALUES (p_user_id, p_action, 1, NOW());
     RETURN TRUE;
   END IF;
   
