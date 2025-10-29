@@ -7,6 +7,7 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { getOrCreateProfile, getDashboardUrl } from '@/lib/auth/profile-helper'
+import type { Database } from '@/types/database.types'
 
 export async function GET(request: Request) {
   const requestUrl = new URL(request.url)
@@ -82,12 +83,28 @@ export async function GET(request: Request) {
     // Update email_verified status in profile if email is confirmed
     if (user.email_confirmed_at && !profile.email_verified) {
       console.log('[Auth Callback] Updating email verification status')
-      await supabase
-        .from('users')
-        .update({ email_verified: true, updated_at: new Date().toISOString() })
-        .eq('id', user.id)
       
-      profile.email_verified = true
+      try {
+        // Use RPC function to update email verification status
+        const { error: updateError } = await supabase.rpc('update_user_email_verified', {
+          user_id: user.id
+        })
+        
+        if (updateError) {
+          console.error('[Auth Callback] RPC update error:', updateError)
+          // Fallback to simple update
+          await supabase
+            .from('users')
+            .update({ email_verified: true })
+            .eq('id', user.id)
+        }
+        
+        profile.email_verified = true
+      } catch (error) {
+        console.error('[Auth Callback] Update failed:', error)
+        // Mark as verified anyway since email is confirmed
+        profile.email_verified = true
+      }
     }
 
     console.log('[Auth Callback] Profile status:', {

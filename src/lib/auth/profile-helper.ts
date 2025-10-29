@@ -15,6 +15,8 @@ interface ProfileData {
   avatar_url: string | null
   role: UserRole
   email_verified: boolean
+  onboarding_completed: boolean
+  onboarding_data: any
 }
 
 /**
@@ -30,7 +32,7 @@ export async function getOrCreateProfile(
     // First, try to get existing profile
     const { data: existingProfile } = await supabase
       .from('users')
-      .select('id, email, full_name, avatar_url, role, email_verified')
+      .select('id, email, full_name, avatar_url, role, email_verified, onboarding_completed, onboarding_data')
       .eq('id', user.id)
       .single()
 
