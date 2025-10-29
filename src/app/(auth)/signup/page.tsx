@@ -1,6 +1,7 @@
 /**
  * Signup Page - Role Selection + Registration
  * Two-step process: Choose role → Fill form
+ * Note: Admin accounts cannot be created via signup (only investor/advisor)
  */
 
 'use client'
@@ -9,20 +10,22 @@ import { useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { RoleSelector } from '@/components/auth/RoleSelector'
 import { QuickSignup } from '@/components/auth/QuickSignup'
-import { UserRole } from '@/types/database.types'
 import { Card, CardContent } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { ArrowLeft } from 'lucide-react'
 
+// Signup-specific role type (excludes admin)
+type SignupRole = 'investor' | 'advisor'
+
 export default function SignupPage() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const preSelectedRole = searchParams.get('role') as UserRole | null
+  const preSelectedRole = searchParams.get('role') as SignupRole | null
   
-  const [selectedRole, setSelectedRole] = useState<UserRole | null>(preSelectedRole)
+  const [selectedRole, setSelectedRole] = useState<SignupRole | null>(preSelectedRole)
   const [step, setStep] = useState<'role' | 'form'>(preSelectedRole ? 'form' : 'role')
 
-  const handleRoleSelect = (role: UserRole) => {
+  const handleRoleSelect = (role: SignupRole) => {
     setSelectedRole(role)
     setStep('form')
   }

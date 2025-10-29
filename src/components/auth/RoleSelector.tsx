@@ -1,16 +1,19 @@
 /**
  * Role Selector Component
  * Allows users to choose between Investor and Advisor roles during signup
+ * Note: Admin role is not available during signup
  */
 
 'use client'
 
 import { UserCircle, BriefcaseIcon } from 'lucide-react'
-import { UserRole } from '@/types/database.types'
+
+// Signup-specific role type (excludes admin)
+type SignupRole = 'investor' | 'advisor'
 
 interface RoleSelectorProps {
-  onSelectRole: (role: UserRole) => void
-  selectedRole?: UserRole | null
+  onSelectRole: (role: SignupRole) => void
+  selectedRole?: SignupRole | null
 }
 
 export function RoleSelector({ onSelectRole, selectedRole }: RoleSelectorProps) {
@@ -147,4 +150,3 @@ export function RoleSelector({ onSelectRole, selectedRole }: RoleSelectorProps) 
     </div>
   )
 }
-
