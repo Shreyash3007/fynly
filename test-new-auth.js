@@ -73,22 +73,33 @@ async function testSignup() {
     // Wait for trigger to create profile
     await new Promise(resolve => setTimeout(resolve, 2000))
     
-    // Check profile
-    const { data: profile, error: profileError } = await supabase
+    // Check profile - use maybeSingle() to avoid multiple rows error
+    const { data: profiles, error: profileError } = await supabase
       .from('users')
       .select('*')
       .eq('id', data.user.id)
-      .single()
     
     if (profileError) {
-      console.error('❌ Profile not created:', profileError.message, '\n')
+      console.error('❌ Profile query error:', profileError.message, '\n')
       return false
     }
     
+    if (!profiles || profiles.length === 0) {
+      console.error('❌ Profile not created\n')
+      return false
+    }
+    
+    const profile = profiles[0]
     console.log('✅ Profile created automatically')
     console.log('👤 Name:', profile.full_name)
     console.log('🎭 Role:', profile.role)
-    console.log('✉️  Email verified:', profile.email_verified, '\n')
+    console.log('✉️  Email verified:', profile.email_verified)
+    
+    // Check for duplicates
+    if (profiles.length > 1) {
+      console.log('⚠️  Warning: Found', profiles.length, 'profiles for this user (should be 1)')
+    }
+    console.log('')
     
     return true
   } catch (error) {

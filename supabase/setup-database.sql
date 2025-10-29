@@ -221,26 +221,41 @@ FOR UPDATE USING (auth.uid() = user_id);
 
 CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS TRIGGER AS $$
+DECLARE
+  user_exists BOOLEAN;
 BEGIN
-  INSERT INTO public.users (id, email, full_name, avatar_url, role, email_verified, created_at, updated_at)
-  VALUES (
-    NEW.id,
-    NEW.email,
-    COALESCE(NEW.raw_user_meta_data->>'full_name', NEW.raw_user_meta_data->>'name', split_part(NEW.email, '@', 1)),
-    NEW.raw_user_meta_data->>'avatar_url',
-    COALESCE(NEW.raw_user_meta_data->>'role', 'investor'),
-    NEW.email_confirmed_at IS NOT NULL,
-    NOW(),
-    NOW()
-  )
-  ON CONFLICT (id) DO UPDATE SET
-    full_name = COALESCE(EXCLUDED.full_name, public.users.full_name),
-    avatar_url = COALESCE(EXCLUDED.avatar_url, public.users.avatar_url),
-    role = COALESCE(EXCLUDED.role, public.users.role),
-    email_verified = EXCLUDED.email_verified,
-    updated_at = NOW();
+  -- Check if user already exists
+  SELECT EXISTS(SELECT 1 FROM public.users WHERE id = NEW.id) INTO user_exists;
+  
+  IF NOT user_exists THEN
+    -- Only insert if user doesn't exist
+    INSERT INTO public.users (id, email, full_name, avatar_url, role, email_verified, created_at, updated_at)
+    VALUES (
+      NEW.id,
+      NEW.email,
+      COALESCE(NEW.raw_user_meta_data->>'full_name', NEW.raw_user_meta_data->>'name', split_part(NEW.email, '@', 1)),
+      COALESCE(NEW.raw_user_meta_data->>'avatar_url', NULL),
+      COALESCE(NEW.raw_user_meta_data->>'role', 'investor'),
+      COALESCE(NEW.email_confirmed_at IS NOT NULL, FALSE),
+      NOW(),
+      NOW()
+    );
+  ELSE
+    -- Update if exists
+    UPDATE public.users SET
+      full_name = COALESCE(NEW.raw_user_meta_data->>'full_name', NEW.raw_user_meta_data->>'name', full_name),
+      avatar_url = COALESCE(NEW.raw_user_meta_data->>'avatar_url', avatar_url),
+      email_verified = COALESCE(NEW.email_confirmed_at IS NOT NULL, FALSE),
+      updated_at = NOW()
+    WHERE id = NEW.id;
+  END IF;
   
   RETURN NEW;
+EXCEPTION
+  WHEN OTHERS THEN
+    -- Log error but don't fail the auth creation
+    RAISE WARNING 'Failed to create/update user profile: %', SQLERRM;
+    RETURN NEW;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
