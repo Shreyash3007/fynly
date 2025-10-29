@@ -152,38 +152,7 @@ export async function signIn(
   }
 }
 
-/**
- * Sign in with Google OAuth
- */
-export async function signInWithGoogle(): Promise<AuthSuccess | AuthError> {
-  try {
-    const supabase = createClient()
-
-    console.log('[Auth] Initiating Google OAuth')
-
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback`,
-      },
-    })
-
-    if (error) {
-      console.error('[Auth] Google OAuth error:', error)
-      return { error: error.message }
-    }
-
-    if (data.url) {
-      console.log('[Auth] Redirecting to Google OAuth URL')
-      redirect(data.url)
-    }
-
-    return { success: true }
-  } catch (error: any) {
-    console.error('[Auth] Unexpected error in signInWithGoogle:', error)
-    return { error: error.message || 'Failed to initiate Google sign in' }
-  }
-}
+// Google OAuth removed - using email authentication only
 
 /**
  * Sign out current user
