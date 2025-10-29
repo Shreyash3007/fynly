@@ -41,6 +41,9 @@ export interface Database {
           role: 'investor' | 'advisor' | 'admin'
           phone: string | null
           avatar_url: string | null
+          email_verified: boolean
+          onboarding_completed: boolean
+          onboarding_data: any
           created_at: string
           updated_at: string
         }
@@ -51,6 +54,9 @@ export interface Database {
           role?: 'investor' | 'advisor' | 'admin'
           phone?: string | null
           avatar_url?: string | null
+          email_verified?: boolean
+          onboarding_completed?: boolean
+          onboarding_data?: any
           created_at?: string
           updated_at?: string
         }
@@ -61,6 +67,9 @@ export interface Database {
           role?: 'investor' | 'advisor' | 'admin'
           phone?: string | null
           avatar_url?: string | null
+          email_verified?: boolean
+          onboarding_completed?: boolean
+          onboarding_data?: any
           created_at?: string
           updated_at?: string
         }

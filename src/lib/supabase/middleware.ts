@@ -107,7 +107,7 @@ export async function updateSession(request: NextRequest) {
       .from('users')
       .select('role, email_verified')
       .eq('id', user.id)
-      .single<{ role: string; email_verified: boolean }>()
+      .single()
 
     // If no profile or no role, send to onboarding
     if (!profile || !profile.role) {
@@ -136,7 +136,7 @@ export async function updateSession(request: NextRequest) {
       .from('users')
       .select('role')
       .eq('id', user.id)
-      .single<{ role: string }>()
+      .single()
 
     const role = profile?.role as string
 
