@@ -7,20 +7,25 @@ const { createClient } = require('@supabase/supabase-js')
 require('dotenv').config({ path: '.env.local' })
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
 
 console.log('🔧 Testing New Supabase Configuration')
 console.log('=====================================')
 console.log('Supabase URL:', supabaseUrl)
-console.log('Anon Key:', supabaseKey ? 'Set ✅' : 'Not Set ❌')
+console.log('Anon Key:', supabaseAnonKey ? 'Set ✅' : 'Not Set ❌')
+console.log('Service Key:', supabaseServiceKey ? 'Set ✅' : 'Not Set ❌')
 console.log('')
 
-if (!supabaseUrl || !supabaseKey) {
+if (!supabaseUrl || !supabaseAnonKey) {
   console.error('❌ Missing Supabase environment variables')
   process.exit(1)
 }
 
-const supabase = createClient(supabaseUrl, supabaseKey)
+// Use anon key for auth operations
+const supabase = createClient(supabaseUrl, supabaseAnonKey)
+// Use service key for admin operations
+const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey || supabaseAnonKey)
 
 async function testConnection() {
   console.log('1️⃣ Testing database connection...')
@@ -70,11 +75,12 @@ async function testSignup() {
     console.log('📧 Email:', testEmail)
     console.log('✉️  Email confirmed:', data.user?.email_confirmed_at ? 'Yes' : 'No (check email)')
     
-    // Wait for trigger to create profile
-    await new Promise(resolve => setTimeout(resolve, 2000))
+    // Wait longer for trigger to create profile
+    console.log('⏳ Waiting for trigger to create profile...')
+    await new Promise(resolve => setTimeout(resolve, 3000))
     
-    // Check profile - use maybeSingle() to avoid multiple rows error
-    const { data: profiles, error: profileError } = await supabase
+    // Check profile using admin client (service role has full access)
+    const { data: profiles, error: profileError } = await supabaseAdmin
       .from('users')
       .select('*')
       .eq('id', data.user.id)
