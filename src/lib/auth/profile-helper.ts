@@ -58,7 +58,9 @@ export async function getOrCreateProfile(
     }
 
     // Profile doesn't exist, create it
-    logger.log('[Profile Helper] Creating new profile for user:', user.id)
+    if (process.env.NODE_ENV === 'development') {
+      logger.log('[Profile Helper] Creating new profile for user:', user.id)
+    }
     
     const newProfile = await createUserProfile(supabase, user, defaultRole)
     
@@ -113,12 +115,14 @@ export async function createUserProfile(
       updated_at: new Date().toISOString(),
     }
 
-    logger.log('[Profile Helper] Creating profile with data:', {
-      id: profileData.id,
-      email: profileData.email,
-      role: profileData.role,
-      email_verified: profileData.email_verified
-    })
+    if (process.env.NODE_ENV === 'development') {
+      logger.log('[Profile Helper] Creating profile with data:', {
+        id: profileData.id,
+        email: profileData.email,
+        role: profileData.role,
+        email_verified: profileData.email_verified
+      })
+    }
 
     // First try to insert, if it fails due to conflict, try to update
     let { data, error } = await (supabase as any)
@@ -152,7 +156,9 @@ export async function createUserProfile(
       return { profile: null, error: error.message }
     }
 
-    logger.log('[Profile Helper] Profile created/updated successfully')
+    if (process.env.NODE_ENV === 'development') {
+      logger.log('[Profile Helper] Profile created/updated successfully')
+    }
     return { profile: data as ProfileData, error: null }
   } catch (error) {
     logger.error(error instanceof Error ? error : new Error(String(error)), '[Profile Helper] Exception in createUserProfile')
@@ -185,7 +191,9 @@ export async function updateUserRole(
       return { success: false, error: error.message }
     }
 
-    logger.log('[Profile Helper] Role updated successfully to:', role)
+    if (process.env.NODE_ENV === 'development') {
+      logger.log('[Profile Helper] Role updated successfully to:', role)
+    }
     return { success: true, error: null }
   } catch (error) {
     logger.error(error instanceof Error ? error : new Error(String(error)), '[Profile Helper] Exception in updateUserRole')
