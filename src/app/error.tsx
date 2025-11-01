@@ -19,7 +19,8 @@ export default function Error({
 }) {
   useEffect(() => {
     // Log error to error reporting service
-    logger.error(error instanceof Error ? error : new Error(String(error)), '[App Error]')
+    const errorObj = error instanceof Error ? error : new Error(error.message || String(error))
+    logger.error(errorObj, '[App Error]')
   }, [error])
 
   return (

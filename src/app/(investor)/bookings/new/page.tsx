@@ -184,7 +184,7 @@ function BookingForm() {
       razorpay.open()
       */ // END DISABLED
     } catch (error) {
-      console.error('Booking failed:', error)
+      setError(error instanceof Error ? error.message : 'Failed to create booking. Please try again.')
       setLoading(false)
     }
   }
