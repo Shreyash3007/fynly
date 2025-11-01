@@ -5,6 +5,7 @@
 
 import { AlertCircle, X, RefreshCw } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { getUserFriendlyMessage } from '@/lib/error-handler'
 
 interface ErrorMessageProps {
   title?: string
@@ -49,7 +50,7 @@ export function ErrorMessage({
         <AlertCircle className={cn('h-5 w-5 mt-0.5 mr-3', iconClasses[variant])} />
         <div className="flex-1">
           <h3 className="font-medium text-sm">{title}</h3>
-          <p className="mt-1 text-sm">{message}</p>
+          <p className="mt-1 text-sm">{getUserFriendlyMessage(message)}</p>
           {onRetry && (
             <button
               onClick={onRetry}

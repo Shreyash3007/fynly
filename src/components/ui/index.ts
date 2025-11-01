@@ -68,6 +68,7 @@ export {
   useToast 
 } from './Toast'
 export type { Toast } from './Toast'
+export { ToastProvider, useGlobalToast } from './ToastProvider'
 
 // NotificationBell removed - using email-only notifications for MVP
 

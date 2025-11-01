@@ -8,6 +8,7 @@
 import { useState, useEffect } from 'react'
 import { X, CheckCircle, AlertCircle, Info, AlertTriangle } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { getUserFriendlyMessage } from '@/lib/error-handler'
 
 export interface Toast {
   id: string
@@ -89,7 +90,7 @@ export function ToastComponent({
         </div>
         <div className="flex-1 ml-3">
           {title && <h4 className="font-semibold text-sm mb-1">{title}</h4>}
-          <p className="text-sm leading-relaxed">{message}</p>
+          <p className="text-sm leading-relaxed">{getUserFriendlyMessage(message)}</p>
         </div>
         <button
           onClick={() => {
@@ -141,7 +142,7 @@ export function useToast() {
   }
 
   const showError = (message: string, title?: string) => {
-    addToast({ type: 'error', message, title })
+    addToast({ type: 'error', message: getUserFriendlyMessage(message), title })
   }
 
   const showWarning = (message: string, title?: string) => {

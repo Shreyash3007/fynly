@@ -7,7 +7,7 @@
 
 import { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { Button } from '@/components/ui'
+import { Button, ErrorMessage, useGlobalToast } from '@/components/ui'
 import { useAuth } from '@/hooks'
 
 declare global {
@@ -20,6 +20,7 @@ function BookingForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const { user: _user, isAuthenticated } = useAuth()
+  const { showError } = useGlobalToast()
   const advisorId = searchParams.get('advisorId')
 
   const [advisor, setAdvisor] = useState<any>(null)
@@ -54,13 +55,17 @@ function BookingForm() {
       const response = await fetch(`/api/advisors/${advisorId}`)
       const data = await response.json()
       if (!response.ok && data.error) {
-        setError(data.error.message || 'Failed to load advisor details')
+        const errorMsg = data.error.message || 'Failed to load advisor details'
+        setError(errorMsg)
+        showError(errorMsg, 'Loading Failed')
       } else {
         setAdvisor(data.advisor)
         generateAvailableSlots()
       }
     } catch (error) {
-      setError(error instanceof Error ? error.message : 'Failed to fetch advisor')
+      const errorMsg = error instanceof Error ? error.message : 'Failed to fetch advisor'
+      setError(errorMsg)
+      showError(errorMsg, 'Loading Failed')
     }
   }
 
@@ -128,7 +133,17 @@ function BookingForm() {
         }),
       })
 
-      const { booking } = await bookingResponse.json()
+      const bookingData = await bookingResponse.json()
+      
+      if (!bookingResponse.ok) {
+        const errorMsg = bookingData.error?.message || 'Failed to create booking'
+        setError(errorMsg)
+        showError(errorMsg, 'Booking Failed')
+        setLoading(false)
+        return
+      }
+
+      const { booking } = bookingData
 
       // Create payment order
       const orderResponse = await fetch('/api/payments/create-order', {
@@ -207,6 +222,13 @@ function BookingForm() {
   return (
     <div className="min-h-screen bg-smoke py-12">
       <div className="container mx-auto max-w-3xl px-4">
+        {/* Error Display */}
+        {error && (
+          <div className="mb-6">
+            <ErrorMessage message={error} onDismiss={() => setError(null)} />
+          </div>
+        )}
+
         {/* Enhanced Header */}
         <div className="text-center mb-8">
           <h1 className="font-display text-4xl font-bold text-graphite-900 mb-2">

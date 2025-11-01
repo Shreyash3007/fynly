@@ -19,8 +19,7 @@ export default function Error({
 }) {
   useEffect(() => {
     // Log error to error reporting service
-    const errorObj = error instanceof Error ? error : new Error(error.message || String(error))
-    logger.error(errorObj, '[App Error]')
+    logger.error(error, '[App Error]')
   }, [error])
 
   return (
@@ -46,7 +45,7 @@ export default function Error({
 
           {/* Error Message */}
           <h2 className="font-display text-2xl font-semibold text-graphite-900 mb-3">
-            {getUserFriendlyMessage(error)}
+            {error.message ? getUserFriendlyMessage(error.message) : 'Something went wrong'}
           </h2>
           <p className="text-graphite-600 mb-8">
             We're sorry for the inconvenience. Please try again or contact support if the problem persists.

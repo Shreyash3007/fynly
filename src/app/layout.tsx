@@ -6,6 +6,7 @@
 import type { Metadata } from 'next'
 import { Inter, Poppins } from 'next/font/google'
 import '@/styles/globals.css'
+import { ToastProvider } from '@/components/ui/ToastProvider'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -59,7 +60,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
       <body className="min-h-screen bg-smoke font-sans antialiased">
-        {children}
+        <ToastProvider>
+          {children}
+        </ToastProvider>
       </body>
     </html>
   )

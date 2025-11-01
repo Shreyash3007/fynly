@@ -26,22 +26,12 @@
 
 ## ⏳ **IN PROGRESS**
 
-### **API Routes Standardization** (14 remaining)
-Need to update all remaining API routes with:
-- Standardized error handling using `handleApiError`
-- Logger instead of console statements
-- Proper error codes and status codes
-
-**Files to update:**
-1. ⏳ `src/app/api/chat/relationships/route.ts`
-5. ⏳ `src/app/api/admin/advisors/pending/route.ts`
-6. ⏳ `src/app/api/admin/advisors/[id]/approve/route.ts`
-7. ⏳ `src/app/api/admin/advisors/[id]/reject/route.ts`
-8. ⏳ `src/app/api/advisors/[id]/route.ts`
-9. ⏳ `src/app/api/advisors/me/route.ts`
-10. ⏳ `src/app/api/profile/route.ts`
-11. ⏳ `src/app/api/upload/sebi-cert/route.ts`
-12. ⏳ `src/app/auth/callback/route.ts`
+### **API Routes Standardization** ✅ **COMPLETE**
+All API routes now use:
+- ✅ Standardized error handling using `handleApiError`
+- ✅ Logger instead of console statements
+- ✅ Proper error codes and status codes
+- ✅ User-friendly error messages
 
 ---
 
