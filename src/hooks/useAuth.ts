@@ -64,8 +64,16 @@ export function useAuth() {
   }, [supabase, router])
 
   const signOut = async () => {
-    await supabase.auth.signOut()
-    router.push('/login')
+    try {
+      await supabase.auth.signOut()
+      setUser(null)
+      // Force a page reload to clear all state
+      window.location.href = '/login'
+    } catch (error) {
+      console.error('Error signing out:', error)
+      // Still redirect even if signout fails
+      window.location.href = '/login'
+    }
   }
 
   return {

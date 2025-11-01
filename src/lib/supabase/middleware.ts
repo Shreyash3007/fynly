@@ -125,7 +125,7 @@ export async function updateSession(request: NextRequest) {
         ? '/admin/dashboard'
         : role === 'advisor'
         ? '/advisor/dashboard'
-        : '/investor/dashboard'
+        : '/dashboard' // Fixed: route group (investor) creates /dashboard, not /investor/dashboard
 
     return NextResponse.redirect(new URL(dashboardUrl, request.url))
   }

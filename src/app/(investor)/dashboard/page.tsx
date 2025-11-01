@@ -19,7 +19,14 @@ export default async function InvestorDashboardPage() {
   }
 
   if ((profile as any).role !== 'investor') {
-    redirect(`/${(profile as any).role}/dashboard`)
+    const role = (profile as any).role
+    if (role === 'advisor') {
+      redirect('/advisor/dashboard')
+    } else if (role === 'admin') {
+      redirect('/admin/dashboard')
+    } else {
+      redirect('/onboarding')
+    }
   }
 
   const supabase = createClient()
