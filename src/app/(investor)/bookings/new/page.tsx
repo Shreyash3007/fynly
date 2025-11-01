@@ -28,6 +28,7 @@ function BookingForm() {
   const [duration, setDuration] = useState(60)
   const [notes, setNotes] = useState('')
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   const [availableSlots, setAvailableSlots] = useState<any[]>([])
   const [selectedDate, setSelectedDate] = useState('')
   const [selectedTime, setSelectedTime] = useState('')
@@ -52,10 +53,14 @@ function BookingForm() {
     try {
       const response = await fetch(`/api/advisors/${advisorId}`)
       const data = await response.json()
-      setAdvisor(data.advisor)
-      generateAvailableSlots()
+      if (!response.ok && data.error) {
+        setError(data.error.message || 'Failed to load advisor details')
+      } else {
+        setAdvisor(data.advisor)
+        generateAvailableSlots()
+      }
     } catch (error) {
-      console.error('Failed to fetch advisor:', error)
+      setError(error instanceof Error ? error.message : 'Failed to fetch advisor')
     }
   }
 

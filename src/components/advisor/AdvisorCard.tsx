@@ -5,6 +5,7 @@
 
 'use client'
 
+import React from 'react'
 import Link from 'next/link'
 import { VerifiedBadge } from '@/components/ui'
 
@@ -24,7 +25,7 @@ export interface AdvisorCardProps {
   onQuickBook?: () => void
 }
 
-export function AdvisorCard({
+function AdvisorCardComponent({
   id,
   name,
   title,
@@ -51,10 +52,12 @@ export function AdvisorCard({
       {/* Avatar & Name Section */}
       <div className="flex items-start gap-4 mb-4">
         {avatar ? (
+          // eslint-disable-next-line @next/next/no-img-element
           <img
             src={avatar}
             alt={name}
             className="w-16 h-16 rounded-full object-cover flex-shrink-0 ring-2 ring-mint-500/20"
+            loading="lazy"
           />
         ) : (
           <div className="w-16 h-16 rounded-full bg-gradient-mint flex items-center justify-center text-white font-display font-bold text-xl flex-shrink-0">
@@ -178,8 +181,20 @@ export function AdvisorCard({
   )
 }
 
+// Memoized component to prevent unnecessary re-renders
+export const AdvisorCard = React.memo(AdvisorCardComponent, (prev, next) => {
+  return (
+    prev.id === next.id &&
+    prev.name === next.name &&
+    prev.rating === next.rating &&
+    prev.reviewCount === next.reviewCount &&
+    prev.sessionFee === next.sessionFee &&
+    JSON.stringify(prev.specializations) === JSON.stringify(next.specializations)
+  )
+})
+
 // Compact variant for lists
-export function AdvisorCardCompact(props: AdvisorCardProps) {
+export const AdvisorCardCompact = React.memo(function AdvisorCardCompact(props: AdvisorCardProps) {
   const initials = props.name
     .split(' ')
     .map(n => n[0])
@@ -191,10 +206,12 @@ export function AdvisorCardCompact(props: AdvisorCardProps) {
     <div className="flex items-center gap-4 p-4 rounded-xl bg-white/60 backdrop-blur-lg border border-graphite-100/50 shadow-neomorph hover:shadow-neomorph-lg hover:border-mint-300 transition-all duration-200">
       {/* Avatar */}
       {props.avatar ? (
+        // eslint-disable-next-line @next/next/no-img-element
         <img
           src={props.avatar}
           alt={props.name}
           className="w-12 h-12 rounded-full object-cover flex-shrink-0"
+          loading="lazy"
         />
       ) : (
         <div className="w-12 h-12 rounded-full bg-gradient-mint flex items-center justify-center text-white font-semibold flex-shrink-0">
@@ -230,5 +247,12 @@ export function AdvisorCardCompact(props: AdvisorCardProps) {
       </button>
     </div>
   )
-}
+}, (prev, next) => {
+  return (
+    prev.id === next.id &&
+    prev.name === next.name &&
+    prev.rating === next.rating &&
+    prev.sessionFee === next.sessionFee
+  )
+})
 

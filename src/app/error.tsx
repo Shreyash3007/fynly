@@ -7,6 +7,8 @@
 
 import { useEffect } from 'react'
 import Link from 'next/link'
+import { getUserFriendlyMessage } from '@/lib/error-handler'
+import { logger } from '@/lib/logger'
 
 export default function Error({
   error,
@@ -17,7 +19,7 @@ export default function Error({
 }) {
   useEffect(() => {
     // Log error to error reporting service
-    console.error('Application error:', error)
+    logger.error(error instanceof Error ? error : new Error(String(error)), '[App Error]')
   }, [error])
 
   return (
@@ -43,7 +45,7 @@ export default function Error({
 
           {/* Error Message */}
           <h2 className="font-display text-2xl font-semibold text-graphite-900 mb-3">
-            Something went wrong
+            {getUserFriendlyMessage(error)}
           </h2>
           <p className="text-graphite-600 mb-8">
             We're sorry for the inconvenience. Please try again or contact support if the problem persists.

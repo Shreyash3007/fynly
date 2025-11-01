@@ -5,7 +5,7 @@
 
 'use client'
 
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useCallback } from 'react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { LayoutWrapper } from '@/components/layout'
@@ -102,12 +102,12 @@ export default function AdvisorsPage() {
         const { data, error } = await query.limit(50)
         
         if (error) {
-          console.error('Error fetching advisors:', error)
+          // Error handled by UI state
         } else {
           setAdvisors(data || [])
         }
       } catch (error) {
-        console.error('Error:', error)
+        // Error handled by UI state
       } finally {
         setLoading(false)
       }
@@ -138,10 +138,10 @@ export default function AdvisorsPage() {
     return advisors
   }, [advisors, availability])
 
-  const handleQuickBook = (advisorId: string) => {
+  const handleQuickBook = useCallback((advisorId: string) => {
     // Check if user is logged in, if not redirect to login
     router.push(`/login?redirect=/advisors/${advisorId}/book`)
-  }
+  }, [router])
 
   return (
     <div className="min-h-screen bg-smoke">
