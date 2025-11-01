@@ -6,6 +6,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useState } from 'react'
 import { useAuth } from '@/hooks'
 
@@ -81,9 +82,11 @@ export function AuthenticatedNavbar() {
                 className="flex items-center gap-2 p-2 rounded-lg hover:bg-graphite-50 transition-colors"
               >
                 {profile?.avatar_url ? (
-                  <img
+                  <Image
                     src={profile.avatar_url}
                     alt={profile.full_name || 'User'}
+                    width={32}
+                    height={32}
                     className="w-8 h-8 rounded-full object-cover"
                   />
                 ) : (

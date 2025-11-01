@@ -7,6 +7,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
+import Image from 'next/image'
 
 export interface ChatMessage {
   id: string
@@ -140,9 +141,11 @@ export function ChatWidget({
       <div className="flex items-center justify-between p-4 border-b border-graphite-100">
         <div className="flex items-center gap-3">
           {otherPartyAvatar ? (
-            <img
+            <Image
               src={otherPartyAvatar}
               alt={otherPartyName}
+              width={40}
+              height={40}
               className="w-10 h-10 rounded-full object-cover"
             />
           ) : (

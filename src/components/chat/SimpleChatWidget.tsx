@@ -50,7 +50,7 @@ export function SimpleChatWidget({
       await onSendMessage(newMessage.trim())
       setNewMessage('')
     } catch (error) {
-      console.error('Failed to send message:', error)
+      // Error will be handled by parent component via toast
     } finally {
       setSending(false)
     }

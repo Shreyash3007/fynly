@@ -7,6 +7,7 @@
 
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { VerifiedBadge } from '@/components/ui'
 
 export interface AdvisorCardProps {
@@ -52,10 +53,11 @@ function AdvisorCardComponent({
       {/* Avatar & Name Section */}
       <div className="flex items-start gap-4 mb-4">
         {avatar ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <Image
             src={avatar}
             alt={name}
+            width={64}
+            height={64}
             className="w-16 h-16 rounded-full object-cover flex-shrink-0 ring-2 ring-mint-500/20"
             loading="lazy"
           />
@@ -206,10 +208,11 @@ export const AdvisorCardCompact = React.memo(function AdvisorCardCompact(props: 
     <div className="flex items-center gap-4 p-4 rounded-xl bg-white/60 backdrop-blur-lg border border-graphite-100/50 shadow-neomorph hover:shadow-neomorph-lg hover:border-mint-300 transition-all duration-200">
       {/* Avatar */}
       {props.avatar ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
+        <Image
           src={props.avatar}
           alt={props.name}
+          width={48}
+          height={48}
           className="w-12 h-12 rounded-full object-cover flex-shrink-0"
           loading="lazy"
         />
