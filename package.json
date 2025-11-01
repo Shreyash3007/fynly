@@ -4,6 +4,7 @@
   "description": "Fintech marketplace connecting investors with verified financial advisors",
   "private": true,
   "scripts": {
+    "create-demo-users": "node scripts/create-demo-users.js",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
