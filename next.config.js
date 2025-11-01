@@ -82,13 +82,11 @@ const nextConfig = {
     ]
   },
   // Redirects
+  // Note: Removed /dashboard -> /investor/dashboard redirect
+  // Route group (investor) creates /dashboard directly, not /investor/dashboard
   async redirects() {
     return [
-      {
-        source: '/dashboard',
-        destination: '/investor/dashboard',
-        permanent: false,
-      },
+      // No redirects needed - routes work correctly
     ]
   },
 }
