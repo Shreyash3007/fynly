@@ -133,7 +133,9 @@ export async function createUserProfile(
 
     // If insert fails due to conflict, try update
     if (error && error.code === '23505') {
-      logger.log('[Profile Helper] Profile exists, updating instead')
+      if (process.env.NODE_ENV === 'development') {
+        logger.log('[Profile Helper] Profile exists, updating instead')
+      }
       const updateResult = await (supabase as any)
         .from('users')
         .update({
