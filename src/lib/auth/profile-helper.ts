@@ -31,11 +31,21 @@ export async function getOrCreateProfile(
 ): Promise<{ profile: ProfileData | null; error: string | null; needsOnboarding: boolean }> {
   try {
     // First, try to get existing profile
-    const { data: existingProfile } = await supabase
+    const { data: existingProfile, error: fetchError } = await supabase
       .from('users')
       .select('id, email, full_name, avatar_url, role, email_verified, onboarding_completed, onboarding_data')
       .eq('id', user.id)
       .single()
+    
+    // If profile fetch fails but it's not a "not found" error, return error
+    if (fetchError && fetchError.code !== 'PGRST116') {
+      logger.error(fetchError instanceof Error ? fetchError : new Error(String(fetchError)), '[Profile Helper] Error fetching profile')
+      return { 
+        profile: null, 
+        error: fetchError.message || 'Failed to fetch profile',
+        needsOnboarding: false
+      }
+    }
 
     if (existingProfile) {
       // Profile exists, check if onboarding is needed
