@@ -33,7 +33,9 @@ export async function signUp(
   try {
     const supabase = createClient()
 
-    logger.log('[Auth] Signing up user:', email, 'as', role)
+    if (process.env.NODE_ENV === 'development') {
+      logger.log('[Auth] Signing up user:', email, 'as', role)
+    }
 
     const { data, error } = await supabase.auth.signUp({
       email,
@@ -57,7 +59,9 @@ export async function signUp(
       return { error: 'Failed to create user' }
     }
 
-    logger.log('[Auth] User signed up:', data.user.id)
+    if (process.env.NODE_ENV === 'development') {
+      logger.log('[Auth] User signed up:', data.user.id)
+    }
 
     // Create user profile immediately (fallback if trigger fails)
     const { error: profileError } = await getOrCreateProfile(
@@ -74,7 +78,9 @@ export async function signUp(
     revalidatePath('/', 'layout')
     
     // Redirect to email verification page
-    logger.log('[Auth] Redirecting to email verification')
+    if (process.env.NODE_ENV === 'development') {
+      logger.log('[Auth] Redirecting to email verification')
+    }
     return { 
       success: true, 
       redirectTo: `/verify-email?email=${encodeURIComponent(email)}` 
@@ -112,7 +118,9 @@ export async function signIn(
       return { error: 'Failed to sign in' }
     }
 
-    logger.log('[Auth] User signed in:', data.user.id)
+    if (process.env.NODE_ENV === 'development') {
+      logger.log('[Auth] User signed in:', data.user.id)
+    }
 
     // Get or create user profile (fallback if trigger failed)
     const { profile, error: profileError, needsOnboarding } = await getOrCreateProfile(
@@ -126,25 +134,33 @@ export async function signIn(
       return { error: profileError || 'Failed to load profile' }
     }
 
-    logger.log('[Auth] Profile loaded:', { role: profile.role, needsOnboarding })
+    if (process.env.NODE_ENV === 'development') {
+      logger.log('[Auth] Profile loaded:', { role: profile.role, needsOnboarding })
+    }
 
     revalidatePath('/', 'layout')
 
     // Check if email verification is required
     if (!profile.email_verified) {
-      logger.log('[Auth] Email not verified')
+      if (process.env.NODE_ENV === 'development') {
+        logger.log('[Auth] Email not verified')
+      }
       return { success: true, redirectTo: `/verify-email?email=${encodeURIComponent(email)}` }
     }
 
     // Check if user needs onboarding
     if (needsOnboarding || !profile.role) {
-      logger.log('[Auth] User needs onboarding')
+      if (process.env.NODE_ENV === 'development') {
+        logger.log('[Auth] User needs onboarding')
+      }
       return { success: true, redirectTo: '/onboarding' }
     }
 
     // Redirect to appropriate dashboard
     const redirectPath = getDashboardUrl(profile.role)
-    logger.log('[Auth] Redirecting to:', redirectPath)
+    if (process.env.NODE_ENV === 'development') {
+      logger.log('[Auth] Redirecting to:', redirectPath)
+    }
 
     return { success: true, redirectTo: redirectPath }
   } catch (error: any) {
@@ -186,24 +202,39 @@ export async function getSession() {
  * Get current user profile
  */
 export async function getUserProfile() {
-  const supabase = createClient()
-  
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  try {
+    const supabase = createClient()
+    
+    const {
+      data: { user },
+      error: userError
+    } = await supabase.auth.getUser()
 
-  if (!user) {
+    if (userError || !user) {
+      if (process.env.NODE_ENV === 'development') {
+        logger.log('[Auth] getUserProfile: No user or auth error')
+      }
+      return null
+    }
+
+    const { data: profile, error: profileError } = await supabase
+      .from('users')
+      .select('*')
+      .eq('id', user.id)
+      .single()
+
+    if (profileError || !profile) {
+      if (process.env.NODE_ENV === 'development') {
+        logger.log('[Auth] getUserProfile: Profile error or not found')
+      }
+      return null
+    }
+    
+    return profile
+  } catch (error) {
+    logger.error(error instanceof Error ? error : new Error(String(error)), '[Auth] getUserProfile exception')
     return null
   }
-
-  const { data: profile, error: profileError } = await supabase
-    .from('users')
-    .select('*')
-    .eq('id', user.id)
-    .single()
-
-  if (profileError || !profile) return null
-  return profile
 }
 
 /**

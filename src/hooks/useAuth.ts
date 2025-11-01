@@ -43,15 +43,28 @@ export function useAuth() {
     // Listen for auth changes
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (_event: any, session: any) => {
+    } = supabase.auth.onAuthStateChange(async (event: any, session: any) => {
+      if (event === 'SIGNED_OUT') {
+        setUser(null)
+        setLoading(false)
+        // Redirect to login on sign out
+        router.push('/login')
+        return
+      }
+      
       if (session?.user) {
-        const { data } = await supabase
-          .from('users')
-          .select('*')
-          .eq('id', session.user.id)
-          .single()
+        try {
+          const { data } = await supabase
+            .from('users')
+            .select('*')
+            .eq('id', session.user.id)
+            .single()
 
-        setUser(data)
+          setUser(data)
+        } catch (error) {
+          // If profile fetch fails, still clear user
+          setUser(null)
+        }
       } else {
         setUser(null)
       }
@@ -65,14 +78,16 @@ export function useAuth() {
 
   const signOut = async () => {
     try {
-      await supabase.auth.signOut()
+      // Clear user state first
       setUser(null)
-      // Force a page reload to clear all state
-      window.location.href = '/login'
+      // Sign out from Supabase
+      await supabase.auth.signOut()
+      // Force a full page reload to clear all state including cookies
+      window.location.replace('/login')
     } catch (error) {
-      console.error('Error signing out:', error)
-      // Still redirect even if signout fails
-      window.location.href = '/login'
+      // Still redirect even if signout fails - clear everything
+      setUser(null)
+      window.location.replace('/login')
     }
   }
 

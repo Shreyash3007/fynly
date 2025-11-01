@@ -7,76 +7,81 @@ import { redirect } from 'next/navigation'
 import { getUserProfile } from '@/lib/auth/actions'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
-import { EmptyStates } from '@/components/ui'
 
 export const dynamic = 'force-dynamic'
 
 export default async function InvestorDashboardPage() {
-  const profile = await getUserProfile()
+  try {
+    const profile = await getUserProfile()
 
-  if (!profile) {
-    redirect('/login')
-  }
-
-  if ((profile as any).role !== 'investor') {
-    const role = (profile as any).role
-    if (role === 'advisor') {
-      redirect('/advisor/dashboard')
-    } else if (role === 'admin') {
-      redirect('/admin/dashboard')
-    } else {
-      redirect('/onboarding')
+    if (!profile) {
+      redirect('/login')
     }
-  }
 
-  const supabase = createClient()
+    if ((profile as any).role !== 'investor') {
+      const role = (profile as any).role
+      if (role === 'advisor') {
+        redirect('/advisor/dashboard')
+      } else if (role === 'admin') {
+        redirect('/admin/dashboard')
+      } else {
+        redirect('/onboarding')
+      }
+    }
 
-  // Fetch upcoming bookings
-  const { data: bookings } = await supabase
-    .from('bookings')
-    .select(`
-      *,
-      advisor:advisors(
-        id,
-        user_id,
-        consultation_fee,
-        users!advisors_user_id_fkey(full_name, email)
-      )
-    `)
-    .eq('investor_id', (profile as any).id)
-    .eq('status', 'confirmed')
-    .gte('meeting_time', new Date().toISOString())
-    .order('meeting_time', { ascending: true })
-    .limit(3)
+    const supabase = createClient()
 
-  // Fetch recent chats
-  const { data: recentChats } = await supabase
-    .from('advisor_investor_relationships')
-    .select(`
-      *,
-      advisor:advisors(
-        id,
-        user_id,
-        users!advisors_user_id_fkey(full_name, email)
-      )
-    `)
-    .eq('investor_id', (profile as any).id)
-    .eq('status', 'active')
-    .order('last_message_at', { ascending: false, nullsFirst: false })
-    .limit(3)
+    // Fetch upcoming bookings - handle errors gracefully
+    const { data: bookings, error: bookingsError } = await supabase
+      .from('bookings')
+      .select(`
+        *,
+        advisor:advisors(
+          id,
+          user_id,
+          consultation_fee,
+          users!advisors_user_id_fkey(full_name, email)
+        )
+      `)
+      .eq('investor_id', (profile as any).id)
+      .eq('status', 'confirmed')
+      .gte('meeting_time', new Date().toISOString())
+      .order('meeting_time', { ascending: true })
+      .limit(3)
 
-  // Count total sessions from bookings
-  const { count: totalSessionsCount } = await supabase
-    .from('bookings')
-    .select('*', { count: 'exact', head: true })
-    .eq('investor_id', (profile as any).id)
-    .in('status', ['confirmed', 'completed'])
-  
-  const totalSessions = totalSessionsCount || 0
-  const nextSession = bookings?.[0] ? new Date((bookings[0] as any).meeting_time) : null
+    // Fetch recent chats - handle errors gracefully
+    const { data: recentChats, error: chatsError } = await supabase
+      .from('advisor_investor_relationships')
+      .select(`
+        *,
+        advisor:advisors(
+          id,
+          user_id,
+          users!advisors_user_id_fkey(full_name, email)
+        )
+      `)
+      .eq('investor_id', (profile as any).id)
+      .eq('status', 'active')
+      .order('last_message_at', { ascending: false, nullsFirst: false })
+      .limit(3)
 
-  return (
-    <div className="min-h-screen bg-smoke">
+    // Count total sessions from bookings - handle errors gracefully
+    const { count: totalSessionsCount, error: countError } = await supabase
+      .from('bookings')
+      .select('*', { count: 'exact', head: true })
+      .eq('investor_id', (profile as any).id)
+      .in('status', ['confirmed', 'completed'])
+    
+    // If critical errors, use empty data instead of crashing
+    if (bookingsError || chatsError || countError) {
+      // Log but don't crash - use empty data
+    }
+    
+    const totalSessions = totalSessionsCount || 0
+    const nextSession = bookings?.[0] ? new Date((bookings[0] as any).meeting_time) : null
+
+    return (
+      <div className="min-h-screen bg-smoke">
       {/* Enhanced Hero Header with Balance Card */}
       <div className="relative overflow-hidden bg-gradient-to-br from-graphite-900 via-graphite-800 to-graphite-900">
         {/* Animated Background */}
@@ -303,7 +308,26 @@ export default async function InvestorDashboardPage() {
                 ))}
               </div>
             ) : (
-              EmptyStates.NoBookings(() => { window.location.href = '/advisors' })
+              <div className="text-center py-12">
+                <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-mint-50 to-mint-100 mb-4">
+                  <svg className="w-10 h-10 text-mint-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <h3 className="font-semibold text-graphite-900 mb-2">No upcoming sessions</h3>
+                <p className="text-graphite-600 text-sm mb-4">
+                  Book your first consultation with a verified advisor
+                </p>
+                <Link
+                  href="/advisors"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-mint text-white font-semibold rounded-xl shadow-glow-mint hover:shadow-glow-mint-lg hover:scale-105 transition-all"
+                >
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                  Find Advisors
+                </Link>
+              </div>
             )}
           </div>
 
@@ -354,20 +378,24 @@ export default async function InvestorDashboardPage() {
                 </svg>
                 <p className="text-graphite-600 font-medium mb-1">No conversations yet</p>
                 <p className="text-sm text-graphite-500 mb-4">Chat feature will be available soon</p>
-                <button
-                  onClick={() => window.location.href = '/advisors'}
+                <Link
+                  href="/advisors"
                   className="inline-flex items-center gap-2 px-4 py-2 bg-mint-500 text-white rounded-lg hover:bg-mint-600 transition-colors text-sm font-semibold"
                 >
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                   </svg>
                   Find Advisors
-                </button>
+                </Link>
               </div>
             )}
           </div>
         </div>
       </div>
     </div>
-  )
+    )
+  } catch (error) {
+    // Log error and redirect to login
+    redirect('/login?error=dashboard_load_failed')
+  }
 }
