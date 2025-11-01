@@ -51,13 +51,6 @@ export default async function AdminDashboardPage() {
     .order('created_at', { ascending: false })
     .limit(10)
 
-  // Mock platform metrics
-  const platformRevenue = 125000
-  const monthlyGrowth = 8.5
-  const activeUsers = Math.round((totalUsers || 0) * 0.75)
-  const conversionRate = 12.5
-  const avgSessionValue = 2500
-
   return (
     <div className="min-h-screen bg-smoke">
       {/* Enhanced Hero Header */}
@@ -89,45 +82,20 @@ export default async function AdminDashboardPage() {
                 </svg>
                 Review Advisors
               </Link>
-              <Link
-                href="/admin/analytics"
-                className="inline-flex items-center justify-center px-6 py-3 bg-transparent border-2 border-white text-white font-semibold rounded-xl hover:bg-white/10 transition-all duration-200"
-              >
-                <svg className="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                </svg>
-                View Analytics
-              </Link>
             </div>
           </div>
 
-          {/* Platform Revenue Card */}
+          {/* Quick Actions Card */}
           <div className="rounded-3xl bg-gradient-to-br from-mint-500 to-mint-600 p-8 shadow-2xl">
             <div className="flex items-start justify-between mb-6">
               <div className="flex-1">
-                <p className="text-mint-100 text-sm font-medium mb-2">Platform Revenue (This Month)</p>
-                <div className="flex items-baseline gap-3 mb-3">
-                  <h2 className="font-display text-5xl font-bold text-white">
-                    ₹{platformRevenue.toLocaleString('en-IN')}
-                  </h2>
-                  <div className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-sm">
-                    <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
-                    </svg>
-                    <span className="text-white font-semibold text-sm">+{monthlyGrowth}%</span>
-                  </div>
-                </div>
-                <p className="text-mint-100 text-sm">+₹{(platformRevenue * monthlyGrowth / 100).toLocaleString('en-IN')} vs last month</p>
+                <h2 className="font-display text-3xl font-bold text-white mb-2">Platform Overview</h2>
+                <p className="text-mint-100 text-sm">Manage advisors and monitor platform activity</p>
               </div>
-              <button className="w-12 h-12 rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-center hover:bg-white/20 transition-all">
-                <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
-                </svg>
-              </button>
             </div>
 
             {/* Quick Actions */}
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-2 gap-3">
               <Link
                 href="/admin/advisors/pending"
                 className="flex flex-col items-center justify-center p-4 rounded-2xl bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all group"
@@ -138,18 +106,6 @@ export default async function AdminDashboardPage() {
                   </svg>
                 </div>
                 <span className="text-white text-sm font-medium">Review Advisors</span>
-              </Link>
-
-              <Link
-                href="/admin/analytics"
-                className="flex flex-col items-center justify-center p-4 rounded-2xl bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all group"
-              >
-                <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
-                  <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                  </svg>
-                </div>
-                <span className="text-white text-sm font-medium">View Analytics</span>
               </Link>
 
               <Link
@@ -252,39 +208,6 @@ export default async function AdminDashboardPage() {
           </div>
         </div>
 
-        {/* Platform Insights Section */}
-        <div className="rounded-2xl bg-gradient-to-r from-mint-50 to-cyan-50 p-6 mb-8 border border-mint-200">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-mint-500 to-cyan-500 flex items-center justify-center">
-              <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-              </svg>
-            </div>
-            <h2 className="font-display text-xl font-bold text-graphite-900">Platform Insights</h2>
-          </div>
-          <div className="grid gap-4 md:grid-cols-4">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-mint-600 mb-1">{activeUsers}</div>
-              <div className="text-sm text-graphite-600">Active Users</div>
-              <div className="text-xs text-mint-500">This month</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-cyan-600 mb-1">{conversionRate}%</div>
-              <div className="text-sm text-graphite-600">Conversion Rate</div>
-              <div className="text-xs text-cyan-500">Demo to paid</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-purple-600 mb-1">₹{avgSessionValue.toLocaleString('en-IN')}</div>
-              <div className="text-sm text-graphite-600">Avg Session Value</div>
-              <div className="text-xs text-purple-500">Per booking</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-orange-600 mb-1">{Math.round((totalBookings || 0) * 0.85)}%</div>
-              <div className="text-sm text-graphite-600">Completion Rate</div>
-              <div className="text-xs text-orange-500">Sessions completed</div>
-            </div>
-          </div>
-        </div>
 
         {/* Main Content Grid */}
         <div className="grid gap-6 lg:grid-cols-2 mb-8">
@@ -423,15 +346,6 @@ export default async function AdminDashboardPage() {
                 <p className="text-graphite-600 text-sm mb-4">
                   Platform is ready for first consultations
                 </p>
-                <Link
-                  href="/admin/analytics"
-                  className="inline-flex items-center gap-2 text-cyan-600 hover:text-cyan-700 font-semibold"
-                >
-                  View Analytics
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
-                </Link>
               </div>
             )}
           </div>

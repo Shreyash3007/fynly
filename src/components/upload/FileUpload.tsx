@@ -1,392 +1,263 @@
 /**
- * File Upload Components
- * Drag and drop file upload with validation and progress tracking
+ * File Upload Component - SEBI Certificate Upload
+ * Simple file upload using Supabase Storage
+ * Supports drag-and-drop and file input
  */
 
 'use client'
 
-import { useState, useRef, useCallback } from 'react'
-import { Upload, X, File, Image, FileText, CheckCircle, AlertCircle } from 'lucide-react'
+import { useState, useRef, DragEvent } from 'react'
+import { Upload, X, AlertCircle, Loader2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { Button } from '@/components/ui/Button'
-import { Progress } from '@/components/ui/Progress'
 
-interface FileUploadProps {
+export interface FileUploadProps {
+  onUploadSuccess: (url: string, fileId: string) => void
+  onUploadError?: (error: string) => void
   accept?: string
-  maxSize?: number // in MB
-  maxFiles?: number
-  onUpload: (files: File[]) => Promise<void>
-  onError?: (error: string) => void
+  maxSize?: number // in bytes
   className?: string
-  disabled?: boolean
-  multiple?: boolean
+  label?: string
+  description?: string
 }
 
-interface UploadedFile {
-  file: File
-  id: string
-  status: 'pending' | 'uploading' | 'success' | 'error'
-  progress: number
-  error?: string
-}
-
-const FILE_TYPES = {
-  image: ['image/jpeg', 'image/png', 'image/gif', 'image/webp'],
-  document: ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'],
-  spreadsheet: ['application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']
-}
-
-const getFileIcon = (file: File) => {
-  if (FILE_TYPES.image.includes(file.type)) {
-    return <Image className="h-8 w-8 text-blue-500" />
-  } else if (FILE_TYPES.document.includes(file.type)) {
-    return <FileText className="h-8 w-8 text-green-500" />
-  } else {
-    return <File className="h-8 w-8 text-gray-500" />
-  }
-}
-
-const formatFileSize = (bytes: number) => {
-  if (bytes === 0) return '0 Bytes'
-  const k = 1024
-  const sizes = ['Bytes', 'KB', 'MB', 'GB']
-  const i = Math.floor(Math.log(bytes) / Math.log(k))
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
-}
+const DEFAULT_ACCEPT = '.pdf,.jpg,.jpeg,.png'
+const DEFAULT_MAX_SIZE = 5 * 1024 * 1024 // 5MB
 
 export function FileUpload({
-  accept = '*/*',
-  maxSize = 10, // 10MB
-  maxFiles = 5,
-  onUpload,
-  onError,
+  onUploadSuccess,
+  onUploadError,
+  accept = DEFAULT_ACCEPT,
+  maxSize = DEFAULT_MAX_SIZE,
   className,
-  disabled = false,
-  multiple = true
+  label = 'Upload SEBI Certificate',
+  description = 'PDF, JPG, or PNG (max 5MB)',
 }: FileUploadProps) {
-  const [files, setFiles] = useState<UploadedFile[]>([])
-  const [isDragOver, setIsDragOver] = useState(false)
-  const [isUploading, setIsUploading] = useState(false)
+  const [file, setFile] = useState<File | null>(null)
+  const [preview, setPreview] = useState<string | null>(null)
+  const [uploading, setUploading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
-  const validateFile = (file: File): string | null => {
-    // Check file size
-    if (file.size > maxSize * 1024 * 1024) {
-      return `File size must be less than ${maxSize}MB`
+  const validateFile = (selectedFile: File): string | null => {
+    // Check file type
+    const validTypes = ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png']
+    if (!validTypes.includes(selectedFile.type)) {
+      return 'Invalid file type. Only PDF, JPG, and PNG files are allowed.'
     }
 
-    // Check file type if accept is specified
-    if (accept !== '*/*') {
-      const acceptedTypes = accept.split(',').map(type => type.trim())
-      const isAccepted = acceptedTypes.some(type => {
-        if (type.startsWith('.')) {
-          return file.name.toLowerCase().endsWith(type.toLowerCase())
-        }
-        return file.type.match(type.replace('*', '.*'))
-      })
-
-      if (!isAccepted) {
-        return `File type not supported. Accepted types: ${accept}`
-      }
+    // Check file size
+    if (selectedFile.size > maxSize) {
+      const maxSizeMB = Math.round(maxSize / (1024 * 1024))
+      return `File size exceeds ${maxSizeMB}MB limit.`
     }
 
     return null
   }
 
-  const addFiles = useCallback((newFiles: FileList | File[]) => {
-    const fileArray = Array.from(newFiles)
-    const validFiles: UploadedFile[] = []
-    const errors: string[] = []
-
-    // Check max files limit
-    if (files.length + fileArray.length > maxFiles) {
-      errors.push(`Maximum ${maxFiles} files allowed`)
-    }
-
-    fileArray.forEach(file => {
-      const error = validateFile(file)
-      if (error) {
-        errors.push(`${file.name}: ${error}`)
-      } else {
-        validFiles.push({
-          file,
-          id: Math.random().toString(36).substr(2, 9),
-          status: 'pending',
-          progress: 0
-        })
-      }
-    })
-
-    if (errors.length > 0) {
-      onError?.(errors.join(', '))
-    }
-
-    if (validFiles.length > 0) {
-      setFiles(prev => [...prev, ...validFiles])
-    }
-  }, [files.length, maxFiles, maxSize, accept, onError])
-
-  const removeFile = (id: string) => {
-    setFiles(prev => prev.filter(file => file.id !== id))
-  }
-
-  const handleUpload = async () => {
-    if (files.length === 0) return
-
-    setIsUploading(true)
-    const filesToUpload = files.map(f => f.file)
-
-    try {
-      // Update file statuses to uploading
-      setFiles(prev => prev.map(f => ({ ...f, status: 'uploading' as const })))
-
-      // Simulate progress for each file
-      files.forEach((file, index) => {
-        const interval = setInterval(() => {
-          setFiles(prev => prev.map(f => 
-            f.id === file.id 
-              ? { ...f, progress: Math.min(f.progress + 10, 90) }
-              : f
-          ))
-        }, 200)
-
-        setTimeout(() => {
-          clearInterval(interval)
-          setFiles(prev => prev.map(f => 
-            f.id === file.id 
-              ? { ...f, status: 'success' as const, progress: 100 }
-              : f
-          ))
-        }, (index + 1) * 1000)
-      })
-
-      await onUpload(filesToUpload)
-
-      // Mark all files as successful
-      setFiles(prev => prev.map(f => ({ ...f, status: 'success' as const, progress: 100 })))
-
-      // Clear files after successful upload
-      setTimeout(() => {
-        setFiles([])
-      }, 2000)
-
-    } catch (error) {
-      // Mark all files as error
-      setFiles(prev => prev.map(f => ({ 
-        ...f, 
-        status: 'error' as const, 
-        error: error instanceof Error ? error.message : 'Upload failed'
-      })))
-      onError?.(error instanceof Error ? error.message : 'Upload failed')
-    } finally {
-      setIsUploading(false)
-    }
-  }
-
-  const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault()
-    if (!disabled) {
-      setIsDragOver(true)
-    }
-  }
-
-  const handleDragLeave = (e: React.DragEvent) => {
-    e.preventDefault()
-    setIsDragOver(false)
-  }
-
-  const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault()
-    setIsDragOver(false)
+  const handleFileSelect = (selectedFile: File) => {
+    setError(null)
+    const validationError = validateFile(selectedFile)
     
-    if (disabled) return
+    if (validationError) {
+      setError(validationError)
+      onUploadError?.(validationError)
+      return
+    }
 
-    const droppedFiles = e.dataTransfer.files
-    if (droppedFiles.length > 0) {
-      addFiles(droppedFiles)
+    setFile(selectedFile)
+
+    // Create preview for images
+    if (selectedFile.type.startsWith('image/')) {
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        setPreview(e.target?.result as string)
+      }
+      reader.readAsDataURL(selectedFile)
+    } else {
+      setPreview(null)
     }
   }
 
   const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFiles = e.target.files
-    if (selectedFiles && selectedFiles.length > 0) {
-      addFiles(selectedFiles)
+    const selectedFile = e.target.files?.[0]
+    if (selectedFile) {
+      handleFileSelect(selectedFile)
     }
   }
 
-  const openFileDialog = () => {
-    fileInputRef.current?.click()
+  const handleDrop = (e: DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    e.stopPropagation()
+    
+    const droppedFile = e.dataTransfer.files[0]
+    if (droppedFile) {
+      handleFileSelect(droppedFile)
+    }
+  }
+
+  const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    e.stopPropagation()
+  }
+
+  const handleUpload = async () => {
+    if (!file) {
+      setError('Please select a file first')
+      return
+    }
+
+    setUploading(true)
+    setError(null)
+
+    try {
+      const formData = new FormData()
+      formData.append('file', file)
+
+      const response = await fetch('/api/upload/sebi-cert', {
+        method: 'POST',
+        body: formData,
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.error || 'Upload failed')
+      }
+
+      const data = await response.json()
+      onUploadSuccess(data.url, data.fileId)
+      
+      // Reset state after successful upload
+      setFile(null)
+      setPreview(null)
+      if (fileInputRef.current) {
+        fileInputRef.current.value = ''
+      }
+    } catch (err: any) {
+      const errorMessage = err.message || 'Failed to upload file'
+      setError(errorMessage)
+      onUploadError?.(errorMessage)
+    } finally {
+      setUploading(false)
+    }
+  }
+
+  const handleRemove = () => {
+    setFile(null)
+    setPreview(null)
+    setError(null)
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ''
+    }
   }
 
   return (
     <div className={cn('space-y-4', className)}>
-      {/* Upload Area */}
-      <div
-        className={cn(
-          'border-2 border-dashed rounded-lg p-6 text-center transition-colors',
-          isDragOver
-            ? 'border-blue-400 bg-blue-50'
-            : 'border-gray-300 hover:border-gray-400',
-          disabled && 'opacity-50 cursor-not-allowed'
+      <div>
+        <label className="block text-sm font-semibold text-graphite-900 mb-1">
+          {label}
+        </label>
+        {description && (
+          <p className="text-xs text-graphite-600 mb-3">{description}</p>
         )}
-        onDragOver={handleDragOver}
-        onDragLeave={handleDragLeave}
-        onDrop={handleDrop}
-      >
-        <Upload className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-        <p className="text-lg font-medium text-gray-900 mb-2">
-          Drop files here or click to browse
-        </p>
-        <p className="text-sm text-gray-500 mb-4">
-          Maximum {maxFiles} files, {maxSize}MB each
-        </p>
-        <Button
-          type="button"
-          variant="outline"
-          onClick={openFileDialog}
-          disabled={disabled}
-        >
-          Choose Files
-        </Button>
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept={accept}
-          multiple={multiple}
-          onChange={handleFileInput}
-          className="hidden"
-          disabled={disabled}
-        />
       </div>
 
-      {/* File List */}
-      {files.length > 0 && (
-        <div className="space-y-2">
-          <h3 className="text-sm font-medium text-gray-900">Selected Files</h3>
-          {files.map((file) => (
-            <div
-              key={file.id}
-              className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
-            >
-              <div className="flex items-center space-x-3">
-                {getFileIcon(file.file)}
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-gray-900 truncate">
-                    {file.file.name}
-                  </p>
-                  <p className="text-xs text-gray-500">
-                    {formatFileSize(file.file.size)}
-                  </p>
-                  {file.status === 'uploading' && (
-                    <Progress value={file.progress} className="mt-1" />
-                  )}
-                  {file.error && (
-                    <p className="text-xs text-red-600 mt-1">{file.error}</p>
-                  )}
-                </div>
-              </div>
-              
-              <div className="flex items-center space-x-2">
-                {file.status === 'success' && (
-                  <CheckCircle className="h-5 w-5 text-green-500" />
-                )}
-                {file.status === 'error' && (
-                  <AlertCircle className="h-5 w-5 text-red-500" />
-                )}
-                {file.status === 'pending' && (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => removeFile(file.id)}
-                    className="p-1"
-                  >
-                    <X className="h-4 w-4" />
-                  </Button>
-                )}
-              </div>
+      {/* Drag and Drop Area */}
+      {!file ? (
+        <div
+          onDrop={handleDrop}
+          onDragOver={handleDragOver}
+          onClick={() => fileInputRef.current?.click()}
+          className={cn(
+            'relative border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all',
+            'hover:border-mint-400 hover:bg-mint-50/50',
+            error ? 'border-error' : 'border-graphite-300',
+            uploading && 'opacity-50 cursor-not-allowed'
+          )}
+        >
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept={accept}
+            onChange={handleFileInput}
+            className="hidden"
+            disabled={uploading}
+          />
+
+          <div className="flex flex-col items-center gap-3">
+            <div className="w-12 h-12 rounded-full bg-mint-100 flex items-center justify-center">
+              <Upload className="w-6 h-6 text-mint-600" />
             </div>
-          ))}
+            <div>
+              <p className="text-sm font-medium text-graphite-900">
+                Click to upload or drag and drop
+              </p>
+              <p className="text-xs text-graphite-600 mt-1">
+                {accept.split(',').join(' ').replace(/\./g, '')}
+              </p>
+            </div>
+          </div>
+        </div>
+      ) : (
+        /* File Preview */
+        <div className="relative rounded-xl border-2 border-graphite-200 bg-graphite-50 p-4">
+          <div className="flex items-center gap-4">
+            {preview ? (
+              <img
+                src={preview}
+                alt="Preview"
+                className="w-16 h-16 rounded-lg object-cover"
+              />
+            ) : (
+              <div className="w-16 h-16 rounded-lg bg-graphite-200 flex items-center justify-center">
+                <span className="text-2xl font-bold text-graphite-600">PDF</span>
+              </div>
+            )}
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium text-graphite-900 truncate">
+                {file.name}
+              </p>
+              <p className="text-xs text-graphite-600">
+                {(file.size / 1024 / 1024).toFixed(2)} MB
+              </p>
+            </div>
+            <button
+              onClick={handleRemove}
+              disabled={uploading}
+              className="p-2 text-graphite-400 hover:text-graphite-900 transition-colors disabled:opacity-50"
+              aria-label="Remove file"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Error Message */}
+      {error && (
+        <div className="flex items-center gap-2 text-sm text-error bg-error/10 border border-error/20 rounded-lg p-3">
+          <AlertCircle className="w-4 h-4 flex-shrink-0" />
+          <span>{error}</span>
         </div>
       )}
 
       {/* Upload Button */}
-      {files.length > 0 && (
-        <div className="flex justify-end space-x-2">
-          <Button
-            variant="outline"
-            onClick={() => setFiles([])}
-            disabled={isUploading}
-          >
-            Clear All
-          </Button>
-          <Button
-            onClick={handleUpload}
-            disabled={isUploading || files.every(f => f.status === 'success')}
-          >
-            {isUploading ? 'Uploading...' : 'Upload Files'}
-          </Button>
+      {file && !uploading && (
+        <button
+          onClick={handleUpload}
+          className="w-full px-6 py-3 bg-gradient-mint text-white font-semibold rounded-lg shadow-glow-mint hover:shadow-glow-mint-lg hover:scale-102 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Upload Certificate
+        </button>
+      )}
+
+      {/* Uploading State */}
+      {uploading && (
+        <div className="flex items-center justify-center gap-3 px-6 py-3 bg-mint-50 border border-mint-200 rounded-lg">
+          <Loader2 className="w-5 h-5 text-mint-600 animate-spin" />
+          <span className="text-sm font-medium text-mint-700">Uploading...</span>
         </div>
       )}
     </div>
   )
 }
 
-// Image Upload Component
-interface ImageUploadProps {
-  onUpload: (files: File[]) => Promise<void>
-  onError?: (error: string) => void
-  className?: string
-  disabled?: boolean
-  maxFiles?: number
-}
-
-export function ImageUpload({
-  onUpload,
-  onError,
-  className,
-  disabled = false,
-  maxFiles = 5
-}: ImageUploadProps) {
-  return (
-    <FileUpload
-      accept="image/*"
-      maxSize={5} // 5MB for images
-      maxFiles={maxFiles}
-      onUpload={onUpload}
-      onError={onError}
-      className={className}
-      disabled={disabled}
-      multiple={maxFiles > 1}
-    />
-  )
-}
-
-// Document Upload Component
-interface DocumentUploadProps {
-  onUpload: (files: File[]) => Promise<void>
-  onError?: (error: string) => void
-  className?: string
-  disabled?: boolean
-  maxFiles?: number
-}
-
-export function DocumentUpload({
-  onUpload,
-  onError,
-  className,
-  disabled = false,
-  maxFiles = 5
-}: DocumentUploadProps) {
-  return (
-    <FileUpload
-      accept=".pdf,.doc,.docx,.xls,.xlsx"
-      maxSize={20} // 20MB for documents
-      maxFiles={maxFiles}
-      onUpload={onUpload}
-      onError={onError}
-      className={className}
-      disabled={disabled}
-      multiple={maxFiles > 1}
-    />
-  )
-}

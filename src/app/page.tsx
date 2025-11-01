@@ -120,7 +120,7 @@ export default function HomePage() {
               </div>
               <h3 className="mb-3 font-display text-xl font-semibold text-graphite-900">Secure Payments</h3>
               <p className="text-graphite-600 leading-relaxed">
-                Safe and transparent pricing with Razorpay integration. Your data is encrypted and protected.
+                Safe and transparent pricing with secure payment processing. Your data is encrypted and protected.
               </p>
             </div>
           </div>

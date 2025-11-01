@@ -13,8 +13,8 @@ export interface PaymentModalProps {
   onClose: () => void
   advisorName: string
   sessionFee: number
-  callId?: string
-  onPaymentSuccess: (paymentId: string, orderId: string) => void
+  callId?: string // Reserved for future use when payment is enabled
+  onPaymentSuccess: (paymentId: string, orderId: string) => void // Reserved for future use
   onPaymentFailure: (error: string) => void
 }
 
@@ -23,8 +23,8 @@ export function PaymentModal({
   onClose,
   advisorName,
   sessionFee,
-  callId,
-  onPaymentSuccess,
+  callId: _callId, // Reserved for future use when payment is enabled
+  onPaymentSuccess: _onPaymentSuccess, // Reserved for future use
   onPaymentFailure,
 }: PaymentModalProps) {
   const [processing, setProcessing] = useState(false)
@@ -32,12 +32,19 @@ export function PaymentModal({
   const [errorMessage, setErrorMessage] = useState('')
 
   const handlePayment = async () => {
+    // Payment system temporarily disabled - Razorpay on hold
+    setPaymentState('failure')
+    setErrorMessage('Payment system is currently disabled. Please contact support for assistance.')
+    onPaymentFailure('Payment system disabled')
+    // callId and onPaymentSuccess are reserved for future use when payment is enabled
+    return
+
+    /* DISABLED - Payment system on hold
     setProcessing(true)
     setPaymentState('processing')
     setErrorMessage('')
 
     try {
-      // Step 1: Create Razorpay order
       const orderResponse = await fetch('/api/payments/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -53,7 +60,6 @@ export function PaymentModal({
 
       const { orderId, amount, currency } = await orderResponse.json()
 
-      // Step 2: Initialize Razorpay
       const options = {
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
         amount: amount,
@@ -62,7 +68,6 @@ export function PaymentModal({
         description: `Session with ${advisorName}`,
         order_id: orderId,
         handler: async function (response: any) {
-          // Step 3: Verify payment on backend
           try {
             const verifyResponse = await fetch('/api/payments/verify', {
               method: 'POST',
@@ -98,12 +103,11 @@ export function PaymentModal({
           contact: '',
         },
         theme: {
-          color: '#3AE2CE', // Mint color
+          color: '#3AE2CE',
         },
       }
 
-      // @ts-ignore - Razorpay is loaded via script
-      const rzp = new window.Razorpay(options)
+      const rzp = new (window as any).Razorpay(options)
       rzp.open()
     } catch (error: any) {
       setPaymentState('failure')
@@ -111,6 +115,7 @@ export function PaymentModal({
       onPaymentFailure(error.message)
       setProcessing(false)
     }
+    */ // END DISABLED
   }
 
   const handleRetry = () => {

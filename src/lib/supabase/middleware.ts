@@ -110,16 +110,16 @@ export async function updateSession(request: NextRequest) {
       .single()
 
     // If no profile or no role, send to onboarding
-    if (!profile || !profile.role) {
+    if (!profile || !(profile as any).role) {
       return NextResponse.redirect(new URL('/onboarding', request.url))
     }
 
     // If email not verified, send to verification
-    if (!profile.email_verified) {
+    if (!(profile as any).email_verified) {
       return NextResponse.redirect(new URL(`/verify-email?email=${encodeURIComponent(user.email || '')}`, request.url))
     }
 
-    const role = profile.role as 'investor' | 'advisor' | 'admin'
+    const role = (profile as any).role as 'investor' | 'advisor' | 'admin'
     const dashboardUrl =
       role === 'admin'
         ? '/admin/dashboard'
@@ -138,7 +138,7 @@ export async function updateSession(request: NextRequest) {
       .eq('id', user.id)
       .single()
 
-    const role = profile?.role as string
+    const role = (profile as any)?.role as string
 
     // Protect admin routes
     if (path.startsWith('/admin') && role !== 'admin') {

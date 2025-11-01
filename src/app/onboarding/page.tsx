@@ -6,7 +6,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { InvestorOnboarding } from '@/components/auth/InvestorOnboarding'
 import { AdvisorOnboarding } from '@/components/auth/AdvisorOnboarding'
@@ -79,13 +79,16 @@ export default function OnboardingPage() {
     // If role not set in database yet, update it
     if (!currentRole) {
       try {
-        const supabase = createClient()
-        await supabase
-          .from('users')
-          .update({ role, updated_at: new Date().toISOString() })
-          .eq('id', userId)
+        // Update role using API route to avoid TypeScript issues with RLS
+        const response = await fetch('/api/profile', {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ role })
+        })
         
-        setCurrentRole(role)
+        if (response.ok) {
+          setCurrentRole(role)
+        }
       } catch (err) {
         console.error('Failed to update role:', err)
       }
@@ -99,7 +102,7 @@ export default function OnboardingPage() {
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center">
         <Card className="p-8">
           <CardContent className="flex flex-col items-center gap-4">
-            <LoadingSpinner size="large" />
+            <LoadingSpinner size="xl" />
             <p className="text-gray-600">Loading your profile...</p>
           </CardContent>
         </Card>

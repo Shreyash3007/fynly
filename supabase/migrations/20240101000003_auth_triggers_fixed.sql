@@ -114,7 +114,7 @@ CREATE TRIGGER on_auth_user_deleted
 CREATE OR REPLACE FUNCTION public.track_user_login()
 RETURNS TRIGGER AS $$
 BEGIN
-  INSERT INTO public.events (user_id, event_type, event_data, created_at)
+  INSERT INTO public.events (user_id, event_name, properties, timestamp)
   VALUES (
     NEW.id,
     'user_logged_in',
@@ -147,7 +147,7 @@ RETURNS TRIGGER AS $$
 BEGIN
   -- Track approval event
   IF NEW.status = 'approved' AND OLD.status != 'approved' THEN
-    INSERT INTO public.events (user_id, event_type, event_data, created_at)
+    INSERT INTO public.events (user_id, event_name, properties, timestamp)
     VALUES (
       NEW.user_id,
       'advisor_approved',
@@ -158,7 +158,7 @@ BEGIN
   
   -- Track rejection event
   IF NEW.status = 'rejected' AND OLD.status != 'rejected' THEN
-    INSERT INTO public.events (user_id, event_type, event_data, created_at)
+    INSERT INTO public.events (user_id, event_name, properties, timestamp)
     VALUES (
       NEW.user_id,
       'advisor_rejected',
@@ -223,7 +223,7 @@ RETURNS TRIGGER AS $$
 BEGIN
   IF NEW.status = 'completed' AND OLD.status != 'completed' THEN
     -- Track payment completion event
-    INSERT INTO public.events (user_id, event_type, event_data, created_at)
+    INSERT INTO public.events (user_id, event_name, properties, timestamp)
     SELECT
       b.investor_id,
       'payment_completed',

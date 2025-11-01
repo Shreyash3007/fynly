@@ -9,7 +9,12 @@
     "start": "next start",
     "lint": "next lint",
     "type-check": "tsc --noEmit",
-    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,md}\""
+    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,md}\"",
+    "test": "node scripts/brutal-test-suite.js",
+    "supabase:status": "node scripts/automated-backend-control.js status",
+    "supabase:check": "node scripts/automated-backend-control.js check",
+    "supabase:verify": "node scripts/automated-backend-control.js verify",
+    "supabase:setup": "node scripts/automated-backend-control.js setup"
   },
   "dependencies": {
     "@daily-co/daily-js": "^0.60.0",

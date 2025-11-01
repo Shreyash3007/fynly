@@ -112,7 +112,7 @@
 - **Analytics:** Supabase Events
 
 ### DevOps
-- **Hosting:** Firebase Hosting
+- **Hosting:** Vercel
 - **CI/CD:** GitHub Actions
 - **Testing:** Jest + Cypress
 - **Linting:** ESLint + Prettier
@@ -130,7 +130,6 @@ Before you begin, ensure you have:
 - **Daily.co** API key ([daily.co](https://daily.co))
 - **Razorpay** account ([razorpay.com](https://razorpay.com))
 - **Resend** API key ([resend.com](https://resend.com))
-- **Firebase** project ([firebase.google.com](https://firebase.google.com))
 
 ---
 
@@ -168,7 +167,7 @@ npm install
 cp .env.local.example .env.local
 
 # Install global tools (optional)
-npm install -g supabase firebase-tools
+npm install -g supabase
 ```
 
 ---
@@ -185,9 +184,11 @@ NEXT_PUBLIC_APP_URL=http://localhost:3000
 NEXT_PUBLIC_APP_NAME=Fynly
 
 # Supabase
-NEXT_PUBLIC_SUPABASE_URL=https://xxxxx.supabase.co
+# Get these from: https://supabase.com/dashboard/project/YOUR_PROJECT_ID/settings/api
+NEXT_PUBLIC_SUPABASE_URL=https://YOUR_PROJECT_ID.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
 SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+SUPABASE_JWT_SECRET=your_jwt_secret
 
 # Daily.co Video
 NEXT_PUBLIC_DAILY_API_KEY=your_daily_api_key
@@ -200,9 +201,6 @@ RAZORPAY_KEY_SECRET=your_secret_key
 # Resend Email
 RESEND_API_KEY=re_xxxxx
 NEXT_PUBLIC_EMAIL_FROM=noreply@fynly.com
-
-# Firebase
-NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_firebase_project
 
 # Security
 ENCRYPTION_KEY=your_32_character_random_string
@@ -365,48 +363,41 @@ npm run test:e2e:headless
 
 ## 🚢 Deployment
 
-### Firebase Hosting (Automated)
+### Vercel Deployment (Automated)
 
 ```bash
-# Windows Command Prompt
-scripts\deploy.bat
+# Push to GitHub (Vercel auto-deploys)
+git push origin main
 
-# PowerShell
-.\scripts\deploy.ps1
-
-# Manual
-firebase login
-npm run build
-firebase deploy --only hosting
+# Or deploy manually via Vercel CLI
+npm install -g vercel
+vercel --prod
 ```
 
 ### Deployment Checklist
 
 - [ ] All tests passing
-- [ ] Environment variables configured in Firebase
+- [ ] Environment variables configured in Vercel
 - [ ] Database migrations applied
 - [ ] API keys are production keys (not test)
-- [ ] Razorpay in live mode
-- [ ] Firebase project linked
+- [ ] Payment system configured (currently disabled)
 
 ### CI/CD Pipeline
 
-GitHub Actions automatically:
-1. ✅ Runs linting and type checks
-2. ✅ Executes unit tests
-3. ✅ Runs E2E tests
-4. ✅ Builds production bundle
-5. ✅ Deploys to Firebase on `main` branch push
+Vercel automatically:
+1. ✅ Runs linting and type checks on push
+2. ✅ Builds production bundle
+3. ✅ Deploys on `main` branch push
 
-### Environment Variables in GitHub
+### Environment Variables in Vercel
 
-Add secrets in **Settings → Secrets and variables → Actions**:
+Add in **Project Settings → Environment Variables**:
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `SUPABASE_SERVICE_ROLE_KEY`
 - `NEXT_PUBLIC_DAILY_API_KEY`
-- `NEXT_PUBLIC_RAZORPAY_KEY_ID`
-- `FIREBASE_SERVICE_ACCOUNT`
-- `FIREBASE_PROJECT_ID`
+- `DAILY_API_KEY`
+- `RESEND_API_KEY`
 
 ---
 

@@ -69,11 +69,7 @@ export {
 } from './Toast'
 export type { Toast } from './Toast'
 
-export { 
-  NotificationBell,
-  mockNotifications
-} from './NotificationBell'
-export type { Notification } from './NotificationBell'
+// NotificationBell removed - using email-only notifications for MVP
 
 export { 
   AccessibilityEnhancer, 
@@ -84,38 +80,11 @@ export {
   FocusIndicator 
 } from './AccessibilityEnhancer'
 
-// Mobile Components
-export {
-  MobileHeader,
-  MobileSidebar,
-  MobileCard,
-  MobileSearch,
-  MobileBottomNav,
-  useMobile
-} from '../mobile/MobileOptimizedLayout'
+// Mobile Components removed - using Tailwind responsive classes for MVP
 
-// Performance Components
-export {
-  OptimizedImage,
-  OptimizedAvatar,
-  ResponsiveImageGallery
-} from '../performance/ImageOptimizer'
+// Performance Components removed - using Next.js built-in Image and lazy loading for MVP
 
-export {
-  LazyLoadWrapper,
-  LazyImage,
-  LazyList,
-  VirtualList,
-  createLazyComponent,
-  useIntersectionObserver,
-  useVirtualScrolling
-} from '../performance/LazyLoader'
-
-// Search Components
-export {
-  AdvancedSearch,
-  SearchResults
-} from '../search/AdvancedSearch'
+// Search Components removed - using basic search filters for MVP
 
 // Validation Components
 export {
@@ -127,11 +96,7 @@ export {
 } from '../validation/FormValidation'
 
 // Upload Components
-export {
-  FileUpload,
-  ImageUpload,
-  DocumentUpload
-} from '../upload/FileUpload'
+export { FileUpload } from '../upload/FileUpload'
 
 
 

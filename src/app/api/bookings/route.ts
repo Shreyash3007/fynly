@@ -7,6 +7,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { createDailyRoom, generateRoomName, getRoomUrl } from '@/lib/daily/client'
+import { validateBookingPayload } from '@/lib/validation/api-validators'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
@@ -27,15 +28,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const { advisorId, meetingTime, duration, notes } = body
-
-    // Validate input
-    if (!advisorId || !meetingTime) {
-      return NextResponse.json(
-        { error: 'Missing required fields' },
-        { status: 400 }
-      )
+    // Validate input using validation utility
+    const validation = validateBookingPayload(body)
+    if (!validation.valid) {
+      return NextResponse.json({ error: validation.error }, { status: 400 })
     }
+
+    const { advisorId, meetingTime, duration, notes } = validation.data!
 
     // Get advisor details
     const { data: advisor, error: advisorError } = await supabase
@@ -51,14 +50,14 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Create booking
-    const { data: booking, error: bookingError} = await supabase
+    // Create booking with validated data
+    const { data: booking, error: bookingError } = await supabase
       .from('bookings')
       .insert({
         investor_id: user.id,
         advisor_id: advisorId,
         meeting_time: meetingTime,
-        duration_minutes: duration || 60,
+        duration_minutes: duration,
         notes: notes || null,
         status: 'pending',
       } as any)
@@ -69,16 +68,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: bookingError.message }, { status: 500 })
     }
 
-    // Create Daily.co room
+    // Create Daily.co room (simplified for MVP - uses built-in UI)
     try {
       const roomName = generateRoomName((booking as any).id)
       const room = await createDailyRoom({
         name: roomName,
         privacy: 'private',
-        properties: {
-          exp: Math.floor(new Date(meetingTime).getTime() / 1000) + 86400, // 24 hours from meeting
-          max_participants: 2,
-        },
+        exp: Math.floor(new Date(meetingTime).getTime() / 1000) + 86400, // 24 hours from meeting
       })
 
       // Update booking with meeting link

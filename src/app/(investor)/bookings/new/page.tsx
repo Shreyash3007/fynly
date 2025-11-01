@@ -19,7 +19,7 @@ declare global {
 function BookingForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const { user, isAuthenticated } = useAuth()
+  const { user: _user, isAuthenticated } = useAuth()
   const advisorId = searchParams.get('advisorId')
 
   const [advisor, setAdvisor] = useState<any>(null)
@@ -134,7 +134,15 @@ function BookingForm() {
 
       const orderData = await orderResponse.json()
 
-      // Open Razorpay checkout
+      // Payment system is disabled - show message and redirect
+      if (orderData.disabled || orderResponse.status === 503) {
+        alert('Payment system is currently disabled. Your booking has been created but payment is pending. Please contact support to complete payment.')
+        router.push(`/dashboard?booking=${booking.id}&payment=pending`)
+        return
+      }
+
+      // Payment system enabled (code preserved for future use)
+      /* DISABLED - Payment on hold
       const options = {
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
         amount: orderData.amount,
@@ -150,7 +158,6 @@ function BookingForm() {
           color: '#3AE2CE',
         },
         handler: async (response: any) => {
-          // Verify payment
           const verifyResponse = await fetch('/api/payments/verify', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -158,7 +165,7 @@ function BookingForm() {
           })
 
           if (verifyResponse.ok) {
-            router.push(`/investor/dashboard?booking=${booking.id}`)
+            router.push(`/dashboard?booking=${booking.id}`)
           }
         },
         modal: {
@@ -168,8 +175,9 @@ function BookingForm() {
         },
       }
 
-      const razorpay = new window.Razorpay(options)
+      const razorpay = new (window as any).Razorpay(options)
       razorpay.open()
+      */ // END DISABLED
     } catch (error) {
       console.error('Booking failed:', error)
       setLoading(false)
@@ -530,8 +538,7 @@ function BookingForm() {
         </div>
       </div>
 
-      {/* Load Razorpay script */}
-      <script src="https://checkout.razorpay.com/v1/checkout.js" async />
+      {/* Razorpay script disabled - Payment system on hold */}
     </div>
   )
 }

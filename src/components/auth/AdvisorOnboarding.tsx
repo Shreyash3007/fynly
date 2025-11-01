@@ -28,7 +28,7 @@ const EXPERTISE_OPTIONS: ExpertiseArea[] = [
   'tax_planning',
   'wealth_management',
   'mutual_funds',
-  'stocks_and_equity',
+  'stocks',
   'insurance',
   'real_estate'
 ]

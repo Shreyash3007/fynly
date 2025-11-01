@@ -54,15 +54,18 @@ export default async function InvestorDashboardPage() {
       )
     `)
     .eq('investor_id', (profile as any).id)
-    .order('updated_at', { ascending: false })
+    .eq('status', 'active')
+    .order('last_message_at', { ascending: false, nullsFirst: false })
     .limit(3)
 
-  // Mock data for demonstration (replace with real data)
-  const portfolioValue = 125000
-  const monthlyGrowth = 12.5
-  const totalSpent = 2500
-  const totalSessions = 8
-  const averageRating = 4.8
+  // Count total sessions from bookings
+  const { count: totalSessionsCount } = await supabase
+    .from('bookings')
+    .select('*', { count: 'exact', head: true })
+    .eq('investor_id', (profile as any).id)
+    .in('status', ['confirmed', 'completed'])
+  
+  const totalSessions = totalSessionsCount || 0
   const nextSession = bookings?.[0] ? new Date((bookings[0] as any).meeting_time) : null
 
   return (
@@ -97,29 +100,16 @@ export default async function InvestorDashboardPage() {
             </Link>
           </div>
 
-          {/* Main Balance Card */}
+          {/* Welcome Card */}
           <div className="rounded-3xl bg-gradient-to-br from-mint-500 to-mint-600 p-8 shadow-2xl">
             <div className="flex items-start justify-between mb-6">
               <div className="flex-1">
-                <p className="text-mint-100 text-sm font-medium mb-2">Portfolio Value</p>
-                <div className="flex items-baseline gap-3 mb-3">
-                  <h2 className="font-display text-5xl font-bold text-white">
-                    ₹{portfolioValue.toLocaleString('en-IN')}
-                  </h2>
-                  <div className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-sm">
-                    <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
-                    </svg>
-                    <span className="text-white font-semibold text-sm">+{monthlyGrowth}%</span>
-                  </div>
-                </div>
-                <p className="text-mint-100 text-sm">+₹{(portfolioValue * monthlyGrowth / 100).toLocaleString('en-IN')} this month</p>
+                <p className="text-mint-100 text-sm font-medium mb-2">Dashboard</p>
+                <h2 className="font-display text-4xl font-bold text-white mb-3">
+                  Welcome to Fynly
+                </h2>
+                <p className="text-mint-100 text-sm">Connect with verified SEBI advisors</p>
               </div>
-              <button className="w-12 h-12 rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-center hover:bg-white/20 transition-all">
-                <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
-                </svg>
-              </button>
             </div>
 
             {/* Quick Actions */}
@@ -136,29 +126,31 @@ export default async function InvestorDashboardPage() {
                 <span className="text-white text-sm font-medium">Book Session</span>
               </Link>
 
-              <Link
-                href="/profile/net-worth"
-                className="flex flex-col items-center justify-center p-4 rounded-2xl bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all group"
+              <div
+                className="flex flex-col items-center justify-center p-4 rounded-2xl bg-white/10 backdrop-blur-sm opacity-60 cursor-not-allowed group"
+                title="Coming soon"
               >
-                <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+                <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center mb-2">
                   <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                   </svg>
                 </div>
                 <span className="text-white text-sm font-medium">Add Wealth</span>
-              </Link>
+                <span className="text-xs text-white/60 mt-1">Coming soon</span>
+              </div>
 
-              <Link
-                href="/transactions"
-                className="flex flex-col items-center justify-center p-4 rounded-2xl bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all group"
+              <div
+                className="flex flex-col items-center justify-center p-4 rounded-2xl bg-white/10 backdrop-blur-sm opacity-60 cursor-not-allowed group"
+                title="Coming soon"
               >
-                <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+                <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center mb-2">
                   <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                   </svg>
                 </div>
                 <span className="text-white text-sm font-medium">History</span>
-              </Link>
+                <span className="text-xs text-white/60 mt-1">Coming soon</span>
+              </div>
             </div>
           </div>
         </div>
@@ -166,7 +158,7 @@ export default async function InvestorDashboardPage() {
 
       {/* Stats Cards Section */}
       <div className="container mx-auto px-4 -mt-12">
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-8">
+        <div className={`grid gap-4 ${bookings && bookings.length > 0 ? 'md:grid-cols-2 lg:grid-cols-4' : 'md:grid-cols-2 lg:grid-cols-3'} mb-8`}>
           {/* Sessions Card */}
           <div className="rounded-2xl bg-white/90 backdrop-blur-md p-6 shadow-neomorph-lg border border-white/50 hover:shadow-neomorph-xl transition-all group">
             <div className="flex items-center justify-between mb-4">
@@ -197,18 +189,12 @@ export default async function InvestorDashboardPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                 </svg>
               </div>
-              <div className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-cyan-50 text-cyan-700 text-xs font-semibold">
-                <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                </svg>
-                {averageRating}/5
-              </div>
             </div>
             <p className="text-graphite-600 text-sm font-medium mb-1">Total Sessions</p>
             <p className="text-3xl font-display font-bold text-graphite-900 mb-1">
               {totalSessions}
             </p>
-            <p className="text-xs text-graphite-500">Average rating: {averageRating}/5</p>
+            <p className="text-xs text-graphite-500">Completed consultations</p>
           </div>
 
           {/* Chats Card */}
@@ -230,56 +216,23 @@ export default async function InvestorDashboardPage() {
             <p className="text-xs text-graphite-500">{recentChats?.length ? 'Messages available' : 'Start chatting'}</p>
           </div>
 
-          {/* Spending Card */}
-          <div className="rounded-2xl bg-white/90 backdrop-blur-md p-6 shadow-neomorph-lg border border-white/50 hover:shadow-neomorph-xl transition-all group">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center shadow-lg">
-                <svg className="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
+          {/* Spending Card - Only show if there are actual bookings */}
+          {bookings && bookings.length > 0 && (
+            <div className="rounded-2xl bg-white/90 backdrop-blur-md p-6 shadow-neomorph-lg border border-white/50 hover:shadow-neomorph-xl transition-all group">
+              <div className="flex items-center justify-between mb-4">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center shadow-lg">
+                  <svg className="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
               </div>
-              <div className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-orange-50 text-orange-700 text-xs font-semibold">
-                <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                </svg>
-                Secure
-              </div>
+              <p className="text-graphite-600 text-sm font-medium mb-1">Total Spent</p>
+              <p className="text-3xl font-display font-bold text-graphite-900 mb-1">
+                — {/* Will show actual amount when payment data is available */}
+              </p>
+              <p className="text-xs text-graphite-500">On consultations</p>
             </div>
-            <p className="text-graphite-600 text-sm font-medium mb-1">Total Spent</p>
-            <p className="text-3xl font-display font-bold text-graphite-900 mb-1">
-              ₹{totalSpent.toLocaleString('en-IN')}
-            </p>
-            <p className="text-xs text-graphite-500">On consultations</p>
-          </div>
-        </div>
-
-        {/* Quick Insights Section */}
-        <div className="rounded-2xl bg-gradient-to-r from-mint-50 to-cyan-50 p-6 mb-8 border border-mint-200">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-mint-500 to-cyan-500 flex items-center justify-center">
-              <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-              </svg>
-            </div>
-            <h2 className="font-display text-xl font-bold text-graphite-900">Quick Insights</h2>
-          </div>
-          <div className="grid gap-4 md:grid-cols-3">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-mint-600 mb-1">₹{Math.round(portfolioValue * 0.15).toLocaleString('en-IN')}</div>
-              <div className="text-sm text-graphite-600">Potential Savings</div>
-              <div className="text-xs text-mint-500">From expert advice</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-cyan-600 mb-1">{Math.round(totalSessions * 1.2)}</div>
-              <div className="text-sm text-graphite-600">Recommended Sessions</div>
-              <div className="text-xs text-cyan-500">Based on your goals</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-purple-600 mb-1">₹{Math.round(totalSpent * 0.8).toLocaleString('en-IN')}</div>
-              <div className="text-sm text-graphite-600">Avg. Session Cost</div>
-              <div className="text-xs text-purple-500">Great value!</div>
-            </div>
-          </div>
+          )}
         </div>
 
         {/* Main Content Grid */}
@@ -323,7 +276,7 @@ export default async function InvestorDashboardPage() {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                           </svg>
                           <span className="font-medium">
-                            {new Date(booking.scheduled_at).toLocaleString('en-IN', {
+                            {new Date((booking as any).meeting_time).toLocaleString('en-IN', {
                               month: 'short',
                               day: 'numeric',
                               hour: '2-digit',
@@ -358,10 +311,10 @@ export default async function InvestorDashboardPage() {
             {recentChats && recentChats.length > 0 ? (
               <div className="space-y-3">
                 {recentChats.map((chat: any) => (
-                  <Link
+                  <div
                     key={chat.id}
-                    href={`/chat/${chat.id}`}
-                    className="group block rounded-xl bg-graphite-50/50 hover:bg-cyan-50 p-4 transition-all duration-200 border border-graphite-100 hover:border-cyan-300"
+                    className="group block rounded-xl bg-graphite-50/50 p-4 border border-graphite-100 opacity-60"
+                    title="Chat feature coming soon"
                   >
                     <div className="flex items-center gap-4">
                       <div className="relative">
@@ -375,20 +328,35 @@ export default async function InvestorDashboardPage() {
                           {chat.advisor?.users?.full_name || 'Financial Advisor'}
                         </h3>
                         <p className="text-sm text-graphite-600 mt-1">
-                          Last message: {new Date(chat.updated_at).toLocaleDateString('en-IN', {month: 'short', day: 'numeric'})}
+                          Chat feature coming soon
                         </p>
                       </div>
-                      <div className="p-2.5 rounded-lg bg-mint-50 text-mint-600 group-hover:bg-mint-500 group-hover:text-white transition-all">
+                      <div className="p-2.5 rounded-lg bg-mint-50 text-mint-600">
                         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                         </svg>
                       </div>
                     </div>
-                  </Link>
+                  </div>
                 ))}
               </div>
             ) : (
-              EmptyStates.NoChats(() => { window.location.href = '/advisors' })
+              <div className="text-center py-8">
+                <svg className="w-12 h-12 text-graphite-300 mx-auto mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                </svg>
+                <p className="text-graphite-600 font-medium mb-1">No conversations yet</p>
+                <p className="text-sm text-graphite-500 mb-4">Chat feature will be available soon</p>
+                <button
+                  onClick={() => window.location.href = '/advisors'}
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-mint-500 text-white rounded-lg hover:bg-mint-600 transition-colors text-sm font-semibold"
+                >
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                  Find Advisors
+                </button>
+              </div>
             )}
           </div>
         </div>

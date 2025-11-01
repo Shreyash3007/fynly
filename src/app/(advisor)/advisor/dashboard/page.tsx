@@ -43,8 +43,8 @@ export default async function AdvisorDashboardPage() {
     `)
     .eq('advisor_id', (advisor as any).id)
     .eq('status', 'confirmed')
-    .gte('scheduled_at', new Date().toISOString())
-    .order('scheduled_at', { ascending: true })
+    .gte('meeting_time', new Date().toISOString())
+    .order('meeting_time', { ascending: true })
     .limit(5)
 
   // Get recent bookings for activity
@@ -58,15 +58,8 @@ export default async function AdvisorDashboardPage() {
     .order('created_at', { ascending: false })
     .limit(5)
 
-  // Mock earnings data (replace with real calculations)
-  const todayEarnings = 2500
-  const weekEarnings = 12500
-  const monthEarnings = 45000
+  // Real data only - no mock data for MVP
   const totalSessions = recentBookings?.length || 0
-  const weeklyGrowth = 15.2
-  const averageRating = 4.8
-  const responseTime = '2.5 hours'
-  const clientSatisfaction = 96
 
   return (
     <div className="min-h-screen bg-smoke">
@@ -111,7 +104,7 @@ export default async function AdvisorDashboardPage() {
             </div>
           </div>
 
-          {/* Status & Earnings Card */}
+          {/* Status Card */}
           <div className="rounded-3xl bg-gradient-to-br from-mint-500 to-mint-600 p-8 shadow-2xl">
             <div className="flex items-start justify-between mb-6">
               <div className="flex-1">
@@ -132,19 +125,10 @@ export default async function AdvisorDashboardPage() {
                     }
                   </span>
                 </div>
-                <p className="text-mint-100 text-sm font-medium mb-2">This Week's Earnings</p>
-                <div className="flex items-baseline gap-3 mb-3">
-                  <h2 className="font-display text-5xl font-bold text-white">
-                    ₹{weekEarnings.toLocaleString('en-IN')}
-                  </h2>
-                  <div className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-sm">
-                    <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
-                    </svg>
-                    <span className="text-white font-semibold text-sm">+{weeklyGrowth}%</span>
-              </div>
-            </div>
-                <p className="text-mint-100 text-sm">+₹{(weekEarnings * weeklyGrowth / 100).toLocaleString('en-IN')} vs last week</p>
+                <h2 className="font-display text-3xl font-bold text-white mb-2">
+                  Welcome Back!
+                </h2>
+                <p className="text-mint-100 text-sm">Manage your consultations and grow your practice</p>
               </div>
               <button className="w-12 h-12 rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-center hover:bg-white/20 transition-all">
                 <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -197,63 +181,27 @@ export default async function AdvisorDashboardPage() {
 
       {/* Stats Cards Section */}
       <div className="container mx-auto px-4 -mt-12">
-        <div className="grid gap-4 md:grid-cols-4 mb-8">
-          {/* Today's Earnings Card */}
+        <div className="grid gap-4 md:grid-cols-2 mb-8">
+          {/* Upcoming Sessions Today Card */}
           <div className="rounded-2xl bg-white/90 backdrop-blur-md p-6 shadow-neomorph-lg border border-white/50 hover:shadow-neomorph-xl transition-all group">
             <div className="flex items-center justify-between mb-4">
               <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-mint-400 to-mint-600 flex items-center justify-center shadow-lg">
                 <svg className="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
               </div>
-              <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-mint-50 text-mint-700 text-xs font-semibold">
-                <span className="w-2 h-2 rounded-full bg-mint-500 animate-pulse"></span>
-                Today
-              </span>
+              {upcomingBookings && upcomingBookings.length > 0 && (
+                <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-mint-50 text-mint-700 text-xs font-semibold">
+                  <span className="w-2 h-2 rounded-full bg-mint-500 animate-pulse"></span>
+                  {upcomingBookings.length} today
+                </span>
+              )}
             </div>
-            <p className="text-graphite-600 text-sm font-medium mb-1">Today's Earnings</p>
+            <p className="text-graphite-600 text-sm font-medium mb-1">Upcoming Sessions</p>
             <p className="text-3xl font-display font-bold text-graphite-900 mb-1">
-              ₹{todayEarnings.toLocaleString('en-IN')}
+              {upcomingBookings?.length || 0}
             </p>
-            <p className="text-xs text-graphite-500">From {upcomingBookings?.length || 0} sessions</p>
-          </div>
-
-          {/* This Week Card */}
-          <div className="rounded-2xl bg-white/90 backdrop-blur-md p-6 shadow-neomorph-lg border border-white/50 hover:shadow-neomorph-xl transition-all group">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-400 to-cyan-600 flex items-center justify-center shadow-lg">
-                <svg className="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                </svg>
-              </div>
-              <div className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-cyan-50 text-cyan-700 text-xs font-semibold">
-                <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clipRule="evenodd" />
-                </svg>
-                +{weeklyGrowth}%
-              </div>
-            </div>
-            <p className="text-graphite-600 text-sm font-medium mb-1">This Week</p>
-            <p className="text-3xl font-display font-bold text-graphite-900 mb-1">
-              ₹{weekEarnings.toLocaleString('en-IN')}
-            </p>
-            <p className="text-xs text-graphite-500">vs ₹{(weekEarnings / (1 + weeklyGrowth/100)).toLocaleString('en-IN')} last week</p>
-          </div>
-
-          {/* This Month Card */}
-          <div className="rounded-2xl bg-white/90 backdrop-blur-md p-6 shadow-neomorph-lg border border-white/50 hover:shadow-neomorph-xl transition-all group">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center shadow-lg">
-                <svg className="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                </svg>
-              </div>
-            </div>
-            <p className="text-graphite-600 text-sm font-medium mb-1">This Month</p>
-            <p className="text-3xl font-display font-bold text-graphite-900 mb-1">
-              ₹{monthEarnings.toLocaleString('en-IN')}
-            </p>
-            <p className="text-xs text-graphite-500">Monthly target: ₹50,000</p>
+            <p className="text-xs text-graphite-500">Scheduled for today</p>
           </div>
 
           {/* Total Sessions Card */}
@@ -270,40 +218,6 @@ export default async function AdvisorDashboardPage() {
               {totalSessions}
             </p>
             <p className="text-xs text-graphite-500">Lifetime consultations</p>
-          </div>
-        </div>
-
-        {/* Performance Insights Section */}
-        <div className="rounded-2xl bg-gradient-to-r from-mint-50 to-cyan-50 p-6 mb-8 border border-mint-200">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-mint-500 to-cyan-500 flex items-center justify-center">
-              <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-              </svg>
-            </div>
-            <h2 className="font-display text-xl font-bold text-graphite-900">Performance Insights</h2>
-          </div>
-          <div className="grid gap-4 md:grid-cols-4">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-mint-600 mb-1">{averageRating}/5</div>
-              <div className="text-sm text-graphite-600">Average Rating</div>
-              <div className="text-xs text-mint-500">Excellent!</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-cyan-600 mb-1">{responseTime}</div>
-              <div className="text-sm text-graphite-600">Avg Response Time</div>
-              <div className="text-xs text-cyan-500">Very fast</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-purple-600 mb-1">{clientSatisfaction}%</div>
-              <div className="text-sm text-graphite-600">Client Satisfaction</div>
-              <div className="text-xs text-purple-500">Outstanding</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-orange-600 mb-1">₹{Math.round(weekEarnings / 7).toLocaleString('en-IN')}</div>
-              <div className="text-sm text-graphite-600">Daily Average</div>
-              <div className="text-xs text-orange-500">This week</div>
-            </div>
           </div>
         </div>
 
@@ -348,7 +262,7 @@ export default async function AdvisorDashboardPage() {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                           </svg>
                           <span className="font-medium">
-                            {new Date(booking.scheduled_at).toLocaleString('en-IN', {
+                            {new Date(booking.meeting_time).toLocaleString('en-IN', {
                               month: 'short',
                               day: 'numeric',
                               hour: '2-digit',

@@ -14,11 +14,11 @@ import { getDashboardUrl } from '@/lib/auth/profile-helper'
 
 export default function NotFoundPage() {
   const router = useRouter()
-  const { user, profile } = useAuth()
+  const { user } = useAuth()
 
   const handleGoHome = () => {
-    if (user && profile?.role) {
-      const dashboardUrl = getDashboardUrl(profile.role)
+    if (user?.role) {
+      const dashboardUrl = getDashboardUrl(user.role)
       router.push(dashboardUrl)
     } else {
       router.push('/')

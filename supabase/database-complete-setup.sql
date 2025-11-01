@@ -1,9 +1,16 @@
 -- =====================================================
--- FYNLY DATABASE COMPLETE SETUP
--- Run this script in your Supabase SQL Editor
+-- FYNLY DATABASE - COMPLETE SETUP & OPTIMIZATION
+-- Production-Ready Database Schema
+-- Run this script in Supabase SQL Editor
+-- Date: 2024-01-30
+-- Status: MVP Production Ready
 -- =====================================================
 
--- 1. USERS TABLE
+-- =====================================================
+-- 1. CORE TABLES
+-- =====================================================
+
+-- USERS TABLE
 -- Core user profiles linked to auth.users
 CREATE TABLE IF NOT EXISTS public.users (
   id UUID REFERENCES auth.users(id) ON DELETE CASCADE PRIMARY KEY,
@@ -19,7 +26,7 @@ CREATE TABLE IF NOT EXISTS public.users (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
--- 2. ADVISORS TABLE
+-- ADVISORS TABLE
 -- Financial advisors profiles and verification
 CREATE TABLE IF NOT EXISTS public.advisors (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -27,7 +34,7 @@ CREATE TABLE IF NOT EXISTS public.advisors (
   bio TEXT,
   expertise TEXT[] DEFAULT '{}',
   sebi_reg_no TEXT UNIQUE,
-  experience_years INTEGER DEFAULT 0, -- Fixed: Changed from years_experience to match code
+  experience_years INTEGER DEFAULT 0,
   hourly_rate DECIMAL(10,2) DEFAULT 0,
   linkedin_url TEXT,
   status TEXT DEFAULT 'pending' CHECK (status IN ('pending', 'approved', 'rejected', 'suspended')),
@@ -38,13 +45,13 @@ CREATE TABLE IF NOT EXISTS public.advisors (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
--- 3. BOOKINGS TABLE
+-- BOOKINGS TABLE
 -- Consultation bookings between investors and advisors
 CREATE TABLE IF NOT EXISTS public.bookings (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   investor_id UUID REFERENCES public.users(id) ON DELETE CASCADE NOT NULL,
   advisor_id UUID REFERENCES public.advisors(id) ON DELETE CASCADE NOT NULL,
-  meeting_time TIMESTAMP WITH TIME ZONE NOT NULL, -- FIXED: Changed from meeting_date to match code
+  meeting_time TIMESTAMP WITH TIME ZONE NOT NULL,
   duration_minutes INTEGER NOT NULL DEFAULT 30,
   status TEXT DEFAULT 'pending' CHECK (status IN ('pending', 'confirmed', 'completed', 'cancelled')),
   meeting_link TEXT,
@@ -54,7 +61,7 @@ CREATE TABLE IF NOT EXISTS public.bookings (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
--- 4. PAYMENTS TABLE
+-- PAYMENTS TABLE
 -- Payment tracking for bookings
 CREATE TABLE IF NOT EXISTS public.payments (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -75,7 +82,7 @@ CREATE TABLE IF NOT EXISTS public.payments (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
--- 5. REVIEWS TABLE
+-- REVIEWS TABLE
 -- Reviews and ratings for advisors
 CREATE TABLE IF NOT EXISTS public.reviews (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -88,8 +95,8 @@ CREATE TABLE IF NOT EXISTS public.reviews (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
--- 6. NOTIFICATIONS TABLE
--- System notifications for users (email-only for MVP, table for future use)
+-- NOTIFICATIONS TABLE
+-- System notifications (email-only for MVP, table for future use)
 CREATE TABLE IF NOT EXISTS public.notifications (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   user_id UUID REFERENCES public.users(id) ON DELETE CASCADE NOT NULL,
@@ -100,7 +107,7 @@ CREATE TABLE IF NOT EXISTS public.notifications (
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
--- 7. ADVISOR-INVESTOR RELATIONSHIPS TABLE
+-- ADVISOR-INVESTOR RELATIONSHIPS TABLE
 -- Chat relationships between advisors and investors
 CREATE TABLE IF NOT EXISTS public.advisor_investor_relationships (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -113,7 +120,7 @@ CREATE TABLE IF NOT EXISTS public.advisor_investor_relationships (
   UNIQUE(advisor_id, investor_id)
 );
 
--- 8. MESSAGES TABLE
+-- MESSAGES TABLE
 -- Chat messages between advisors and investors
 CREATE TABLE IF NOT EXISTS public.messages (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -130,21 +137,37 @@ CREATE TABLE IF NOT EXISTS public.messages (
 );
 
 -- =====================================================
--- INDEXES FOR PERFORMANCE
+-- 2. INDEXES FOR PERFORMANCE
 -- =====================================================
 
+-- Users indexes
 CREATE INDEX IF NOT EXISTS users_email_idx ON public.users(email);
 CREATE INDEX IF NOT EXISTS users_role_idx ON public.users(role);
+CREATE INDEX IF NOT EXISTS idx_users_onboarding ON public.users(onboarding_completed) WHERE onboarding_completed = FALSE;
+
+-- Advisors indexes
 CREATE INDEX IF NOT EXISTS advisors_user_id_idx ON public.advisors(user_id);
 CREATE INDEX IF NOT EXISTS advisors_status_idx ON public.advisors(status);
+CREATE INDEX IF NOT EXISTS idx_advisors_status_rating ON public.advisors(status, average_rating DESC) WHERE status = 'approved';
+
+-- Bookings indexes
 CREATE INDEX IF NOT EXISTS bookings_investor_id_idx ON public.bookings(investor_id);
 CREATE INDEX IF NOT EXISTS bookings_advisor_id_idx ON public.bookings(advisor_id);
 CREATE INDEX IF NOT EXISTS bookings_status_idx ON public.bookings(status);
 CREATE INDEX IF NOT EXISTS bookings_meeting_time_idx ON public.bookings(meeting_time);
+CREATE INDEX IF NOT EXISTS idx_bookings_investor_status ON public.bookings(investor_id, status);
+CREATE INDEX IF NOT EXISTS idx_bookings_advisor_status ON public.bookings(advisor_id, status);
+CREATE INDEX IF NOT EXISTS idx_bookings_upcoming ON public.bookings(meeting_time, status) WHERE status IN ('pending', 'confirmed') AND meeting_time > NOW();
+
+-- Payments indexes
 CREATE INDEX IF NOT EXISTS payments_booking_id_idx ON public.payments(booking_id);
 CREATE INDEX IF NOT EXISTS payments_status_idx ON public.payments(status);
+
+-- Reviews indexes
 CREATE INDEX IF NOT EXISTS reviews_advisor_id_idx ON public.reviews(advisor_id);
 CREATE INDEX IF NOT EXISTS reviews_investor_id_idx ON public.reviews(investor_id);
+
+-- Notifications indexes
 CREATE INDEX IF NOT EXISTS notifications_user_id_idx ON public.notifications(user_id);
 CREATE INDEX IF NOT EXISTS notifications_read_idx ON public.notifications(read);
 CREATE INDEX IF NOT EXISTS idx_notifications_user_read ON public.notifications(user_id, read, created_at DESC);
@@ -161,7 +184,92 @@ CREATE INDEX IF NOT EXISTS idx_messages_sender ON public.messages(sender_id);
 CREATE INDEX IF NOT EXISTS idx_messages_unread ON public.messages(relationship_id, read, created_at DESC) WHERE read = FALSE;
 
 -- =====================================================
--- ROW LEVEL SECURITY (RLS) POLICIES
+-- 3. DATA VALIDATION CONSTRAINTS
+-- =====================================================
+
+-- Phone number validation (E.164 format)
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_constraint 
+    WHERE conname = 'valid_phone' 
+      AND conrelid = 'public.users'::regclass
+  ) THEN
+    ALTER TABLE public.users 
+    ADD CONSTRAINT valid_phone CHECK (
+      phone IS NULL OR 
+      phone ~ '^\+?[1-9]\d{1,14}$'
+    );
+  END IF;
+END $$;
+
+-- Email validation (basic)
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_constraint 
+    WHERE conname = 'valid_email' 
+      AND conrelid = 'public.users'::regclass
+  ) THEN
+    ALTER TABLE public.users 
+    ADD CONSTRAINT valid_email CHECK (
+      email ~ '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}$'
+    );
+  END IF;
+END $$;
+
+-- SEBI registration format validation
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_constraint 
+    WHERE conname = 'valid_sebi_reg' 
+      AND conrelid = 'public.advisors'::regclass
+  ) THEN
+    ALTER TABLE public.advisors 
+    ADD CONSTRAINT valid_sebi_reg CHECK (
+      sebi_reg_no IS NULL OR
+      sebi_reg_no ~ '^[A-Z0-9]{2,20}$'
+    );
+  END IF;
+END $$;
+
+-- Booking duration validation (15 min to 4 hours)
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_constraint 
+    WHERE conname = 'valid_duration' 
+      AND conrelid = 'public.bookings'::regclass
+  ) THEN
+    ALTER TABLE public.bookings 
+    ADD CONSTRAINT valid_duration CHECK (
+      duration_minutes >= 15 AND duration_minutes <= 240
+    );
+  END IF;
+END $$;
+
+-- Meeting time must be in future (relaxed for testing - can adjust)
+-- Note: This constraint may be too strict for completed bookings
+-- Consider removing or making conditional
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_constraint 
+    WHERE conname = 'future_meeting_time_check' 
+      AND conrelid = 'public.bookings'::regclass
+  ) THEN
+    -- Only enforce for pending/confirmed bookings
+    -- This allows completed bookings to remain in database
+    ALTER TABLE public.bookings 
+    ADD CONSTRAINT future_meeting_time_check CHECK (
+      status IN ('completed', 'cancelled') OR meeting_time > created_at
+    );
+  END IF;
+END $$;
+
+-- =====================================================
+-- 4. ROW LEVEL SECURITY (RLS) POLICIES
 -- =====================================================
 
 -- Enable RLS on all tables
@@ -174,7 +282,7 @@ ALTER TABLE public.notifications ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.advisor_investor_relationships ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.messages ENABLE ROW LEVEL SECURITY;
 
--- Drop existing policies if they exist (clean slate)
+-- Drop existing policies if they exist (for idempotency)
 DROP POLICY IF EXISTS "Users can read own profile" ON public.users;
 DROP POLICY IF EXISTS "Users can update own profile" ON public.users;
 DROP POLICY IF EXISTS "Users can insert own profile" ON public.users;
@@ -326,9 +434,10 @@ FOR UPDATE USING (
 );
 
 -- =====================================================
--- AUTH TRIGGER FOR AUTOMATIC PROFILE CREATION
+-- 5. TRIGGERS & FUNCTIONS
 -- =====================================================
 
+-- Function to automatically create user profile on signup
 CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS TRIGGER AS $$
 DECLARE
@@ -369,23 +478,20 @@ EXCEPTION
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
+-- Drop and recreate trigger
 DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
 CREATE TRIGGER on_auth_user_created
   AFTER INSERT ON auth.users
   FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
 
--- =====================================================
--- HELPER FUNCTIONS
--- =====================================================
-
--- Function to update advisor stats after a review
+-- Function to update advisor rating after review
 CREATE OR REPLACE FUNCTION public.update_advisor_rating()
 RETURNS TRIGGER AS $$
 BEGIN
   UPDATE public.advisors
   SET 
     average_rating = (
-      SELECT COALESCE(AVG(rating), 0)
+      SELECT COALESCE(AVG(rating::numeric), 0)
       FROM public.reviews
       WHERE advisor_id = NEW.advisor_id
     ),
@@ -401,7 +507,45 @@ CREATE TRIGGER update_advisor_rating_trigger
   AFTER INSERT ON public.reviews
   FOR EACH ROW EXECUTE FUNCTION public.update_advisor_rating();
 
--- Function to update timestamps
+-- Function to update relationship's last_message_at
+CREATE OR REPLACE FUNCTION public.update_relationship_last_message()
+RETURNS TRIGGER AS $$
+BEGIN
+  UPDATE public.advisor_investor_relationships
+  SET 
+    last_message_at = NEW.created_at,
+    updated_at = NOW()
+  WHERE id = NEW.relationship_id;
+  
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+DROP TRIGGER IF EXISTS update_relationship_last_message_trigger ON public.messages;
+CREATE TRIGGER update_relationship_last_message_trigger
+  AFTER INSERT ON public.messages
+  FOR EACH ROW EXECUTE FUNCTION public.update_relationship_last_message();
+
+-- Function to update message read_at timestamp
+CREATE OR REPLACE FUNCTION public.update_message_read_at()
+RETURNS TRIGGER AS $$
+BEGIN
+  IF NEW.read = TRUE AND OLD.read = FALSE THEN
+    NEW.read_at = NOW();
+  ELSIF NEW.read = FALSE THEN
+    NEW.read_at = NULL;
+  END IF;
+  
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS update_message_read_at_trigger ON public.messages;
+CREATE TRIGGER update_message_read_at_trigger
+  BEFORE UPDATE ON public.messages
+  FOR EACH ROW EXECUTE FUNCTION public.update_message_read_at();
+
+-- Function to update updated_at timestamp
 CREATE OR REPLACE FUNCTION public.update_updated_at()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -436,43 +580,6 @@ CREATE TRIGGER update_reviews_updated_at
   BEFORE UPDATE ON public.reviews
   FOR EACH ROW EXECUTE FUNCTION public.update_updated_at();
 
--- Chat triggers
-CREATE OR REPLACE FUNCTION public.update_relationship_last_message()
-RETURNS TRIGGER AS $$
-BEGIN
-  UPDATE public.advisor_investor_relationships
-  SET 
-    last_message_at = NEW.created_at,
-    updated_at = NOW()
-  WHERE id = NEW.relationship_id;
-  
-  RETURN NEW;
-END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
-
-DROP TRIGGER IF EXISTS update_relationship_last_message_trigger ON public.messages;
-CREATE TRIGGER update_relationship_last_message_trigger
-  AFTER INSERT ON public.messages
-  FOR EACH ROW EXECUTE FUNCTION public.update_relationship_last_message();
-
-CREATE OR REPLACE FUNCTION public.update_message_read_at()
-RETURNS TRIGGER AS $$
-BEGIN
-  IF NEW.read = TRUE AND OLD.read = FALSE THEN
-    NEW.read_at = NOW();
-  ELSIF NEW.read = FALSE THEN
-    NEW.read_at = NULL;
-  END IF;
-  
-  RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
-DROP TRIGGER IF EXISTS update_message_read_at_trigger ON public.messages;
-CREATE TRIGGER update_message_read_at_trigger
-  BEFORE UPDATE ON public.messages
-  FOR EACH ROW EXECUTE FUNCTION public.update_message_read_at();
-
 DROP TRIGGER IF EXISTS update_relationships_updated_at ON public.advisor_investor_relationships;
 CREATE TRIGGER update_relationships_updated_at
   BEFORE UPDATE ON public.advisor_investor_relationships
@@ -484,18 +591,16 @@ CREATE TRIGGER update_messages_updated_at
   FOR EACH ROW EXECUTE FUNCTION public.update_updated_at();
 
 -- =====================================================
--- GRANT PERMISSIONS
+-- 6. GRANT PERMISSIONS
 -- =====================================================
 
 GRANT USAGE ON SCHEMA public TO postgres, anon, authenticated, service_role;
 GRANT ALL ON ALL TABLES IN SCHEMA public TO postgres, service_role;
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO authenticated;
 GRANT SELECT ON public.users, public.advisors, public.reviews TO anon;
-GRANT SELECT, INSERT, UPDATE ON public.advisor_investor_relationships TO authenticated;
-GRANT SELECT, INSERT, UPDATE ON public.messages TO authenticated;
 
 -- =====================================================
--- SETUP COMPLETE
+-- 7. VERIFICATION QUERIES
 -- =====================================================
 
 DO $$
@@ -507,3 +612,4 @@ BEGIN
   RAISE NOTICE '📈 Indexes optimized for performance';
   RAISE NOTICE '🎯 Database ready for MVP deployment';
 END $$;
+

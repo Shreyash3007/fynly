@@ -4,8 +4,6 @@ const nextConfig = {
   swcMinify: true,
   images: {
     domains: [
-      'lh3.googleusercontent.com', // Google OAuth avatars
-      'avatars.githubusercontent.com',
       'supabase.co',
       'fynly.com',
     ],

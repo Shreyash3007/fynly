@@ -14,8 +14,8 @@ ON public.bookings(investor_id, status);
 CREATE INDEX IF NOT EXISTS idx_bookings_advisor_status 
 ON public.bookings(advisor_id, status);
 
-CREATE INDEX IF NOT EXISTS idx_bookings_meeting_date_status 
-ON public.bookings(meeting_date, status) 
+CREATE INDEX IF NOT EXISTS idx_bookings_meeting_time_status 
+ON public.bookings(meeting_time, status) 
 WHERE status IN ('pending', 'confirmed');
 
 -- Index for onboarding queries
@@ -26,6 +26,11 @@ WHERE onboarding_completed = FALSE;
 -- Index for advisor search
 CREATE INDEX IF NOT EXISTS idx_advisors_status_rating 
 ON public.advisors(status, average_rating DESC) 
+WHERE status = 'approved';
+
+-- For advisor search by expertise (if not exists)
+CREATE INDEX IF NOT EXISTS idx_advisors_expertise 
+ON public.advisors USING GIN(expertise) 
 WHERE status = 'approved';
 
 -- Index for notifications
@@ -146,17 +151,17 @@ BEGIN
   END IF;
 END $$;
 
--- Meeting date must be in future
+-- Meeting time must be in future
 DO $$
 BEGIN
   IF NOT EXISTS (
     SELECT 1 FROM pg_constraint 
-    WHERE conname = 'future_meeting_date' 
+    WHERE conname = 'future_meeting_time' 
       AND conrelid = 'public.bookings'::regclass
   ) THEN
     ALTER TABLE public.bookings 
-    ADD CONSTRAINT future_meeting_date CHECK (
-      meeting_date > NOW()
+    ADD CONSTRAINT future_meeting_time CHECK (
+      meeting_time > NOW()
     );
   END IF;
 END $$;
@@ -189,6 +194,10 @@ ON public.advisor_availability(day_of_week);
 -- RLS for availability
 ALTER TABLE public.advisor_availability ENABLE ROW LEVEL SECURITY;
 
+-- Drop existing policies if they exist (for idempotency)
+DROP POLICY IF EXISTS "Anyone can view availability" ON public.advisor_availability;
+DROP POLICY IF EXISTS "Advisors can manage own availability" ON public.advisor_availability;
+
 CREATE POLICY "Anyone can view availability" ON public.advisor_availability
 FOR SELECT USING (true);
 
@@ -197,7 +206,8 @@ FOR ALL USING (
   auth.uid() IN (SELECT user_id FROM public.advisors WHERE id = advisor_id)
 );
 
--- Trigger for updated_at
+-- Trigger for updated_at (drop first for idempotency)
+DROP TRIGGER IF EXISTS update_advisor_availability_updated_at ON public.advisor_availability;
 CREATE TRIGGER update_advisor_availability_updated_at
   BEFORE UPDATE ON public.advisor_availability
   FOR EACH ROW EXECUTE FUNCTION public.update_updated_at();
@@ -234,6 +244,9 @@ ON public.audit_logs(action);
 
 -- RLS for audit logs (admin only)
 ALTER TABLE public.audit_logs ENABLE ROW LEVEL SECURITY;
+
+-- Drop existing policy if it exists (for idempotency)
+DROP POLICY IF EXISTS "Only admins can view audit logs" ON public.audit_logs;
 
 CREATE POLICY "Only admins can view audit logs" ON public.audit_logs
 FOR SELECT USING (
@@ -343,11 +356,11 @@ BEGIN
       AND id != COALESCE(NEW.id, '00000000-0000-0000-0000-000000000000'::UUID)
       AND (
         -- Check for time overlap
-        (meeting_date <= NEW.meeting_date AND 
-         meeting_date + (duration_minutes || ' minutes')::INTERVAL > NEW.meeting_date)
+        (meeting_time <= NEW.meeting_time AND 
+         meeting_time + (duration_minutes || ' minutes')::INTERVAL > NEW.meeting_time)
         OR
-        (NEW.meeting_date <= meeting_date AND 
-         NEW.meeting_date + (NEW.duration_minutes || ' minutes')::INTERVAL > meeting_date)
+        (NEW.meeting_time <= meeting_time AND 
+         NEW.meeting_time + (NEW.duration_minutes || ' minutes')::INTERVAL > meeting_time)
       )
   ) THEN
     RAISE EXCEPTION 'Booking conflict: Advisor is not available at this time';

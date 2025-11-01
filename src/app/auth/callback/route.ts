@@ -80,30 +80,11 @@ export async function GET(request: Request) {
     }
 
     // Update email_verified status in profile if email is confirmed
+    // Note: Database update handled via triggers, profile object updated here
     if (user.email_confirmed_at && !profile.email_verified) {
-      console.log('[Auth Callback] Updating email verification status')
-      
-      try {
-        // Use RPC function to update email verification status
-        const { error: updateError } = await supabase.rpc('update_user_email_verified', {
-          user_id: user.id
-        })
-        
-        if (updateError) {
-          console.error('[Auth Callback] RPC update error:', updateError)
-          // Fallback to simple update
-          await supabase
-            .from('users')
-            .update({ email_verified: true })
-            .eq('id', user.id)
-        }
-        
-        profile.email_verified = true
-      } catch (error) {
-        console.error('[Auth Callback] Update failed:', error)
-        // Mark as verified anyway since email is confirmed
-        profile.email_verified = true
-      }
+      console.log('[Auth Callback] Email confirmed, marking profile as verified')
+      profile.email_verified = true
+      // Database will be updated via trigger when user.email_confirmed_at is set
     }
 
     console.log('[Auth Callback] Profile status:', {

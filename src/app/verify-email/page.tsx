@@ -42,6 +42,7 @@ export default function VerifyEmailPage() {
       const timer = setTimeout(() => setCountdown(countdown - 1), 1000)
       return () => clearTimeout(timer)
     }
+    return undefined
   }, [countdown])
 
   const handleResendEmail = async () => {
@@ -115,7 +116,7 @@ export default function VerifyEmailPage() {
 
       // Update email_verified if needed
       if (profile && !(profile as any).email_verified) {
-        await supabase
+        await (supabase as any)
           .from('users')
           .update({ email_verified: true, updated_at: new Date().toISOString() })
           .eq('id', user.id)
