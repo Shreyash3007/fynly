@@ -8,6 +8,7 @@ import Link from 'next/link'
 import { getUserProfile } from '@/lib/auth/actions'
 import { createClient } from '@/lib/supabase/server'
 import { Badge, VerifiedBadge } from '@/components/ui'
+import { ProfileWidget } from '@/components/dashboard/ProfileWidget'
 
 export const dynamic = 'force-dynamic'
 
@@ -187,7 +188,10 @@ export default async function AdvisorDashboardPage() {
 
       {/* Stats Cards Section */}
       <div className="container mx-auto px-4 -mt-12">
-        <div className="grid gap-4 md:grid-cols-2 mb-8">
+        <div className="grid gap-6 lg:grid-cols-12 mb-8">
+          {/* Main Content */}
+          <div className="lg:col-span-9">
+            <div className="grid gap-4 md:grid-cols-2 mb-8">
           {/* Upcoming Sessions Today Card */}
           <div className="rounded-2xl bg-white/90 backdrop-blur-md p-6 shadow-neomorph-lg border border-white/50 hover:shadow-neomorph-xl transition-all group">
             <div className="flex items-center justify-between mb-4">
@@ -225,10 +229,17 @@ export default async function AdvisorDashboardPage() {
             </p>
             <p className="text-xs text-graphite-500">Lifetime consultations</p>
           </div>
+            </div>
+          </div>
+          
+          {/* Profile Widget Sidebar */}
+          <div className="lg:col-span-3">
+            <ProfileWidget />
+          </div>
         </div>
 
         {/* Main Content Grid */}
-        <div className="grid gap-6 lg:grid-cols-2 mb-8">
+        <div className="grid gap-6 lg:grid-cols-9 mb-8">
         {/* Upcoming Sessions */}
           <div className="rounded-2xl bg-white/90 backdrop-blur-md p-6 shadow-neomorph border border-white/50">
             <div className="flex items-center justify-between mb-6">

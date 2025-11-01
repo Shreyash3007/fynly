@@ -7,6 +7,7 @@ import { redirect } from 'next/navigation'
 import { getUserProfile } from '@/lib/auth/actions'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
+import { ProfileWidget } from '@/components/dashboard/ProfileWidget'
 
 export const dynamic = 'force-dynamic'
 
@@ -170,7 +171,10 @@ export default async function InvestorDashboardPage() {
 
       {/* Stats Cards Section */}
       <div className="container mx-auto px-4 -mt-12">
-        <div className={`grid gap-4 ${bookings && bookings.length > 0 ? 'md:grid-cols-2 lg:grid-cols-4' : 'md:grid-cols-2 lg:grid-cols-3'} mb-8`}>
+        <div className="grid gap-6 lg:grid-cols-12 mb-8">
+          {/* Main Content */}
+          <div className="lg:col-span-9">
+            <div className={`grid gap-4 ${bookings && bookings.length > 0 ? 'md:grid-cols-2 lg:grid-cols-4' : 'md:grid-cols-2 lg:grid-cols-3'} mb-8`}>
           {/* Sessions Card */}
           <div className="rounded-2xl bg-white/90 backdrop-blur-md p-6 shadow-neomorph-lg border border-white/50 hover:shadow-neomorph-xl transition-all group">
             <div className="flex items-center justify-between mb-4">
@@ -245,11 +249,21 @@ export default async function InvestorDashboardPage() {
               <p className="text-xs text-graphite-500">On consultations</p>
             </div>
           )}
+            </div>
+          </div>
+          
+          {/* Profile Widget Sidebar */}
+          <div className="lg:col-span-3">
+            <ProfileWidget />
+          </div>
         </div>
 
         {/* Main Content Grid */}
-        <div className="grid gap-6 lg:grid-cols-2 mb-8">
-          {/* Upcoming Sessions */}
+        <div className="grid gap-6 lg:grid-cols-12 mb-8">
+          {/* Main Content */}
+          <div className="lg:col-span-9">
+            <div className="grid gap-6 lg:grid-cols-2 mb-8">
+              {/* Upcoming Sessions */}
           <div className="rounded-2xl bg-white/90 backdrop-blur-md p-6 shadow-neomorph border border-white/50">
             <div className="flex items-center justify-between mb-6">
               <h2 className="font-display text-xl font-bold text-graphite-900">
@@ -389,6 +403,13 @@ export default async function InvestorDashboardPage() {
                 </Link>
               </div>
             )}
+          </div>
+            </div>
+          </div>
+          
+          {/* Profile Widget Sidebar */}
+          <div className="lg:col-span-3">
+            <ProfileWidget />
           </div>
         </div>
       </div>
