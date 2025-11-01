@@ -5,6 +5,8 @@
 
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { ApiError, handleApiError } from '@/lib/error-handler'
+import { logger } from '@/lib/logger'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
@@ -25,7 +27,8 @@ export async function POST(
     } = await supabase.auth.getUser()
 
     if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+      const { error: errorObj, statusCode } = handleApiError(new ApiError('AUTH_REQUIRED', 'Unauthorized', 401))
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     const { data: profile } = await supabase
@@ -35,7 +38,8 @@ export async function POST(
       .single()
 
     if ((profile as any)?.role !== 'admin') {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+      const { error: errorObj, statusCode } = handleApiError(new ApiError('FORBIDDEN', 'Forbidden', 403))
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     // Get advisor details
@@ -46,7 +50,8 @@ export async function POST(
       .single()
 
     if (!advisor) {
-      return NextResponse.json({ error: 'Advisor not found' }, { status: 404 })
+      const { error: errorObj, statusCode } = handleApiError(new ApiError('NOT_FOUND', 'Advisor not found', 404))
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     // Reject advisor
@@ -59,7 +64,10 @@ export async function POST(
       .eq('id', params.id)
 
     if (updateError) {
-      return NextResponse.json({ error: updateError.message }, { status: 500 })
+      const { error: errorObj, statusCode } = handleApiError(
+        new ApiError('SERVER_ERROR', updateError.message || 'Failed to reject advisor', 500)
+      )
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     // Log admin action
@@ -81,16 +89,13 @@ export async function POST(
         reason: body.reason,
       })
     } catch (emailError) {
-      console.error('Failed to send rejection email:', emailError)
+      logger.error(emailError instanceof Error ? emailError : new Error(String(emailError)), '[Admin] Failed to send rejection email')
     }
 
     return NextResponse.json({ success: true })
   } catch (error) {
-    console.error('Rejection error:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    const { error: errorObj, statusCode } = handleApiError(error)
+    return NextResponse.json({ error: errorObj }, { status: statusCode })
   }
 }
 

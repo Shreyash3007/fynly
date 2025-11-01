@@ -7,6 +7,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { createClient as createStorageClient } from '@supabase/supabase-js'
+import { ApiError, handleApiError } from '@/lib/error-handler'
+import { logger } from '@/lib/logger'
 
 export const dynamic = 'force-dynamic'
 export const runtime = 'nodejs'
@@ -26,7 +28,8 @@ export async function POST(request: NextRequest) {
     } = await supabase.auth.getUser()
 
     if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+      const { error: errorObj, statusCode } = handleApiError(new ApiError('AUTH_REQUIRED', 'Unauthorized', 401))
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     // Get user profile to verify role
@@ -37,10 +40,10 @@ export async function POST(request: NextRequest) {
       .single()
 
     if ((profile as any)?.role !== 'advisor') {
-      return NextResponse.json(
-        { error: 'Only advisors can upload SEBI certificates' },
-        { status: 403 }
+      const { error: errorObj, statusCode } = handleApiError(
+        new ApiError('FORBIDDEN', 'Only advisors can upload SEBI certificates', 403)
       )
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     // Parse form data
@@ -48,26 +51,26 @@ export async function POST(request: NextRequest) {
     const file = formData.get('file') as File | null
 
     if (!file) {
-      return NextResponse.json(
-        { error: 'File is required' },
-        { status: 400 }
+      const { error: errorObj, statusCode } = handleApiError(
+        new ApiError('VALIDATION_ERROR', 'File is required', 400)
       )
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     // Validate file type
     if (!ALLOWED_TYPES.includes(file.type)) {
-      return NextResponse.json(
-        { error: 'Invalid file type. Only PDF, JPG, and PNG files are allowed' },
-        { status: 400 }
+      const { error: errorObj, statusCode } = handleApiError(
+        new ApiError('VALIDATION_ERROR', 'Invalid file type. Only PDF, JPG, and PNG files are allowed', 400)
       )
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     // Validate file size
     if (file.size > MAX_FILE_SIZE) {
-      return NextResponse.json(
-        { error: 'File size exceeds 5MB limit' },
-        { status: 400 }
+      const { error: errorObj, statusCode } = handleApiError(
+        new ApiError('VALIDATION_ERROR', 'File size exceeds 5MB limit', 400)
       )
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     // Create storage client (using service role for admin access)
@@ -75,11 +78,11 @@ export async function POST(request: NextRequest) {
     const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
 
     if (!supabaseServiceKey) {
-      console.error('SUPABASE_SERVICE_ROLE_KEY not configured')
-      return NextResponse.json(
-        { error: 'File upload not configured' },
-        { status: 500 }
+      logger.error(new Error('SUPABASE_SERVICE_ROLE_KEY not configured'), '[Upload]')
+      const { error: errorObj, statusCode } = handleApiError(
+        new ApiError('SERVER_ERROR', 'File upload not configured', 500)
       )
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     const storageClient = createStorageClient(supabaseUrl, supabaseServiceKey, {
@@ -103,11 +106,11 @@ export async function POST(request: NextRequest) {
       })
 
     if (uploadError) {
-      console.error('Storage upload error:', uploadError)
-      return NextResponse.json(
-        { error: 'Failed to upload file' },
-        { status: 500 }
+      logger.error(uploadError instanceof Error ? uploadError : new Error(String(uploadError)), '[Upload] Storage upload error')
+      const { error: errorObj, statusCode } = handleApiError(
+        new ApiError('SERVER_ERROR', uploadError.message || 'Failed to upload file', 500)
       )
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     // Get public URL
@@ -143,10 +146,7 @@ export async function POST(request: NextRequest) {
       { status: 201 }
     )
   } catch (error) {
-    console.error('File upload error:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    const { error: errorObj, statusCode } = handleApiError(error)
+    return NextResponse.json({ error: errorObj }, { status: statusCode })
   }
 }

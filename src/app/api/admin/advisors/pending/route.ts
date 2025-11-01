@@ -5,6 +5,7 @@
 
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { ApiError, handleApiError } from '@/lib/error-handler'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
@@ -20,7 +21,8 @@ export async function GET(_request: NextRequest) {
     } = await supabase.auth.getUser()
 
     if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+      const { error: errorObj, statusCode } = handleApiError(new ApiError('AUTH_REQUIRED', 'Unauthorized', 401))
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     const { data: profile } = await supabase
@@ -30,7 +32,8 @@ export async function GET(_request: NextRequest) {
       .single()
 
     if ((profile as any)?.role !== 'admin') {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+      const { error: errorObj, statusCode } = handleApiError(new ApiError('FORBIDDEN', 'Forbidden', 403))
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     // Get pending advisors
@@ -41,15 +44,16 @@ export async function GET(_request: NextRequest) {
       .order('created_at', { ascending: false })
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 })
+      const { error: errorObj, statusCode } = handleApiError(
+        new ApiError('SERVER_ERROR', error.message || 'Failed to fetch pending advisors', 500)
+      )
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     return NextResponse.json({ advisors: advisors || [] })
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    const { error: errorObj, statusCode } = handleApiError(error)
+    return NextResponse.json({ error: errorObj }, { status: statusCode })
   }
 }
 

@@ -6,6 +6,7 @@
 
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { ApiError, handleApiError } from '@/lib/error-handler'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
@@ -25,7 +26,10 @@ export async function GET(
       .single()
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 404 })
+      const { error: errorObj, statusCode } = handleApiError(
+        new ApiError('NOT_FOUND', error.message || 'Advisor not found', 404)
+      )
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     // Get reviews for this advisor
@@ -39,10 +43,8 @@ export async function GET(
 
     return NextResponse.json({ advisor, reviews: reviews || [] })
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    const { error: errorObj, statusCode } = handleApiError(error)
+    return NextResponse.json({ error: errorObj }, { status: statusCode })
   }
 }
 
@@ -60,7 +62,8 @@ export async function PATCH(
     } = await supabase.auth.getUser()
 
     if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+      const { error: errorObj, statusCode } = handleApiError(new ApiError('AUTH_REQUIRED', 'Unauthorized', 401))
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     const { data: advisor } = await supabase
@@ -70,7 +73,8 @@ export async function PATCH(
       .single()
 
     if ((advisor as any)?.user_id !== user.id) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+      const { error: errorObj, statusCode } = handleApiError(new ApiError('FORBIDDEN', 'Forbidden', 403))
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     // Update advisor profile (excluding status - only admins can change that)
@@ -85,15 +89,16 @@ export async function PATCH(
       .single()
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 })
+      const { error: errorObj, statusCode } = handleApiError(
+        new ApiError('SERVER_ERROR', error.message || 'Failed to update advisor', 500)
+      )
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     return NextResponse.json({ advisor: data })
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    const { error: errorObj, statusCode } = handleApiError(error)
+    return NextResponse.json({ error: errorObj }, { status: statusCode })
   }
 }
 

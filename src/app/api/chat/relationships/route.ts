@@ -7,6 +7,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { validateRelationshipPayload } from '@/lib/validation/api-validators'
+import { ApiError, handleApiError } from '@/lib/error-handler'
 
 export const dynamic = 'force-dynamic'
 export const runtime = 'nodejs'
@@ -22,7 +23,8 @@ export async function GET(_request: NextRequest) {
     } = await supabase.auth.getUser()
 
     if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+      const { error: errorObj, statusCode } = handleApiError(new ApiError('AUTH_REQUIRED', 'Unauthorized', 401))
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     // Get user profile to determine role
@@ -33,7 +35,10 @@ export async function GET(_request: NextRequest) {
       .single()
 
     if (!profile) {
-      return NextResponse.json({ error: 'User profile not found' }, { status: 404 })
+      const { error: errorObj, statusCode } = handleApiError(
+        new ApiError('NOT_FOUND', 'User profile not found', 404)
+      )
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     // Get relationships based on role
@@ -75,8 +80,10 @@ export async function GET(_request: NextRequest) {
     const { data: relationships, error } = await relationshipsQuery
 
     if (error) {
-      console.error('Relationships fetch error:', error)
-      return NextResponse.json({ error: 'Failed to fetch relationships' }, { status: 500 })
+      const { error: errorObj, statusCode } = handleApiError(
+        new ApiError('SERVER_ERROR', error.message || 'Failed to fetch relationships', 500)
+      )
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     // Get unread message counts for each relationship
@@ -98,11 +105,8 @@ export async function GET(_request: NextRequest) {
 
     return NextResponse.json({ relationships: relationshipsWithCounts })
   } catch (error) {
-    console.error('Get relationships error:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    const { error: errorObj, statusCode } = handleApiError(error)
+    return NextResponse.json({ error: errorObj }, { status: statusCode })
   }
 }
 
@@ -117,13 +121,17 @@ export async function POST(request: NextRequest) {
     } = await supabase.auth.getUser()
 
     if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+      const { error: errorObj, statusCode } = handleApiError(new ApiError('AUTH_REQUIRED', 'Unauthorized', 401))
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     // Validate input
     const validation = validateRelationshipPayload(body)
     if (!validation.valid) {
-      return NextResponse.json({ error: validation.error }, { status: 400 })
+      const { error: errorObj, statusCode } = handleApiError(
+        new ApiError('VALIDATION_ERROR', validation.error || 'Invalid relationship data', 400)
+      )
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     const { advisorId, investorId } = validation.data!
@@ -136,7 +144,10 @@ export async function POST(request: NextRequest) {
       .single()
 
     if (!profile) {
-      return NextResponse.json({ error: 'User profile not found' }, { status: 404 })
+      const { error: errorObj, statusCode } = handleApiError(
+        new ApiError('NOT_FOUND', 'User profile not found', 404)
+      )
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     let finalAdvisorId: string
@@ -146,7 +157,10 @@ export async function POST(request: NextRequest) {
     if ((profile as any).role === 'investor') {
       // Investor creating relationship with advisor
       if (!advisorId) {
-        return NextResponse.json({ error: 'advisorId is required when creating relationship as investor' }, { status: 400 })
+        const { error: errorObj, statusCode } = handleApiError(
+          new ApiError('VALIDATION_ERROR', 'advisorId is required when creating relationship as investor', 400)
+        )
+        return NextResponse.json({ error: errorObj }, { status: statusCode })
       }
       finalInvestorId = user.id
       finalAdvisorId = advisorId
@@ -159,12 +173,18 @@ export async function POST(request: NextRequest) {
         .single()
 
       if (!advisor || (advisor as any).status !== 'approved') {
-        return NextResponse.json({ error: 'Advisor not found or not approved' }, { status: 404 })
+        const { error: errorObj, statusCode } = handleApiError(
+          new ApiError('NOT_FOUND', 'Advisor not found or not approved', 404)
+        )
+        return NextResponse.json({ error: errorObj }, { status: statusCode })
       }
     } else if ((profile as any).role === 'advisor') {
       // Advisor creating relationship with investor
       if (!investorId) {
-        return NextResponse.json({ error: 'investorId is required when creating relationship as advisor' }, { status: 400 })
+        const { error: errorObj, statusCode } = handleApiError(
+          new ApiError('VALIDATION_ERROR', 'investorId is required when creating relationship as advisor', 400)
+        )
+        return NextResponse.json({ error: errorObj }, { status: statusCode })
       }
       
       // Get advisor ID from user_id
@@ -175,7 +195,10 @@ export async function POST(request: NextRequest) {
         .single()
 
       if (!advisor) {
-        return NextResponse.json({ error: 'Advisor profile not found' }, { status: 404 })
+        const { error: errorObj, statusCode } = handleApiError(
+          new ApiError('NOT_FOUND', 'Advisor profile not found', 404)
+        )
+        return NextResponse.json({ error: errorObj }, { status: statusCode })
       }
 
       finalAdvisorId = (advisor as any).id
@@ -189,10 +212,16 @@ export async function POST(request: NextRequest) {
         .single()
 
       if (!investor || (investor as any).role !== 'investor') {
-        return NextResponse.json({ error: 'Investor not found' }, { status: 404 })
+        const { error: errorObj, statusCode } = handleApiError(
+          new ApiError('NOT_FOUND', 'Investor not found', 404)
+        )
+        return NextResponse.json({ error: errorObj }, { status: statusCode })
       }
     } else {
-      return NextResponse.json({ error: 'Only investors and advisors can create relationships' }, { status: 403 })
+      const { error: errorObj, statusCode } = handleApiError(
+        new ApiError('FORBIDDEN', 'Only investors and advisors can create relationships', 403)
+      )
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     // Check if relationship already exists
@@ -244,16 +273,15 @@ export async function POST(request: NextRequest) {
       .single()
 
     if (relationshipError) {
-      console.error('Relationship creation error:', relationshipError)
-      return NextResponse.json({ error: 'Failed to create relationship' }, { status: 500 })
+      const { error: errorObj, statusCode } = handleApiError(
+        new ApiError('SERVER_ERROR', relationshipError.message || 'Failed to create relationship', 500)
+      )
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     return NextResponse.json({ relationship, success: true, created: true }, { status: 201 })
   } catch (error) {
-    console.error('Create relationship error:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    const { error: errorObj, statusCode } = handleApiError(error)
+    return NextResponse.json({ error: errorObj }, { status: statusCode })
   }
 }

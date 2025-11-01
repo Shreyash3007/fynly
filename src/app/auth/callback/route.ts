@@ -7,6 +7,7 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { getOrCreateProfile, getDashboardUrl } from '@/lib/auth/profile-helper'
+import { logger } from '@/lib/logger'
 
 export async function GET(request: Request) {
   const requestUrl = new URL(request.url)
@@ -15,11 +16,11 @@ export async function GET(request: Request) {
   const errorDescription = requestUrl.searchParams.get('error_description')
   const origin = requestUrl.origin
 
-  console.log('[Auth Callback] Processing callback', { code: !!code, error })
+  logger.log('[Auth Callback] Processing callback', { code: !!code, error })
 
   // Handle OAuth errors
   if (error) {
-    console.error('[Auth Callback] OAuth error:', error, errorDescription)
+    logger.error(new Error(`OAuth error: ${error} - ${errorDescription || ''}`), '[Auth Callback]')
     
     if (error === 'access_denied' || errorDescription?.includes('expired')) {
       return NextResponse.redirect(
@@ -33,7 +34,7 @@ export async function GET(request: Request) {
   }
 
   if (!code) {
-    console.error('[Auth Callback] No code provided')
+    logger.error(new Error('No code provided'), '[Auth Callback]')
     return NextResponse.redirect(
       `${origin}/login?error=no_code&message=${encodeURIComponent('Invalid verification link. Please try again.')}`
     )
@@ -46,7 +47,7 @@ export async function GET(request: Request) {
     const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code)
     
     if (exchangeError) {
-      console.error('[Auth Callback] Exchange error:', exchangeError)
+      logger.error(exchangeError instanceof Error ? exchangeError : new Error(String(exchangeError)), '[Auth Callback] Exchange error')
       return NextResponse.redirect(
         `${origin}/verify-email?error=invalid&message=${encodeURIComponent('Verification failed. Please request a new link.')}`
       )
@@ -56,11 +57,11 @@ export async function GET(request: Request) {
     const { data: { user }, error: userError } = await supabase.auth.getUser()
     
     if (userError || !user) {
-      console.error('[Auth Callback] User error:', userError)
+      logger.error(userError instanceof Error ? userError : new Error(String(userError)), '[Auth Callback] User error')
       return NextResponse.redirect(`${origin}/login?error=user_not_found`)
     }
 
-    console.log('[Auth Callback] User authenticated:', user.id, 'Email confirmed:', !!user.email_confirmed_at)
+    logger.log('[Auth Callback] User authenticated:', user.id, 'Email confirmed:', !!user.email_confirmed_at)
 
     // Get or create user profile
     const { profile, error: profileError, needsOnboarding } = await getOrCreateProfile(
@@ -70,24 +71,24 @@ export async function GET(request: Request) {
     )
 
     if (profileError) {
-      console.error('[Auth Callback] Profile error:', profileError)
+      logger.error(new Error(profileError || 'Profile error'), '[Auth Callback]')
       return NextResponse.redirect(`${origin}/login?error=profile_error`)
     }
 
     if (!profile) {
-      console.error('[Auth Callback] No profile created')
+      logger.error(new Error('No profile created'), '[Auth Callback]')
       return NextResponse.redirect(`${origin}/login?error=no_profile`)
     }
 
     // Update email_verified status in profile if email is confirmed
     // Note: Database update handled via triggers, profile object updated here
     if (user.email_confirmed_at && !profile.email_verified) {
-      console.log('[Auth Callback] Email confirmed, marking profile as verified')
+      logger.log('[Auth Callback] Email confirmed, marking profile as verified')
       profile.email_verified = true
       // Database will be updated via trigger when user.email_confirmed_at is set
     }
 
-    console.log('[Auth Callback] Profile status:', {
+    logger.log('[Auth Callback] Profile status:', {
       role: profile.role,
       needsOnboarding,
       emailVerified: profile.email_verified
@@ -95,17 +96,17 @@ export async function GET(request: Request) {
 
     // Check if user needs onboarding (no role selected or first time)
     if (needsOnboarding || !profile.role) {
-      console.log('[Auth Callback] User needs onboarding')
+      logger.log('[Auth Callback] User needs onboarding')
       return NextResponse.redirect(`${origin}/onboarding?verified=true`)
     }
 
     // Redirect to appropriate dashboard with success message
     const dashboardUrl = getDashboardUrl(profile.role)
-    console.log('[Auth Callback] Email verified! Redirecting to:', dashboardUrl)
+    logger.log('[Auth Callback] Email verified! Redirecting to:', dashboardUrl)
     
     return NextResponse.redirect(`${origin}${dashboardUrl}?verified=true`)
   } catch (error: any) {
-    console.error('[Auth Callback] Unexpected error:', error)
+    logger.error(error instanceof Error ? error : new Error(String(error)), '[Auth Callback] Unexpected error')
     return NextResponse.redirect(
       `${origin}/login?error=unexpected&message=${encodeURIComponent(error.message || 'An unexpected error occurred')}`
     )
