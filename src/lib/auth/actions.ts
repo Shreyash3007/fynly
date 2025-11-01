@@ -10,6 +10,7 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { UserRole } from '@/types/database.types'
 import { getOrCreateProfile, getDashboardUrl } from './profile-helper'
+import { logger } from '@/lib/logger'
 
 export interface AuthError {
   error: string
@@ -32,7 +33,7 @@ export async function signUp(
   try {
     const supabase = createClient()
 
-    console.log('[Auth] Signing up user:', email, 'as', role)
+    logger.log('[Auth] Signing up user:', email, 'as', role)
 
     const { data, error } = await supabase.auth.signUp({
       email,
@@ -47,16 +48,16 @@ export async function signUp(
     })
 
     if (error) {
-      console.error('[Auth] Sign up error:', error)
+      logger.error(error instanceof Error ? error : new Error(String(error)), '[Auth] Sign up error')
       return { error: error.message }
     }
 
     if (!data.user) {
-      console.error('[Auth] No user returned from signup')
+      logger.error(new Error('No user returned from signup'), '[Auth]')
       return { error: 'Failed to create user' }
     }
 
-    console.log('[Auth] User signed up:', data.user.id)
+    logger.log('[Auth] User signed up:', data.user.id)
 
     // Create user profile immediately (fallback if trigger fails)
     const { error: profileError } = await getOrCreateProfile(
@@ -66,20 +67,20 @@ export async function signUp(
     )
 
     if (profileError) {
-      console.error('[Auth] Profile creation error:', profileError)
+      logger.error(new Error(profileError || 'Profile creation failed'), '[Auth] Profile creation error')
       // Don't fail signup, but log the error
     }
 
     revalidatePath('/', 'layout')
     
     // Redirect to email verification page
-    console.log('[Auth] Redirecting to email verification')
+    logger.log('[Auth] Redirecting to email verification')
     return { 
       success: true, 
       redirectTo: `/verify-email?email=${encodeURIComponent(email)}` 
     }
   } catch (error: any) {
-    console.error('[Auth] Unexpected error in signUp:', error)
+    logger.error(error instanceof Error ? error : new Error(String(error)), '[Auth] Unexpected error in signUp')
     return { error: error.message || 'An unexpected error occurred' }
   }
 }
@@ -94,7 +95,7 @@ export async function signIn(
   try {
     const supabase = createClient()
 
-    console.log('[Auth] Signing in user:', email)
+    logger.log('[Auth] Signing in user:', email)
 
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
@@ -102,16 +103,16 @@ export async function signIn(
     })
 
     if (error) {
-      console.error('[Auth] Sign in error:', error)
+      logger.error(error instanceof Error ? error : new Error(String(error)), '[Auth] Sign in error')
       return { error: error.message }
     }
 
     if (!data.user) {
-      console.error('[Auth] No user returned from signin')
+      logger.error(new Error('No user returned from signin'), '[Auth]')
       return { error: 'Failed to sign in' }
     }
 
-    console.log('[Auth] User signed in:', data.user.id)
+    logger.log('[Auth] User signed in:', data.user.id)
 
     // Get or create user profile (fallback if trigger failed)
     const { profile, error: profileError, needsOnboarding } = await getOrCreateProfile(
@@ -121,33 +122,33 @@ export async function signIn(
     )
 
     if (profileError || !profile) {
-      console.error('[Auth] Profile error:', profileError)
+      logger.error(new Error(profileError || 'Profile load failed'), '[Auth] Profile error')
       return { error: profileError || 'Failed to load profile' }
     }
 
-    console.log('[Auth] Profile loaded:', { role: profile.role, needsOnboarding })
+    logger.log('[Auth] Profile loaded:', { role: profile.role, needsOnboarding })
 
     revalidatePath('/', 'layout')
 
     // Check if email verification is required
     if (!profile.email_verified) {
-      console.log('[Auth] Email not verified')
+      logger.log('[Auth] Email not verified')
       return { success: true, redirectTo: `/verify-email?email=${encodeURIComponent(email)}` }
     }
 
     // Check if user needs onboarding
     if (needsOnboarding || !profile.role) {
-      console.log('[Auth] User needs onboarding')
+      logger.log('[Auth] User needs onboarding')
       return { success: true, redirectTo: '/onboarding' }
     }
 
     // Redirect to appropriate dashboard
     const redirectPath = getDashboardUrl(profile.role)
-    console.log('[Auth] Redirecting to:', redirectPath)
+    logger.log('[Auth] Redirecting to:', redirectPath)
 
     return { success: true, redirectTo: redirectPath }
   } catch (error: any) {
-    console.error('[Auth] Unexpected error in signIn:', error)
+    logger.error(error instanceof Error ? error : new Error(String(error)), '[Auth] Unexpected error in signIn')
     return { error: error.message || 'An unexpected error occurred' }
   }
 }

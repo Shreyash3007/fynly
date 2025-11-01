@@ -6,6 +6,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { validatePagination } from '@/lib/validation/api-validators'
+import { ApiError, handleApiError } from '@/lib/error-handler'
 
 export const dynamic = 'force-dynamic'
 export const runtime = 'nodejs'
@@ -26,13 +27,17 @@ export async function GET(
     } = await supabase.auth.getUser()
 
     if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+      const { error: errorObj, statusCode } = handleApiError(new ApiError('AUTH_REQUIRED', 'Unauthorized', 401))
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     // Validate relationshipId format
     const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
     if (!uuidRegex.test(relationshipId)) {
-      return NextResponse.json({ error: 'Invalid relationship ID format' }, { status: 400 })
+      const { error: errorObj, statusCode } = handleApiError(
+        new ApiError('VALIDATION_ERROR', 'Invalid relationship ID format', 400)
+      )
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     // Verify relationship exists and user is part of it
@@ -43,7 +48,10 @@ export async function GET(
       .single()
 
     if (relationshipError || !relationship) {
-      return NextResponse.json({ error: 'Relationship not found' }, { status: 404 })
+      const { error: errorObj, statusCode } = handleApiError(
+        new ApiError('NOT_FOUND', 'Relationship not found', 404)
+      )
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     // Check if user is part of this relationship
@@ -51,13 +59,19 @@ export async function GET(
     const investorId = (relationship as any).investor?.id
 
     if (user.id !== advisorUserId && user.id !== investorId) {
-      return NextResponse.json({ error: 'Unauthorized to view messages in this relationship' }, { status: 403 })
+      const { error: errorObj, statusCode } = handleApiError(
+        new ApiError('FORBIDDEN', 'Unauthorized to view messages in this relationship', 403)
+      )
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     // Validate pagination
     const pagination = validatePagination(searchParams)
     if (!pagination.valid) {
-      return NextResponse.json({ error: pagination.error }, { status: 400 })
+      const { error: errorObj, statusCode } = handleApiError(
+        new ApiError('VALIDATION_ERROR', pagination.error || 'Invalid pagination parameters', 400)
+      )
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     const { limit, offset } = pagination.data!
@@ -71,8 +85,10 @@ export async function GET(
       .range(offset, offset + limit - 1)
 
     if (messagesError) {
-      console.error('Messages fetch error:', messagesError)
-      return NextResponse.json({ error: 'Failed to fetch messages' }, { status: 500 })
+      const { error: errorObj, statusCode } = handleApiError(
+        new ApiError('SERVER_ERROR', messagesError.message || 'Failed to fetch messages', 500)
+      )
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     // Get total count for pagination
@@ -104,10 +120,7 @@ export async function GET(
       },
     })
   } catch (error) {
-    console.error('Get messages error:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    const { error: errorObj, statusCode } = handleApiError(error)
+    return NextResponse.json({ error: errorObj }, { status: statusCode })
   }
 }

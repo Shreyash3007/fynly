@@ -5,6 +5,7 @@
 
 import { SupabaseClient, User } from '@supabase/supabase-js'
 import { Database } from '@/types/database.types'
+import { logger } from '@/lib/logger'
 
 type UserRole = Database['public']['Enums']['user_role']
 
@@ -47,7 +48,7 @@ export async function getOrCreateProfile(
     }
 
     // Profile doesn't exist, create it
-    console.log('[Profile Helper] Creating new profile for user:', user.id)
+    logger.log('[Profile Helper] Creating new profile for user:', user.id)
     
     const newProfile = await createUserProfile(supabase, user, defaultRole)
     
@@ -61,7 +62,7 @@ export async function getOrCreateProfile(
       needsOnboarding: true // New users need onboarding
     }
   } catch (error) {
-    console.error('[Profile Helper] Error in getOrCreateProfile:', error)
+    logger.error(error instanceof Error ? error : new Error(String(error)), '[Profile Helper] Error in getOrCreateProfile')
     return { 
       profile: null, 
       error: error instanceof Error ? error.message : 'Unknown error',
@@ -102,7 +103,7 @@ export async function createUserProfile(
       updated_at: new Date().toISOString(),
     }
 
-    console.log('[Profile Helper] Creating profile with data:', {
+    logger.log('[Profile Helper] Creating profile with data:', {
       id: profileData.id,
       email: profileData.email,
       role: profileData.role,
@@ -118,7 +119,7 @@ export async function createUserProfile(
 
     // If insert fails due to conflict, try update
     if (error && error.code === '23505') {
-      console.log('[Profile Helper] Profile exists, updating instead')
+      logger.log('[Profile Helper] Profile exists, updating instead')
       const updateResult = await (supabase as any)
         .from('users')
         .update({
@@ -137,14 +138,14 @@ export async function createUserProfile(
     }
 
     if (error) {
-      console.error('[Profile Helper] Error creating/updating profile:', error)
+      logger.error(error instanceof Error ? error : new Error(String(error)), '[Profile Helper] Error creating/updating profile')
       return { profile: null, error: error.message }
     }
 
-    console.log('[Profile Helper] Profile created/updated successfully')
+    logger.log('[Profile Helper] Profile created/updated successfully')
     return { profile: data as ProfileData, error: null }
   } catch (error) {
-    console.error('[Profile Helper] Exception in createUserProfile:', error)
+    logger.error(error instanceof Error ? error : new Error(String(error)), '[Profile Helper] Exception in createUserProfile')
     return { 
       profile: null, 
       error: error instanceof Error ? error.message : 'Failed to create profile'
@@ -170,14 +171,14 @@ export async function updateUserRole(
       .eq('id', userId)
 
     if (error) {
-      console.error('[Profile Helper] Error updating role:', error)
+      logger.error(error instanceof Error ? error : new Error(String(error)), '[Profile Helper] Error updating role')
       return { success: false, error: error.message }
     }
 
-    console.log('[Profile Helper] Role updated successfully to:', role)
+    logger.log('[Profile Helper] Role updated successfully to:', role)
     return { success: true, error: null }
   } catch (error) {
-    console.error('[Profile Helper] Exception in updateUserRole:', error)
+    logger.error(error instanceof Error ? error : new Error(String(error)), '[Profile Helper] Exception in updateUserRole')
     return { 
       success: false, 
       error: error instanceof Error ? error.message : 'Failed to update role'

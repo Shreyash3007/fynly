@@ -3,6 +3,8 @@
  * Provides consistent error handling across the application
  */
 
+import { NextResponse } from 'next/server'
+
 export interface AppError {
   code: string
   message: string
@@ -114,14 +116,14 @@ export function logError(error: Error | ApiError, context?: string) {
 }
 
 /**
- * Create API error response
+ * Create API error response (Next.js compatible)
  */
 export function createErrorResponse(
   code: string,
   message: string,
   statusCode: number = 500,
   details?: any
-): Response {
+) {
   const error: AppError = {
     code,
     message: getUserFriendlyMessage(message),
@@ -131,19 +133,16 @@ export function createErrorResponse(
 
   logError(new ApiError(code, message, statusCode, details), 'API_ERROR')
 
-  return new Response(
-    JSON.stringify({ error }),
-    {
-      status: statusCode,
-      headers: { 'Content-Type': 'application/json' },
-    }
-  )
+  return {
+    error,
+    statusCode,
+  }
 }
 
 /**
- * Handle API route errors
+ * Handle API route errors (Next.js compatible)
  */
-export function handleApiError(error: unknown): Response {
+export function handleApiError(error: unknown) {
   if (error instanceof ApiError) {
     return createErrorResponse(
       error.code,
@@ -174,16 +173,18 @@ export function handleApiError(error: unknown): Response {
 }
 
 /**
- * Wrap async API route handler with error handling
+ * Wrap async API route handler with error handling (Next.js compatible)
  */
-export function withErrorHandling<T extends (...args: any[]) => Promise<Response>>(
+
+export function withErrorHandling<T extends (...args: any[]) => Promise<any>>(
   handler: T
 ): T {
   return (async (...args: Parameters<T>) => {
     try {
       return await handler(...args)
     } catch (error) {
-      return handleApiError(error)
+      const { error: errorObj, statusCode } = handleApiError(error)
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
   }) as T
 }

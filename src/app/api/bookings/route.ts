@@ -8,6 +8,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { createDailyRoom, generateRoomName, getRoomUrl } from '@/lib/daily/client'
 import { validateBookingPayload } from '@/lib/validation/api-validators'
+import { ApiError, handleApiError } from '@/lib/error-handler'
+import { logger } from '@/lib/logger'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
@@ -31,7 +33,10 @@ export async function POST(request: NextRequest) {
     // Validate input using validation utility
     const validation = validateBookingPayload(body)
     if (!validation.valid) {
-      return NextResponse.json({ error: validation.error }, { status: 400 })
+      const { error: errorObj, statusCode } = handleApiError(
+        new ApiError('VALIDATION_ERROR', validation.error || 'Invalid booking data', 400)
+      )
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     const { advisorId, meetingTime, duration, notes } = validation.data!
@@ -44,10 +49,10 @@ export async function POST(request: NextRequest) {
       .single()
 
     if (advisorError || (advisor as any)?.status !== 'approved') {
-      return NextResponse.json(
-        { error: 'Advisor not available' },
-        { status: 400 }
+      const { error: errorObj, statusCode } = handleApiError(
+        new ApiError('NOT_FOUND', 'Advisor not available or not approved', 400)
       )
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     // Create booking with validated data
@@ -65,7 +70,10 @@ export async function POST(request: NextRequest) {
       .single()
 
     if (bookingError) {
-      return NextResponse.json({ error: bookingError.message }, { status: 500 })
+      const { error: errorObj, statusCode } = handleApiError(
+        new ApiError('BOOKING_FAILED', bookingError.message || 'Failed to create booking', 500)
+      )
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     // Create Daily.co room (simplified for MVP - uses built-in UI)
@@ -116,17 +124,14 @@ export async function POST(request: NextRequest) {
         })
       }
     } catch (dailyError) {
-      console.error('Failed to create Daily.co room:', dailyError)
+      logger.error(dailyError instanceof Error ? dailyError : new Error(String(dailyError)), '[Bookings] Failed to create Daily.co room')
       // Continue without video room - can be created later
     }
 
     return NextResponse.json({ booking }, { status: 201 })
   } catch (error) {
-    console.error('Booking creation error:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    const { error: errorObj, statusCode } = handleApiError(error)
+    return NextResponse.json({ error: errorObj }, { status: statusCode })
   }
 }
 
@@ -172,15 +177,16 @@ export async function GET(_request: NextRequest) {
     })
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 })
+      const { error: errorObj, statusCode } = handleApiError(
+        new ApiError('SERVER_ERROR', error.message || 'Failed to fetch bookings', 500)
+      )
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     return NextResponse.json({ bookings: bookings || [] })
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    const { error: errorObj, statusCode } = handleApiError(error)
+    return NextResponse.json({ error: errorObj }, { status: statusCode })
   }
 }
 

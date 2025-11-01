@@ -7,6 +7,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { validateChatMessagePayload } from '@/lib/validation/api-validators'
+import { ApiError, handleApiError } from '@/lib/error-handler'
 
 export const dynamic = 'force-dynamic'
 export const runtime = 'nodejs'
@@ -23,13 +24,17 @@ export async function POST(request: NextRequest) {
     } = await supabase.auth.getUser()
 
     if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+      const { error: errorObj, statusCode } = handleApiError(new ApiError('AUTH_REQUIRED', 'Unauthorized', 401))
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     // Validate input
     const validation = validateChatMessagePayload(body)
     if (!validation.valid) {
-      return NextResponse.json({ error: validation.error }, { status: 400 })
+      const { error: errorObj, statusCode } = handleApiError(
+        new ApiError('VALIDATION_ERROR', validation.error || 'Invalid message data', 400)
+      )
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     const { relationshipId, content, attachmentUrl } = validation.data!
@@ -48,10 +53,10 @@ export async function POST(request: NextRequest) {
       .single()
 
     if (relationshipError || !relationship) {
-      return NextResponse.json(
-        { error: 'Relationship not found' },
-        { status: 404 }
+      const { error: errorObj, statusCode } = handleApiError(
+        new ApiError('NOT_FOUND', 'Relationship not found', 404)
       )
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     // Check if user is part of this relationship
@@ -59,10 +64,10 @@ export async function POST(request: NextRequest) {
     const isAdvisor = (relationship as any).advisors?.user_id === user.id
 
     if (!isInvestor && !isAdvisor) {
-      return NextResponse.json(
-        { error: 'Unauthorized: You are not part of this relationship' },
-        { status: 403 }
+      const { error: errorObj, statusCode } = handleApiError(
+        new ApiError('FORBIDDEN', 'Unauthorized: You are not part of this relationship', 403)
       )
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     // Create message
@@ -80,19 +85,15 @@ export async function POST(request: NextRequest) {
       .single()
 
     if (messageError) {
-      console.error('Message creation error:', messageError)
-      return NextResponse.json(
-        { error: 'Failed to send message' },
-        { status: 500 }
+      const { error: errorObj, statusCode } = handleApiError(
+        new ApiError('SERVER_ERROR', messageError.message || 'Failed to send message', 500)
       )
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     return NextResponse.json({ message }, { status: 201 })
   } catch (error) {
-    console.error('Send message error:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    const { error: errorObj, statusCode } = handleApiError(error)
+    return NextResponse.json({ error: errorObj }, { status: statusCode })
   }
 }

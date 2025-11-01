@@ -5,6 +5,7 @@
 
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { ApiError, handleApiError } from '@/lib/error-handler'
 
 export const dynamic = 'force-dynamic'
 export const runtime = 'nodejs'
@@ -30,10 +31,16 @@ export async function GET(request: NextRequest) {
 
     // Validate inputs
     if (limit > 50) {
-      return NextResponse.json({ error: 'Limit cannot exceed 50' }, { status: 400 })
+      const { error: errorObj, statusCode } = handleApiError(
+        new ApiError('VALIDATION_ERROR', 'Limit cannot exceed 50', 400)
+      )
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
     if (offset < 0) {
-      return NextResponse.json({ error: 'Offset must be non-negative' }, { status: 400 })
+      const { error: errorObj, statusCode } = handleApiError(
+        new ApiError('VALIDATION_ERROR', 'Offset must be non-negative', 400)
+      )
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     // Build the query - only approved advisors
@@ -86,8 +93,10 @@ export async function GET(request: NextRequest) {
     const { data: advisors, error } = await supabaseQuery
 
     if (error) {
-      console.error('Search error:', error)
-      return NextResponse.json({ error: 'Failed to search advisors' }, { status: 500 })
+      const { error: errorObj, statusCode } = handleApiError(
+        new ApiError('SERVER_ERROR', error.message || 'Failed to search advisors', 500)
+      )
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     // Get total count (simplified - no filters for count in MVP)
@@ -106,10 +115,7 @@ export async function GET(request: NextRequest) {
       }
     })
   } catch (error) {
-    console.error('Search API error:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    const { error: errorObj, statusCode } = handleApiError(error)
+    return NextResponse.json({ error: errorObj }, { status: statusCode })
   }
 }

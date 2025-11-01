@@ -6,6 +6,7 @@
 
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { ApiError, handleApiError } from '@/lib/error-handler'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
@@ -52,8 +53,10 @@ export async function GET(request: NextRequest) {
     })
 
     if (error) {
-      console.error('Advisors fetch error:', error)
-      return NextResponse.json({ error: 'Failed to fetch advisors' }, { status: 500 })
+      const { error: errorObj, statusCode } = handleApiError(
+        new ApiError('SERVER_ERROR', error.message || 'Failed to fetch advisors', 500)
+      )
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     // Simple client-side search (name matching)
@@ -68,11 +71,8 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({ advisors: filteredData || [] })
   } catch (error) {
-    console.error('Advisors API error:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    const { error: errorObj, statusCode } = handleApiError(error)
+    return NextResponse.json({ error: errorObj }, { status: statusCode })
   }
 }
 
@@ -87,45 +87,46 @@ export async function POST(request: NextRequest) {
     } = await supabase.auth.getUser()
 
     if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+      const { error: errorObj, statusCode } = handleApiError(new ApiError('AUTH_REQUIRED', 'Unauthorized', 401))
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     // Validate required fields
     const { bio, experience_years, sebi_reg_no, expertise, hourly_rate } = body
 
     if (!bio || typeof bio !== 'string' || bio.trim().length < 10) {
-      return NextResponse.json(
-        { error: 'Bio is required and must be at least 10 characters' },
-        { status: 400 }
+      const { error: errorObj, statusCode } = handleApiError(
+        new ApiError('VALIDATION_ERROR', 'Bio is required and must be at least 10 characters', 400)
       )
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     if (!experience_years || !Number.isInteger(experience_years) || experience_years < 0) {
-      return NextResponse.json(
-        { error: 'Experience years must be a non-negative integer' },
-        { status: 400 }
+      const { error: errorObj, statusCode } = handleApiError(
+        new ApiError('VALIDATION_ERROR', 'Experience years must be a non-negative integer', 400)
       )
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     if (!sebi_reg_no || typeof sebi_reg_no !== 'string' || !sebi_reg_no.trim()) {
-      return NextResponse.json(
-        { error: 'SEBI registration number is required' },
-        { status: 400 }
+      const { error: errorObj, statusCode } = handleApiError(
+        new ApiError('VALIDATION_ERROR', 'SEBI registration number is required', 400)
       )
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     if (!expertise || !Array.isArray(expertise) || expertise.length === 0) {
-      return NextResponse.json(
-        { error: 'At least one expertise area is required' },
-        { status: 400 }
+      const { error: errorObj, statusCode } = handleApiError(
+        new ApiError('VALIDATION_ERROR', 'At least one expertise area is required', 400)
       )
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     if (!hourly_rate || typeof hourly_rate !== 'number' || hourly_rate <= 0) {
-      return NextResponse.json(
-        { error: 'Hourly rate must be a positive number' },
-        { status: 400 }
+      const { error: errorObj, statusCode } = handleApiError(
+        new ApiError('VALIDATION_ERROR', 'Hourly rate must be a positive number', 400)
       )
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     // Check if advisor profile already exists
@@ -136,10 +137,10 @@ export async function POST(request: NextRequest) {
       .single()
 
     if (existing) {
-      return NextResponse.json(
-        { error: 'Advisor profile already exists' },
-        { status: 400 }
+      const { error: errorObj, statusCode } = handleApiError(
+        new ApiError('VALIDATION_ERROR', 'Advisor profile already exists', 400)
       )
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     // Create advisor profile with validated data
@@ -159,16 +160,15 @@ export async function POST(request: NextRequest) {
       .single()
 
     if (error) {
-      console.error('Advisor creation error:', error)
-      return NextResponse.json({ error: 'Failed to create advisor profile' }, { status: 500 })
+      const { error: errorObj, statusCode } = handleApiError(
+        new ApiError('SERVER_ERROR', error.message || 'Failed to create advisor profile', 500)
+      )
+      return NextResponse.json({ error: errorObj }, { status: statusCode })
     }
 
     return NextResponse.json({ advisor }, { status: 201 })
   } catch (error) {
-    console.error('Advisor POST API error:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    const { error: errorObj, statusCode } = handleApiError(error)
+    return NextResponse.json({ error: errorObj }, { status: statusCode })
   }
 }
