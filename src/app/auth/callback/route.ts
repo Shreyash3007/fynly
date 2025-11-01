@@ -16,7 +16,9 @@ export async function GET(request: Request) {
   const errorDescription = requestUrl.searchParams.get('error_description')
   const origin = requestUrl.origin
 
-  logger.log('[Auth Callback] Processing callback', { code: !!code, error })
+  if (process.env.NODE_ENV === 'development') {
+    logger.log('[Auth Callback] Processing callback', { code: !!code, error })
+  }
 
   // Handle OAuth errors
   if (error) {
@@ -61,54 +63,81 @@ export async function GET(request: Request) {
       return NextResponse.redirect(`${origin}/login?error=user_not_found`)
     }
 
-    logger.log('[Auth Callback] User authenticated:', user.id, 'Email confirmed:', !!user.email_confirmed_at)
+    if (process.env.NODE_ENV === 'development') {
+      logger.log('[Auth Callback] User authenticated:', user.id, 'Email confirmed:', !!user.email_confirmed_at)
+    }
 
-    // Get or create user profile
-    const { profile, error: profileError, needsOnboarding } = await getOrCreateProfile(
-      supabase, 
-      user,
-      user.user_metadata?.role || 'investor'
-    )
+    // Get or create user profile with better error handling
+    let profile, profileError, needsOnboarding
+    try {
+      const result = await getOrCreateProfile(
+        supabase, 
+        user,
+        user.user_metadata?.role || 'investor'
+      )
+      profile = result.profile
+      profileError = result.error
+      needsOnboarding = result.needsOnboarding
+    } catch (profileException) {
+      logger.error(profileException instanceof Error ? profileException : new Error(String(profileException)), '[Auth Callback] Profile exception')
+      return NextResponse.redirect(`${origin}/login?error=profile_exception&message=${encodeURIComponent('Failed to load profile. Please try again.')}`)
+    }
 
     if (profileError) {
       logger.error(new Error(profileError || 'Profile error'), '[Auth Callback]')
-      return NextResponse.redirect(`${origin}/login?error=profile_error`)
+      return NextResponse.redirect(`${origin}/login?error=profile_error&message=${encodeURIComponent(profileError)}`)
     }
 
     if (!profile) {
       logger.error(new Error('No profile created'), '[Auth Callback]')
-      return NextResponse.redirect(`${origin}/login?error=no_profile`)
+      return NextResponse.redirect(`${origin}/login?error=no_profile&message=${encodeURIComponent('Profile could not be created. Please contact support.')}`)
     }
 
     // Update email_verified status in profile if email is confirmed
     // Note: Database update handled via triggers, profile object updated here
     if (user.email_confirmed_at && !profile.email_verified) {
-      logger.log('[Auth Callback] Email confirmed, marking profile as verified')
+      if (process.env.NODE_ENV === 'development') {
+        logger.log('[Auth Callback] Email confirmed, marking profile as verified')
+      }
       profile.email_verified = true
       // Database will be updated via trigger when user.email_confirmed_at is set
     }
 
-    logger.log('[Auth Callback] Profile status:', {
-      role: profile.role,
-      needsOnboarding,
-      emailVerified: profile.email_verified
-    })
+    if (process.env.NODE_ENV === 'development') {
+      logger.log('[Auth Callback] Profile status:', {
+        role: profile.role,
+        needsOnboarding,
+        emailVerified: profile.email_verified
+      })
+    }
 
     // Check if user needs onboarding (no role selected or first time)
     if (needsOnboarding || !profile.role) {
-      logger.log('[Auth Callback] User needs onboarding')
+      if (process.env.NODE_ENV === 'development') {
+        logger.log('[Auth Callback] User needs onboarding')
+      }
       return NextResponse.redirect(`${origin}/onboarding?verified=true`)
     }
 
     // Redirect to appropriate dashboard with success message
     const dashboardUrl = getDashboardUrl(profile.role)
-    logger.log('[Auth Callback] Email verified! Redirecting to:', dashboardUrl)
+    if (process.env.NODE_ENV === 'development') {
+      logger.log('[Auth Callback] Email verified! Redirecting to:', dashboardUrl)
+    }
     
-    return NextResponse.redirect(`${origin}${dashboardUrl}?verified=true`)
+    // Ensure dashboardUrl is valid
+    const finalUrl = dashboardUrl || '/dashboard'
+    return NextResponse.redirect(`${origin}${finalUrl}?verified=true`)
   } catch (error: any) {
+    const requestUrl = new URL(request.url)
+    const origin = requestUrl.origin
+    
     logger.error(error instanceof Error ? error : new Error(String(error)), '[Auth Callback] Unexpected error')
+    
+    // Provide a safe fallback redirect
+    const errorMessage = error?.message || 'An unexpected error occurred during sign-in'
     return NextResponse.redirect(
-      `${origin}/login?error=unexpected&message=${encodeURIComponent(error.message || 'An unexpected error occurred')}`
+      `${origin}/login?error=unexpected&message=${encodeURIComponent(errorMessage)}`
     )
   }
 }

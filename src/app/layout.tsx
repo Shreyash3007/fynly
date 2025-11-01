@@ -33,6 +33,9 @@ export const metadata: Metadata = {
     'wealth management',
   ],
   authors: [{ name: 'Fynly Team' }],
+  icons: {
+    icon: '/favicon.ico',
+  },
   openGraph: {
     type: 'website',
     locale: 'en_IN',
