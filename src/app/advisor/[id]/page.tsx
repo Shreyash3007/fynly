@@ -16,6 +16,7 @@ import { Badge } from '@/components/ui/Badge'
 import { Modal } from '@/components/ui/Modal'
 import { BookingModal } from '@/components/booking/BookingModal'
 import type { Advisor } from '@/types'
+import { Heatmap } from '@/components/ui/Heatmap'
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
@@ -124,6 +125,17 @@ export default function AdvisorProfilePage() {
                     </Badge>
                   ))}
                 </div>
+              </CardBody>
+            </Card>
+
+            {/* Availability Heatmap (demo) */}
+            <Card>
+              <CardBody>
+                <h2 className="text-xl font-semibold text-graphite-900 mb-4">Availability Heatmap</h2>
+                <Heatmap
+                  title="Next 30 days"
+                  dates={advisor.availableSlots.map((s: any) => ({ date: s.date, count: 1 }))}
+                />
               </CardBody>
             </Card>
 

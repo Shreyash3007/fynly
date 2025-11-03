@@ -14,6 +14,72 @@ import { Modal } from '@/components/ui/Modal'
 import { Card, CardBody } from '@/components/ui/Card'
 import Image from 'next/image'
 import { format } from 'date-fns'
+import { useState as _useState } from 'react'
+
+function PostCallSummary({ bookingId, onDone }: { bookingId: string; onDone: () => void }) {
+  const [rating, setRating] = useState<number>(5)
+  const [feedback, setFeedback] = useState('')
+  const [scheduling, setScheduling] = useState(false)
+
+  const scheduleNext = async () => {
+    try {
+      setScheduling(true)
+      const nextTime = new Date()
+      nextTime.setDate(nextTime.getDate() + 3)
+      nextTime.setHours(11, 0, 0, 0)
+
+      // Create a new booking for the next session (investor-demo-001 with same advisor derived from existing booking is out of scope here, we simulate with first available advisor)
+      await fetch('/api/bookings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          advisorId: 'advisor-001',
+          investorId: 'investor-demo-001',
+          meetingTime: nextTime.toISOString(),
+          duration: 60,
+          notes: `Follow-up session (auto-scheduled). Previous rating: ${rating}. ${feedback}`,
+        }),
+      })
+
+      onDone()
+    } catch (e) {
+      onDone()
+    }
+  }
+
+  return (
+    <div className="text-center space-y-6">
+      <div className="w-32 h-32 rounded-full bg-green-500/20 flex items-center justify-center mx-auto">
+        <svg className="w-16 h-16 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+        </svg>
+      </div>
+      <div>
+        <h2 className="text-2xl font-semibold mb-2">Call Ended</h2>
+        <p className="text-graphite-400 mb-6">Thanks! Leave a quick review and plan your next session.</p>
+      </div>
+
+      <div className="max-w-md mx-auto text-left space-y-3">
+        <div>
+          <label className="block text-sm mb-1">Rating</label>
+          <div className="flex items-center gap-1">
+            {[1,2,3,4,5].map(n => (
+              <button key={n} onClick={() => setRating(n)} className={`w-8 h-8 rounded-full flex items-center justify-center ${n <= rating ? 'bg-yellow-400 text-white' : 'bg-graphite-700 text-graphite-300'}`}>{n}</button>
+            ))}
+          </div>
+        </div>
+        <div>
+          <label className="block text-sm mb-1">Feedback</label>
+          <textarea value={feedback} onChange={(e)=>setFeedback(e.target.value)} rows={3} className="w-full px-3 py-2 rounded-lg border border-graphite-700 bg-graphite-900 text-white" placeholder="What went well? What can be improved?" />
+        </div>
+        <div className="flex gap-3">
+          <Button variant="outline" onClick={onDone}>Finish</Button>
+          <Button variant="primary" onClick={scheduleNext} disabled={scheduling}>{scheduling ? 'Scheduling…' : 'Schedule Next Session'}</Button>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
@@ -67,9 +133,7 @@ export default function DemoCallPage() {
       }
     }
 
-    setTimeout(() => {
-      router.push('/dashboard')
-    }, 2000)
+    // Show post-call summary for rating and next steps
   }
 
   const formatDuration = (seconds: number) => {
@@ -151,29 +215,7 @@ export default function DemoCallPage() {
             </div>
           </div>
         ) : callEnded ? (
-          <div className="text-center space-y-6">
-            <div className="w-32 h-32 rounded-full bg-green-500/20 flex items-center justify-center mx-auto">
-              <svg
-                className="w-16 h-16 text-green-500"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M5 13l4 4L19 7"
-                />
-              </svg>
-            </div>
-            <div>
-              <h2 className="text-2xl font-semibold mb-2">Call Ended</h2>
-              <p className="text-graphite-400 mb-6">
-                Thank you for your session. Redirecting to dashboard...
-              </p>
-            </div>
-          </div>
+          <PostCallSummary bookingId={String(params.id)} onDone={() => router.push('/dashboard')} />
         ) : (
           <div className="grid grid-cols-2 gap-4 max-w-4xl w-full px-4">
             {/* Local Video */}

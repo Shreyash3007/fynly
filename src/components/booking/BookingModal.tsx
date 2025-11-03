@@ -266,9 +266,22 @@ export function BookingModal({ advisor, isOpen, onClose }: BookingModalProps) {
             <p className="text-sm text-graphite-500">
               A confirmation email has been sent (simulated).
             </p>
-            <Button variant="primary" fullWidth onClick={handleClose}>
-              Go to Dashboard
-            </Button>
+            <div className="flex gap-3">
+              <Button variant="outline" fullWidth onClick={handleClose}>
+                Go to Dashboard
+              </Button>
+              {bookingId && (
+                <Button
+                  variant="primary"
+                  fullWidth
+                  onClick={() => {
+                    window.location.href = `/demo-call/${bookingId}`
+                  }}
+                >
+                  Join Call Now
+                </Button>
+              )}
+            </div>
           </div>
         )}
       </Modal>

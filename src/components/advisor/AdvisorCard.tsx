@@ -65,7 +65,7 @@ export function AdvisorCard({ advisor }: AdvisorCardProps) {
           )}
         </div>
 
-        <Link href={`/advisor/${advisor.id}`}>
+        <Link href={`/advisor/${advisor.id}`} prefetch>
           <Button variant="primary" fullWidth>
             View Profile
           </Button>

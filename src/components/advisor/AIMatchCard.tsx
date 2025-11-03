@@ -49,7 +49,7 @@ export function AIMatchCard({ advisor, rationale, rank }: AIMatchCardProps) {
             <p className="text-sm text-graphite-600 italic mb-3">&quot;{rationale}&quot;</p>
           </div>
         </div>
-        <Link href={`/advisor/${advisor.id}`}>
+        <Link href={`/advisor/${advisor.id}`} prefetch>
           <Button variant="outline" fullWidth size="sm">
             Book Demo
           </Button>

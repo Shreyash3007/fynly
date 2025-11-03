@@ -13,7 +13,8 @@ import { Input } from '@/components/ui/Input'
 import { Button } from '@/components/ui/Button'
 import { Badge } from '@/components/ui/Badge'
 import { Card } from '@/components/ui/Card'
-import useSWR from 'swr'
+import { Heatmap } from '@/components/ui/Heatmap'
+import useSWR, { useSWRConfig } from 'swr'
 import { useRouter } from 'next/navigation'
 import type { Advisor } from '@/types'
 
@@ -32,6 +33,7 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json())
 export default function DiscoverPage() {
   const router = useRouter()
   const { user, setUser, mockUsers } = useDemoAuth()
+  const { mutate } = useSWRConfig()
   const [searchQuery, setSearchQuery] = useState('')
   const [debouncedQuery, setDebouncedQuery] = useState('')
   const [filters, setFilters] = useState({
@@ -43,6 +45,8 @@ export default function DiscoverPage() {
   })
   const [sortBy, setSortBy] = useState<'relevance' | 'rating' | 'price_low' | 'price_high'>('relevance')
   const [page, setPage] = useState(1)
+  const [selected, setSelected] = useState<Record<string, Advisor>>({})
+  const [showCompare, setShowCompare] = useState(false)
 
   // Redirect if not logged in
   useEffect(() => {
@@ -72,6 +76,7 @@ export default function DiscoverPage() {
     if (filters.priceMax) params.set('price_max', filters.priceMax)
     if (filters.ratingMin) params.set('rating_min', filters.ratingMin)
     if (filters.verified !== undefined) params.set('verified', String(filters.verified))
+    if ((filters as any).availabilityDate) params.set('availability_date', (filters as any).availabilityDate)
     return `/api/advisors?${params.toString()}`
   }, [debouncedQuery, page, sortBy, filters])
 
@@ -91,6 +96,15 @@ export default function DiscoverPage() {
         : [...prev.expertise, exp],
     }))
     setPage(1)
+  }
+
+  const toggleSelectAdvisor = (advisor: Advisor) => {
+    setSelected(prev => {
+      const next = { ...prev }
+      if (next[advisor.id]) delete next[advisor.id]
+      else next[advisor.id] = advisor
+      return next
+    })
   }
 
   return (
@@ -122,6 +136,18 @@ export default function DiscoverPage() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full"
+            />
+          </div>
+          {/* Availability Heatmap filter (demo visual) */}
+          <div className="mt-4 max-w-2xl">
+            <Heatmap
+              title="Overall Availability (Demo)"
+              selectedDate={(filters as any).availabilityDate}
+              onDateClick={(date) => {
+                setFilters(prev => ({ ...prev, availabilityDate: date }))
+                setPage(1)
+              }}
+              dates={(advisorsData?.data || []).flatMap((a: any) => (a.availableSlots || []).map((s: any)=>({ date: s.date, count: 1 })))}
             />
           </div>
         </div>
@@ -273,12 +299,13 @@ export default function DiscoverPage() {
                 </h2>
                 <div className="grid md:grid-cols-3 gap-4">
                   {matchesData.data.map((match: any, idx: number) => (
-                    <AIMatchCard
-                      key={match.advisor.id}
-                      advisor={match.advisor}
-                      rationale={match.rationale}
-                      rank={idx + 1}
-                    />
+                    <div key={match.advisor.id} className="fade-in-up" style={{ animationDelay: `${idx * 50}ms` }}>
+                      <AIMatchCard
+                        advisor={match.advisor}
+                        rationale={match.rationale}
+                        rank={idx + 1}
+                      />
+                    </div>
                   ))}
                 </div>
               </div>
@@ -298,8 +325,30 @@ export default function DiscoverPage() {
             ) : advisorsData?.data && advisorsData.data.length > 0 ? (
               <>
                 <div className="grid md:grid-cols-2 gap-6">
-                  {advisorsData.data.map((advisor: Advisor) => (
-                    <AdvisorCard key={advisor.id} advisor={advisor} />
+                  {advisorsData.data.map((advisor: Advisor, idx: number) => (
+                    <div
+                      key={advisor.id}
+                      className="relative transition-transform hover:-translate-y-0.5 hover:shadow-lg fade-in-up tilt-hover"
+                      style={{ animationDelay: `${idx * 40}ms` }}
+                      onMouseEnter={async () => {
+                        try {
+                          const res = await fetch(`/api/advisors/${advisor.id}`)
+                          const json = await res.json()
+                          mutate(`/api/advisors/${advisor.id}`, json, false)
+                        } catch {}
+                      }}
+                    >
+                      <label className="absolute top-3 left-3 z-10 flex items-center gap-2 bg-white/90 backdrop-blur px-2 py-1 rounded-md border border-graphite-200 shadow-sm">
+                        <input
+                          type="checkbox"
+                          checked={!!selected[advisor.id]}
+                          onChange={() => toggleSelectAdvisor(advisor)}
+                          className="rounded border-graphite-300 text-mint-600 focus:ring-mint-500"
+                        />
+                        <span className="text-xs text-graphite-700">Compare</span>
+                      </label>
+                      <AdvisorCard advisor={advisor} />
+                    </div>
                   ))}
                 </div>
 
@@ -336,6 +385,61 @@ export default function DiscoverPage() {
                   <p className="text-graphite-600">No advisors found. Try adjusting your filters.</p>
                 </div>
               </Card>
+            )}
+
+            {/* Compare Drawer */}
+            {Object.keys(selected).length > 0 && (
+              <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-graphite-200 shadow-2xl">
+                <div className="container mx-auto px-4 py-3 flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <span className="text-sm text-graphite-600">Selected:</span>
+                    <div className="flex -space-x-2">
+                      {Object.values(selected).slice(0, 5).map((a) => (
+                        <div key={a.id} className="w-8 h-8 rounded-full bg-graphite-200 flex items-center justify-center text-xs font-medium border-2 border-white" title={a.name}>
+                          {a.name.split(' ').map(x=>x[0]).slice(0,2).join('')}
+                        </div>
+                      ))}
+                    </div>
+                    <span className="text-sm text-graphite-600">({Object.keys(selected).length})</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Button variant="outline" size="sm" onClick={() => { setSelected({}); setShowCompare(false) }}>Clear</Button>
+                    <Button variant="primary" size="sm" onClick={() => setShowCompare(true)}>Open Compare</Button>
+                  </div>
+                </div>
+                {showCompare && (
+                  <div className="border-t border-graphite-200 bg-graphite-50">
+                    <div className="container mx-auto px-4 py-4 overflow-x-auto">
+                      <div className="min-w-[700px] grid" style={{ gridTemplateColumns: `200px repeat(${Object.keys(selected).length}, minmax(180px, 1fr))`}}>
+                        <div></div>
+                        {Object.values(selected).map((a) => (
+                          <div key={a.id} className="text-center font-semibold text-graphite-900">{a.name}</div>
+                        ))}
+                        <div className="text-graphite-600 py-2">Price / hr</div>
+                        {Object.values(selected).map((a) => (
+                          <div key={a.id} className="py-2 text-center">₹{a.hourlyRate}</div>
+                        ))}
+                        <div className="text-graphite-600 py-2">Rating</div>
+                        {Object.values(selected).map((a) => (
+                          <div key={a.id} className="py-2 text-center">{a.rating}★</div>
+                        ))}
+                        <div className="text-graphite-600 py-2">Experience</div>
+                        {Object.values(selected).map((a) => (
+                          <div key={a.id} className="py-2 text-center">{a.experienceYears} yrs</div>
+                        ))}
+                        <div className="text-graphite-600 py-2">Verified</div>
+                        {Object.values(selected).map((a) => (
+                          <div key={a.id} className="py-2 text-center">{a.verified ? 'Yes' : 'No'}</div>
+                        ))}
+                        <div className="text-graphite-600 py-2">Top Expertise</div>
+                        {Object.values(selected).map((a) => (
+                          <div key={a.id} className="py-2 text-center text-sm text-graphite-700">{a.expertise.slice(0,2).join(', ')}</div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
             )}
           </div>
         </div>

@@ -16,6 +16,13 @@
   .text-balance {
     text-wrap: balance;
   }
+  .fade-in-up {
+    animation: fadeUp 300ms ease-out;
+  }
+  .tilt-hover:hover {
+    transform: perspective(600px) rotateX(2deg) rotateY(-2deg) translateY(-2px);
+    transition: transform 200ms ease, box-shadow 200ms ease;
+  }
 }
 
 /* Custom scrollbar */
@@ -68,6 +75,31 @@
   }
   100% {
     background-position: 1000px 0;
+  }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Page Transitions */
+.page-transition-enter {
+  animation: pageSlideIn 300ms ease-out;
+}
+
+.page-transition-active {
+  opacity: 1;
+}
+
+@keyframes pageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 
