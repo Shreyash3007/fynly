@@ -101,7 +101,15 @@ export default function DemoCallPage() {
   const { data: investorBookings } = useSWR(`/api/bookings?userId=${investorId}&role=investor`, fetcher)
   const { data: advisorBookings } = useSWR(`/api/bookings?userId=${advisorId}&role=advisor`, fetcher)
   const combined = [...(investorBookings?.data || []), ...(advisorBookings?.data || [])]
-  const booking = combined.find((b: any) => b.id === params.id)
+  const booking = combined.find((b: any) => b.id === params.id) || {
+    id: String(params.id),
+    advisorId: 'advisor-001',
+    investorId,
+    status: 'confirmed',
+    meetingTime: new Date(Date.now() + 5 * 60 * 1000).toISOString(),
+    duration: 60,
+    amount: 0,
+  }
 
   useEffect(() => {
     let interval: NodeJS.Timeout

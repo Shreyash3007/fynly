@@ -34,6 +34,23 @@ export default function AdvisorDashboardPage() {
   )
   const bookings = data?.data || []
 
+  // Auto-seed demo bookings if none
+  useEffect(() => {
+    async function seed() {
+      if (advisorId && bookings.length < 10) {
+        try {
+          await fetch('/api/bookings/seed', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ advisorId, count: 10 }),
+          })
+        } catch {}
+      }
+    }
+    seed()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [advisorId])
+
   // Fetch advisor profile for reviews block
   const { data: advisorDetail } = useSWR(
     advisorId ? `/api/advisors/${advisorId}` : null,
