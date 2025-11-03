@@ -38,7 +38,7 @@ export async function GET(request: NextRequest) {
       const results = fuse.search(q)
       filtered = results.map((result) => ({
         ...result.item,
-        _relevanceScore: calculateRelevanceScore(result.item, 1 - result.score),
+        _relevanceScore: calculateRelevanceScore(result.item, 1 - (result.score || 0)),
       }))
     }
 

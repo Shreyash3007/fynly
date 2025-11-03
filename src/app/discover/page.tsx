@@ -168,7 +168,7 @@ export default function DiscoverPage() {
                       onChange={(e) =>
                         setFilters((prev) => ({ ...prev, priceMin: e.target.value }))
                       }
-                      size="sm"
+                      className="text-sm"
                     />
                     <Input
                       type="number"
@@ -177,7 +177,7 @@ export default function DiscoverPage() {
                       onChange={(e) =>
                         setFilters((prev) => ({ ...prev, priceMax: e.target.value }))
                       }
-                      size="sm"
+                      className="text-sm"
                     />
                   </div>
                 </div>

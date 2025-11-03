@@ -97,6 +97,15 @@ function generateAdvisors() {
 
     const reputationScore = calculateReputationScore(rating, reviewsCount, completionRate)
 
+    // Generate reviews first
+    const reviews = Array.from({ length: Math.min(reviewsCount, 10) }, () => ({
+      id: faker.string.uuid(),
+      investorName: faker.person.firstName(),
+      rating: faker.number.int({ min: 3, max: 5 }),
+      comment: faker.lorem.sentence({ min: 10, max: 30 }),
+      date: faker.date.past({ years: 1 }).toISOString(),
+    }))
+
     const advisor = {
       id: `advisor-${String(i + 1).padStart(3, '0')}`,
       name: faker.person.fullName(),
@@ -117,23 +126,11 @@ function generateAdvisors() {
       availableSlots: generateAvailabilitySlots(),
       tags: faker.helpers.arrayElements(['Top Rated', 'Fast Response', 'Expert', 'Verified'], { min: 1, max: 3 }),
       languages: faker.helpers.arrayElements(['English', 'Hindi', 'Gujarati', 'Marathi'], { min: 1, max: 3 }),
+      reviews,
       createdAt: faker.date.past({ years: 2 }).toISOString(),
     }
 
-    // Generate reviews
-    // Add reviews property
-    const advisorWithReviews = {
-      ...advisor,
-      reviews: Array.from({ length: Math.min(reviewsCount, 10) }, () => ({
-        id: faker.string.uuid(),
-        investorName: faker.person.firstName(),
-        rating: faker.number.int({ min: 3, max: 5 }),
-        comment: faker.lorem.sentence({ min: 10, max: 30 }),
-        date: faker.date.past({ years: 1 }).toISOString(),
-      })),
-    }
-
-    advisors.push(advisorWithReviews as any)
+    advisors.push(advisor)
   }
 
   return advisors.sort((a, b) => b.reputationScore - a.reputationScore)
@@ -241,7 +238,7 @@ function generateBookings(advisors: any[], investors: any[]) {
       recordingUrl: null,
       notes: null,
       rating: null,
-      createdAt: faker.date.past({ days: 30, refDate: meetingDate }).toISOString(),
+      createdAt: faker.date.recent({ days: 30, refDate: meetingDate }).toISOString(),
     })
   }
 

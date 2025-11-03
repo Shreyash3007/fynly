@@ -18,6 +18,10 @@ export async function GET(request: NextRequest) {
 
     // Simulate AI matching algorithm
     // In a real app, this would analyze investor portfolio, goals, and preferences
+    if (!advisors || advisors.length === 0) {
+      return NextResponse.json({ data: [] })
+    }
+
     const matched = advisors
       .sort((a, b) => b.reputationScore - a.reputationScore)
       .slice(0, 3)
