@@ -1,0 +1,4397 @@
+[
+  {
+    "id": "investor-0001",
+    "name": "Louis Walter",
+    "email": "erika.deckow48@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=db1d59eb-5e3d-44a7-b5be-1586204e735b",
+    "phone": "+912211794574",
+    "portfolio": {
+      "equity": 53.8,
+      "fixedIncome": 24.5,
+      "gold": 14.2,
+      "realEstate": 7.5,
+      "crypto": 0,
+      "riskLevel": "moderate",
+      "totalValue": "4869268"
+    },
+    "investmentGoals": [
+      "Wealth Building"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-09-23T22:57:31.580Z"
+  },
+  {
+    "id": "investor-0002",
+    "name": "Jack Reichel",
+    "email": "nia.smith@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=eb0fd817-2edb-40e7-8469-2f8193f432bc",
+    "phone": "+914934153398",
+    "portfolio": {
+      "equity": 59.8,
+      "fixedIncome": 30.9,
+      "gold": 9.3,
+      "realEstate": 0,
+      "crypto": 0,
+      "riskLevel": "moderate",
+      "totalValue": "2716424"
+    },
+    "investmentGoals": [
+      "House Purchase",
+      "Child Education"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-08-13T00:36:57.103Z"
+  },
+  {
+    "id": "investor-0003",
+    "name": "Jorge Ankunding",
+    "email": "deondre_murray@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=e9b54798-8ed8-4513-a237-eee8358861ca",
+    "phone": "+913410663324",
+    "portfolio": {
+      "equity": 67.1,
+      "fixedIncome": 11.8,
+      "gold": 11.8,
+      "realEstate": 4.7,
+      "crypto": 4.7,
+      "riskLevel": "aggressive",
+      "totalValue": "3529284"
+    },
+    "investmentGoals": [
+      "Retirement",
+      "Wealth Building",
+      "Child Education"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2024-11-28T23:04:26.986Z"
+  },
+  {
+    "id": "investor-0004",
+    "name": "Ms. Shelley Schneider",
+    "email": "augustus.bradtke@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=79eabc9c-a758-48c8-b76b-186af333428f",
+    "phone": "+917037941404",
+    "portfolio": {
+      "equity": 63,
+      "fixedIncome": 24.1,
+      "gold": 13,
+      "realEstate": 0,
+      "crypto": 0,
+      "riskLevel": "aggressive",
+      "totalValue": "6038695"
+    },
+    "investmentGoals": [
+      "House Purchase",
+      "Retirement",
+      "Tax Savings"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-01-16T23:54:59.267Z"
+  },
+  {
+    "id": "investor-0005",
+    "name": "May Kuhic",
+    "email": "miles.larkin0@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=b83d30c8-3ba4-4ed6-8084-b0ebfe169c7e",
+    "phone": "+919849974284",
+    "portfolio": {
+      "equity": 73.7,
+      "fixedIncome": 12.6,
+      "gold": 11.6,
+      "realEstate": 1.1,
+      "crypto": 1.1,
+      "riskLevel": "aggressive",
+      "totalValue": "2263612"
+    },
+    "investmentGoals": [
+      "Child Education",
+      "Retirement"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-05-20T09:01:31.857Z"
+  },
+  {
+    "id": "investor-0006",
+    "name": "Heather Jacobs V",
+    "email": "chanel.feest22@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d7200420-835f-4a3a-80de-55560524e05a",
+    "phone": "+913476380470",
+    "portfolio": {
+      "equity": 72.2,
+      "fixedIncome": 11.1,
+      "gold": 6.7,
+      "realEstate": 6.7,
+      "crypto": 3.3,
+      "riskLevel": "aggressive",
+      "totalValue": "1492663"
+    },
+    "investmentGoals": [
+      "House Purchase",
+      "Tax Savings"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2024-12-18T14:47:44.533Z"
+  },
+  {
+    "id": "investor-0007",
+    "name": "Harvey Kshlerin-Hermiston",
+    "email": "dovie.harber32@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=1398ebf8-a034-4ea1-a2e7-1becbb5668bc",
+    "phone": "+916120892302",
+    "portfolio": {
+      "equity": 54.2,
+      "fixedIncome": 18.1,
+      "gold": 10.8,
+      "realEstate": 10.8,
+      "crypto": 6,
+      "riskLevel": "moderate",
+      "totalValue": "9504870"
+    },
+    "investmentGoals": [
+      "House Purchase"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-06-21T09:40:34.776Z"
+  },
+  {
+    "id": "investor-0008",
+    "name": "Sheri VonRueden IV",
+    "email": "clay.dooley80@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=65ffef24-f828-4b50-936b-ed024ce6db6a",
+    "phone": "+919776978882",
+    "portfolio": {
+      "equity": 55.9,
+      "fixedIncome": 32.3,
+      "gold": 6.5,
+      "realEstate": 5.4,
+      "crypto": 0,
+      "riskLevel": "moderate",
+      "totalValue": "1651111"
+    },
+    "investmentGoals": [
+      "Tax Savings",
+      "Wealth Building",
+      "Child Education"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-06-04T15:59:51.752Z"
+  },
+  {
+    "id": "investor-0009",
+    "name": "Verna Reilly",
+    "email": "blake_walsh76@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=f5799adb-05d8-4b41-a70c-ab68355cf12e",
+    "phone": "+913173122081",
+    "portfolio": {
+      "equity": 57.3,
+      "fixedIncome": 19.1,
+      "gold": 11.8,
+      "realEstate": 7.3,
+      "crypto": 4.5,
+      "riskLevel": "moderate",
+      "totalValue": "1634047"
+    },
+    "investmentGoals": [
+      "Retirement"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-10-10T14:59:57.526Z"
+  },
+  {
+    "id": "investor-0010",
+    "name": "Laurie Huels",
+    "email": "dane.wintheiser@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=fca1077d-dd68-4fac-bd22-5c9bfceb4b25",
+    "phone": "+913262261829",
+    "portfolio": {
+      "equity": 67,
+      "fixedIncome": 13.6,
+      "gold": 11.7,
+      "realEstate": 3.9,
+      "crypto": 3.9,
+      "riskLevel": "aggressive",
+      "totalValue": "7694217"
+    },
+    "investmentGoals": [
+      "House Purchase",
+      "Wealth Building",
+      "Child Education"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-01-12T15:15:11.022Z"
+  },
+  {
+    "id": "investor-0011",
+    "name": "Amos Klocko Sr.",
+    "email": "rae71@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=c60c18f9-9746-4aee-a03c-afbe806eadb8",
+    "phone": "+912790850982",
+    "portfolio": {
+      "equity": 74.1,
+      "fixedIncome": 12.3,
+      "gold": 7.4,
+      "realEstate": 2.5,
+      "crypto": 3.7,
+      "riskLevel": "aggressive",
+      "totalValue": "1148122"
+    },
+    "investmentGoals": [
+      "House Purchase",
+      "Tax Savings"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2024-12-27T03:24:53.205Z"
+  },
+  {
+    "id": "investor-0012",
+    "name": "Peggy Cremin",
+    "email": "eldon9@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=c6a570df-cf5e-44db-9b3c-8e79dbb17d59",
+    "phone": "+916412132856",
+    "portfolio": {
+      "equity": 53.1,
+      "fixedIncome": 21.4,
+      "gold": 13.3,
+      "realEstate": 8.2,
+      "crypto": 4.1,
+      "riskLevel": "moderate",
+      "totalValue": "5537272"
+    },
+    "investmentGoals": [
+      "House Purchase",
+      "Tax Savings",
+      "Child Education"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-05-24T06:12:12.384Z"
+  },
+  {
+    "id": "investor-0013",
+    "name": "Ted Shanahan",
+    "email": "donavon_kunze@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=a7343bea-79c5-4638-90b5-3fcbb691b128",
+    "phone": "+919358447192",
+    "portfolio": {
+      "equity": 64.8,
+      "fixedIncome": 22.1,
+      "gold": 8.2,
+      "realEstate": 4.9,
+      "crypto": 0,
+      "riskLevel": "aggressive",
+      "totalValue": "4668679"
+    },
+    "investmentGoals": [
+      "Child Education",
+      "Retirement"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-06-03T04:30:57.017Z"
+  },
+  {
+    "id": "investor-0014",
+    "name": "Angelica Grady",
+    "email": "katelyn13@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=2a1ca102-7140-466e-b420-c8f249e85b85",
+    "phone": "+910768724774",
+    "portfolio": {
+      "equity": 63.4,
+      "fixedIncome": 17.8,
+      "gold": 14.9,
+      "realEstate": 1,
+      "crypto": 3,
+      "riskLevel": "aggressive",
+      "totalValue": "4908416"
+    },
+    "investmentGoals": [
+      "Tax Savings",
+      "House Purchase",
+      "Retirement"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-05-20T15:05:38.643Z"
+  },
+  {
+    "id": "investor-0015",
+    "name": "Gerald Wilderman",
+    "email": "elmer_pagac-heller41@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d52eb4fb-f0ec-4f4d-ac8f-f166c5a71c8f",
+    "phone": "+910000828552",
+    "portfolio": {
+      "equity": 56.4,
+      "fixedIncome": 23.6,
+      "gold": 6.4,
+      "realEstate": 9.1,
+      "crypto": 4.5,
+      "riskLevel": "moderate",
+      "totalValue": "4035790"
+    },
+    "investmentGoals": [
+      "Wealth Building"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-05-28T01:57:39.209Z"
+  },
+  {
+    "id": "investor-0016",
+    "name": "Dr. Brent Schimmel",
+    "email": "ora_barton96@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=294eca34-9cf8-4047-b764-7ddd17bd26a2",
+    "phone": "+915756353044",
+    "portfolio": {
+      "equity": 69.4,
+      "fixedIncome": 21.2,
+      "gold": 8.2,
+      "realEstate": 1.2,
+      "crypto": 0,
+      "riskLevel": "aggressive",
+      "totalValue": "3380554"
+    },
+    "investmentGoals": [
+      "Tax Savings",
+      "Retirement"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-09-07T04:59:16.238Z"
+  },
+  {
+    "id": "investor-0017",
+    "name": "Sophie Armstrong",
+    "email": "jameson_weissnat@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=f8459b6b-c687-464e-8566-fc19c894bc46",
+    "phone": "+912873059512",
+    "portfolio": {
+      "equity": 62.5,
+      "fixedIncome": 21.9,
+      "gold": 6.3,
+      "realEstate": 6.3,
+      "crypto": 3.1,
+      "riskLevel": "aggressive",
+      "totalValue": "9839818"
+    },
+    "investmentGoals": [
+      "Child Education",
+      "Wealth Building"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-07-17T18:21:07.433Z"
+  },
+  {
+    "id": "investor-0018",
+    "name": "Dr. Oscar Waters",
+    "email": "issac_ohara@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=7f908ae4-1640-4cf2-a473-0d1785749753",
+    "phone": "+912506103809",
+    "portfolio": {
+      "equity": 56.8,
+      "fixedIncome": 27.4,
+      "gold": 10.5,
+      "realEstate": 5.3,
+      "crypto": 0,
+      "riskLevel": "moderate",
+      "totalValue": "9704864"
+    },
+    "investmentGoals": [
+      "Wealth Building",
+      "Tax Savings",
+      "House Purchase"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-09-08T12:15:51.912Z"
+  },
+  {
+    "id": "investor-0019",
+    "name": "Dr. Kathleen Kuhn",
+    "email": "tillman_steuber69@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=97a8f104-bb02-43f2-b6c9-9aedd47a473f",
+    "phone": "+911796796415",
+    "portfolio": {
+      "equity": 57.7,
+      "fixedIncome": 16.3,
+      "gold": 14.4,
+      "realEstate": 6.7,
+      "crypto": 4.8,
+      "riskLevel": "moderate",
+      "totalValue": "3694698"
+    },
+    "investmentGoals": [
+      "Retirement",
+      "House Purchase"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-01-17T20:27:27.217Z"
+  },
+  {
+    "id": "investor-0020",
+    "name": "Leticia Gleichner",
+    "email": "mandy_aufderhar61@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=f5d73bfb-fc71-41c4-851e-602ddba2bff5",
+    "phone": "+919710666750",
+    "portfolio": {
+      "equity": 63,
+      "fixedIncome": 17.6,
+      "gold": 9.3,
+      "realEstate": 5.6,
+      "crypto": 4.6,
+      "riskLevel": "aggressive",
+      "totalValue": "3368064"
+    },
+    "investmentGoals": [
+      "Wealth Building",
+      "Child Education"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-03-04T08:03:30.680Z"
+  },
+  {
+    "id": "investor-0021",
+    "name": "Wanda Koss-Hayes",
+    "email": "nels.fritsch0@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d61323fc-8ab6-44f9-8d20-239ba47b9459",
+    "phone": "+910759937585",
+    "portfolio": {
+      "equity": 61.3,
+      "fixedIncome": 24.7,
+      "gold": 7.5,
+      "realEstate": 4.3,
+      "crypto": 2.2,
+      "riskLevel": "aggressive",
+      "totalValue": "7003502"
+    },
+    "investmentGoals": [
+      "Child Education"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-05-24T21:31:01.689Z"
+  },
+  {
+    "id": "investor-0022",
+    "name": "Hattie Rogahn",
+    "email": "ward.hickle74@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d6e64cac-ae75-4a9b-b4a3-fba76e287583",
+    "phone": "+910597091375",
+    "portfolio": {
+      "equity": 55.1,
+      "fixedIncome": 25.4,
+      "gold": 11,
+      "realEstate": 5.9,
+      "crypto": 2.5,
+      "riskLevel": "moderate",
+      "totalValue": "7275019"
+    },
+    "investmentGoals": [
+      "House Purchase"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2024-12-06T16:40:05.064Z"
+  },
+  {
+    "id": "investor-0023",
+    "name": "Elisa Williamson",
+    "email": "lessie21@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=3f51fb78-6941-4be0-b857-83492ab83365",
+    "phone": "+917491493740",
+    "portfolio": {
+      "equity": 64.5,
+      "fixedIncome": 21,
+      "gold": 8.9,
+      "realEstate": 3.2,
+      "crypto": 2.4,
+      "riskLevel": "aggressive",
+      "totalValue": "591107"
+    },
+    "investmentGoals": [
+      "Child Education"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-07-31T18:37:07.929Z"
+  },
+  {
+    "id": "investor-0024",
+    "name": "Lowell Klocko DVM",
+    "email": "tara54@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=74ebd490-dad0-4763-8b2d-f5fe210a42ef",
+    "phone": "+913913455302",
+    "portfolio": {
+      "equity": 61.1,
+      "fixedIncome": 26.7,
+      "gold": 5.6,
+      "realEstate": 1.1,
+      "crypto": 5.6,
+      "riskLevel": "aggressive",
+      "totalValue": "2060902"
+    },
+    "investmentGoals": [
+      "Tax Savings"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2024-12-17T20:45:44.825Z"
+  },
+  {
+    "id": "investor-0025",
+    "name": "Mr. Doyle Bogan PhD",
+    "email": "webster34@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=1421448b-519c-4a1e-a86a-cd3e58f54b59",
+    "phone": "+913389920100",
+    "portfolio": {
+      "equity": 73.7,
+      "fixedIncome": 15.8,
+      "gold": 7.9,
+      "realEstate": 0,
+      "crypto": 2.6,
+      "riskLevel": "aggressive",
+      "totalValue": "4109232"
+    },
+    "investmentGoals": [
+      "Retirement",
+      "House Purchase",
+      "Wealth Building"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-10-16T15:20:19.728Z"
+  },
+  {
+    "id": "investor-0026",
+    "name": "Floyd Herman",
+    "email": "caesar_dibbert@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=549fb223-3157-465d-97ee-98e8469772fc",
+    "phone": "+919596673089",
+    "portfolio": {
+      "equity": 55.2,
+      "fixedIncome": 25.3,
+      "gold": 13.8,
+      "realEstate": 1.1,
+      "crypto": 4.6,
+      "riskLevel": "moderate",
+      "totalValue": "4381625"
+    },
+    "investmentGoals": [
+      "Retirement"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-08-26T06:55:49.991Z"
+  },
+  {
+    "id": "investor-0027",
+    "name": "Jackie Willms",
+    "email": "meggie_beatty50@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=7dd999e0-1897-4ccd-85f4-2356585a2018",
+    "phone": "+913402444822",
+    "portfolio": {
+      "equity": 73.6,
+      "fixedIncome": 11.3,
+      "gold": 10.4,
+      "realEstate": 0.9,
+      "crypto": 3.8,
+      "riskLevel": "aggressive",
+      "totalValue": "7352908"
+    },
+    "investmentGoals": [
+      "Wealth Building",
+      "Tax Savings",
+      "Child Education"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-06-01T02:47:14.599Z"
+  },
+  {
+    "id": "investor-0028",
+    "name": "Walter Pacocha",
+    "email": "simeon7@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=da7d0038-d708-4b2c-b62e-687bcb80b704",
+    "phone": "+919353851886",
+    "portfolio": {
+      "equity": 66.3,
+      "fixedIncome": 20.7,
+      "gold": 12,
+      "realEstate": 1.1,
+      "crypto": 0,
+      "riskLevel": "aggressive",
+      "totalValue": "8760009"
+    },
+    "investmentGoals": [
+      "Wealth Building"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2024-12-31T05:02:17.923Z"
+  },
+  {
+    "id": "investor-0029",
+    "name": "Gina Zboncak",
+    "email": "amy_weimann@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=b533fd93-72de-4503-b9ae-fc34f69da9a3",
+    "phone": "+918217897786",
+    "portfolio": {
+      "equity": 52.8,
+      "fixedIncome": 28.1,
+      "gold": 9,
+      "realEstate": 7.9,
+      "crypto": 2.2,
+      "riskLevel": "moderate",
+      "totalValue": "7741528"
+    },
+    "investmentGoals": [
+      "Tax Savings",
+      "Retirement",
+      "House Purchase"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2024-12-25T03:40:52.122Z"
+  },
+  {
+    "id": "investor-0030",
+    "name": "Courtney Cronin",
+    "email": "graciela16@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=e1462fc2-b1bd-43f8-81b9-432e230c987f",
+    "phone": "+911272155210",
+    "portfolio": {
+      "equity": 57.5,
+      "fixedIncome": 23.3,
+      "gold": 6.8,
+      "realEstate": 5.5,
+      "crypto": 6.8,
+      "riskLevel": "moderate",
+      "totalValue": "3704879"
+    },
+    "investmentGoals": [
+      "House Purchase",
+      "Tax Savings"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-03-03T01:19:34.483Z"
+  },
+  {
+    "id": "investor-0031",
+    "name": "Constance Mraz",
+    "email": "sheridan_lemke32@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=c55d51fb-c9c6-4b27-9d0e-9711f0edcd09",
+    "phone": "+911885672197",
+    "portfolio": {
+      "equity": 59.8,
+      "fixedIncome": 19.5,
+      "gold": 16.1,
+      "realEstate": 1.1,
+      "crypto": 3.4,
+      "riskLevel": "moderate",
+      "totalValue": "3328133"
+    },
+    "investmentGoals": [
+      "Tax Savings",
+      "Child Education",
+      "House Purchase"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-08-09T15:38:02.305Z"
+  },
+  {
+    "id": "investor-0032",
+    "name": "Katie Stokes",
+    "email": "camille.trantow69@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=2add515a-33e0-49f8-affe-7778fbd40948",
+    "phone": "+915286330088",
+    "portfolio": {
+      "equity": 56.6,
+      "fixedIncome": 27.7,
+      "gold": 13.3,
+      "realEstate": 0,
+      "crypto": 2.4,
+      "riskLevel": "moderate",
+      "totalValue": "5780273"
+    },
+    "investmentGoals": [
+      "House Purchase",
+      "Child Education",
+      "Tax Savings"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-01-23T08:55:44.695Z"
+  },
+  {
+    "id": "investor-0033",
+    "name": "Rodolfo Waters",
+    "email": "marilie_ferry@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=5e2824f3-dea2-4de3-8d6e-97f77b99b6dd",
+    "phone": "+910875853174",
+    "portfolio": {
+      "equity": 66.9,
+      "fixedIncome": 21.2,
+      "gold": 5.9,
+      "realEstate": 1.7,
+      "crypto": 4.2,
+      "riskLevel": "aggressive",
+      "totalValue": "2171622"
+    },
+    "investmentGoals": [
+      "Wealth Building",
+      "House Purchase",
+      "Retirement"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-02-20T15:50:38.274Z"
+  },
+  {
+    "id": "investor-0034",
+    "name": "Oscar Cole",
+    "email": "jarrod_goldner32@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=f283957a-e6e1-4acd-809c-b2f554ca16cc",
+    "phone": "+914907729201",
+    "portfolio": {
+      "equity": 55.9,
+      "fixedIncome": 22.8,
+      "gold": 10.2,
+      "realEstate": 7.9,
+      "crypto": 3.1,
+      "riskLevel": "moderate",
+      "totalValue": "1811224"
+    },
+    "investmentGoals": [
+      "Tax Savings",
+      "Wealth Building"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-09-10T09:38:44.441Z"
+  },
+  {
+    "id": "investor-0035",
+    "name": "Sherry Mills",
+    "email": "anabel_reynolds@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=3bcf8949-a298-4f18-80c9-e177bf86d642",
+    "phone": "+918415096071",
+    "portfolio": {
+      "equity": 65.8,
+      "fixedIncome": 12.3,
+      "gold": 12.3,
+      "realEstate": 7.9,
+      "crypto": 1.8,
+      "riskLevel": "aggressive",
+      "totalValue": "5451155"
+    },
+    "investmentGoals": [
+      "Child Education",
+      "Wealth Building"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-04-30T22:31:19.277Z"
+  },
+  {
+    "id": "investor-0036",
+    "name": "Sheila Walsh",
+    "email": "anastasia_brown82@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=deac60bb-96d1-4b77-b6c7-0724e147ad0a",
+    "phone": "+916486348207",
+    "portfolio": {
+      "equity": 61.4,
+      "fixedIncome": 22.9,
+      "gold": 11.4,
+      "realEstate": 1.4,
+      "crypto": 2.9,
+      "riskLevel": "aggressive",
+      "totalValue": "8298377"
+    },
+    "investmentGoals": [
+      "Tax Savings",
+      "Retirement"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-02-01T18:05:29.072Z"
+  },
+  {
+    "id": "investor-0037",
+    "name": "Lena Lind",
+    "email": "jamaal69@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=5d75fac7-0a0e-49b9-8d0c-8e1973697cf8",
+    "phone": "+917299977564",
+    "portfolio": {
+      "equity": 76.6,
+      "fixedIncome": 12.8,
+      "gold": 5.3,
+      "realEstate": 3.2,
+      "crypto": 2.1,
+      "riskLevel": "aggressive",
+      "totalValue": "6277706"
+    },
+    "investmentGoals": [
+      "Wealth Building",
+      "Tax Savings"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-04-01T05:36:30.595Z"
+  },
+  {
+    "id": "investor-0038",
+    "name": "Jaime Rau",
+    "email": "johanna.runolfsson@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=6cea02b2-a8e1-4266-897f-eb5c531b445c",
+    "phone": "+911446726010",
+    "portfolio": {
+      "equity": 63,
+      "fixedIncome": 21,
+      "gold": 6.2,
+      "realEstate": 4.9,
+      "crypto": 4.9,
+      "riskLevel": "aggressive",
+      "totalValue": "2204485"
+    },
+    "investmentGoals": [
+      "Wealth Building",
+      "Tax Savings",
+      "Child Education"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-01-02T05:49:56.472Z"
+  },
+  {
+    "id": "investor-0039",
+    "name": "Pete Parker",
+    "email": "wiley.dubuque@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=8ceede09-65de-4683-a9f3-9767a6533d58",
+    "phone": "+919082951675",
+    "portfolio": {
+      "equity": 75,
+      "fixedIncome": 10.9,
+      "gold": 10.9,
+      "realEstate": 0,
+      "crypto": 3.3,
+      "riskLevel": "aggressive",
+      "totalValue": "7835716"
+    },
+    "investmentGoals": [
+      "Retirement",
+      "House Purchase",
+      "Wealth Building"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-03-05T22:28:39.410Z"
+  },
+  {
+    "id": "investor-0040",
+    "name": "Ed Parker",
+    "email": "magdalena_gislason@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=fca1b696-96f3-4653-8e43-84e477f2bc38",
+    "phone": "+911945054160",
+    "portfolio": {
+      "equity": 61.6,
+      "fixedIncome": 16.4,
+      "gold": 15.1,
+      "realEstate": 0,
+      "crypto": 6.8,
+      "riskLevel": "aggressive",
+      "totalValue": "6577000"
+    },
+    "investmentGoals": [
+      "Child Education",
+      "Tax Savings",
+      "Wealth Building"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-09-12T02:30:15.819Z"
+  },
+  {
+    "id": "investor-0041",
+    "name": "Dustin Beatty",
+    "email": "alexa_fadel@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=3f66065b-bd81-41ec-be2f-f2622bd3456d",
+    "phone": "+914567850345",
+    "portfolio": {
+      "equity": 58,
+      "fixedIncome": 19.3,
+      "gold": 15.9,
+      "realEstate": 1.1,
+      "crypto": 5.7,
+      "riskLevel": "moderate",
+      "totalValue": "2012606"
+    },
+    "investmentGoals": [
+      "Tax Savings",
+      "House Purchase",
+      "Child Education"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-06-08T20:54:07.698Z"
+  },
+  {
+    "id": "investor-0042",
+    "name": "Alma Berge",
+    "email": "mary67@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=726439ea-17e1-41d1-a8f3-ec551196798d",
+    "phone": "+919291901244",
+    "portfolio": {
+      "equity": 55.6,
+      "fixedIncome": 32.2,
+      "gold": 5.6,
+      "realEstate": 6.7,
+      "crypto": 0,
+      "riskLevel": "moderate",
+      "totalValue": "9881137"
+    },
+    "investmentGoals": [
+      "Child Education"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2024-12-30T12:43:20.742Z"
+  },
+  {
+    "id": "investor-0043",
+    "name": "Ivan Blanda",
+    "email": "rubye_smitham@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=4ff080ac-a01d-4d21-9d03-346bffe9e0d4",
+    "phone": "+910858147740",
+    "portfolio": {
+      "equity": 63.4,
+      "fixedIncome": 12.2,
+      "gold": 14.6,
+      "realEstate": 3.7,
+      "crypto": 6.1,
+      "riskLevel": "aggressive",
+      "totalValue": "9668630"
+    },
+    "investmentGoals": [
+      "Tax Savings"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-04-10T19:08:56.299Z"
+  },
+  {
+    "id": "investor-0044",
+    "name": "Owen Krajcik Sr.",
+    "email": "michelle.turner12@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=b1059b95-9c56-474b-9f69-c65a8e90ccee",
+    "phone": "+916254140438",
+    "portfolio": {
+      "equity": 65,
+      "fixedIncome": 24.2,
+      "gold": 6.7,
+      "realEstate": 2.5,
+      "crypto": 1.7,
+      "riskLevel": "aggressive",
+      "totalValue": "2289125"
+    },
+    "investmentGoals": [
+      "Wealth Building"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2024-11-30T03:35:50.288Z"
+  },
+  {
+    "id": "investor-0045",
+    "name": "Eddie Grady",
+    "email": "graciela.stokes65@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=c6b65df1-035c-4517-a177-3ca33f4197be",
+    "phone": "+919647706554",
+    "portfolio": {
+      "equity": 64.9,
+      "fixedIncome": 22.3,
+      "gold": 12.8,
+      "realEstate": 0,
+      "crypto": 0,
+      "riskLevel": "aggressive",
+      "totalValue": "3288343"
+    },
+    "investmentGoals": [
+      "Wealth Building",
+      "Child Education",
+      "Retirement"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-08-08T07:06:50.843Z"
+  },
+  {
+    "id": "investor-0046",
+    "name": "Ruth Walker I",
+    "email": "joany6@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d803675b-5d6e-4836-8ba0-a782ce069b26",
+    "phone": "+916918509637",
+    "portfolio": {
+      "equity": 67.6,
+      "fixedIncome": 22.9,
+      "gold": 5.7,
+      "realEstate": 3.8,
+      "crypto": 0,
+      "riskLevel": "aggressive",
+      "totalValue": "1647782"
+    },
+    "investmentGoals": [
+      "Wealth Building",
+      "Child Education",
+      "House Purchase"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-05-11T11:11:24.610Z"
+  },
+  {
+    "id": "investor-0047",
+    "name": "Ebony Goyette II",
+    "email": "izabella.wilderman@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=5e06dfbd-b792-45bc-ae46-ec0f24021b88",
+    "phone": "+916656145056",
+    "portfolio": {
+      "equity": 59.2,
+      "fixedIncome": 28.6,
+      "gold": 8.2,
+      "realEstate": 0,
+      "crypto": 4.1,
+      "riskLevel": "moderate",
+      "totalValue": "3745814"
+    },
+    "investmentGoals": [
+      "House Purchase",
+      "Tax Savings",
+      "Wealth Building"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-04-23T03:08:01.036Z"
+  },
+  {
+    "id": "investor-0048",
+    "name": "Arnold Hamill",
+    "email": "lillie10@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=8d3e7299-b868-4355-88b5-6b2b8fb3b53a",
+    "phone": "+917749816036",
+    "portfolio": {
+      "equity": 64.2,
+      "fixedIncome": 13.8,
+      "gold": 9.8,
+      "realEstate": 8.1,
+      "crypto": 4.1,
+      "riskLevel": "aggressive",
+      "totalValue": "4219244"
+    },
+    "investmentGoals": [
+      "Retirement",
+      "House Purchase",
+      "Child Education"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-09-24T11:54:43.423Z"
+  },
+  {
+    "id": "investor-0049",
+    "name": "Roberta Schowalter",
+    "email": "imogene_lueilwitz-huels41@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=ec2e9acf-bb82-43e7-b47e-b87e633d3bae",
+    "phone": "+913314755063",
+    "portfolio": {
+      "equity": 65.2,
+      "fixedIncome": 20.3,
+      "gold": 10.1,
+      "realEstate": 2.9,
+      "crypto": 1.4,
+      "riskLevel": "aggressive",
+      "totalValue": "8860878"
+    },
+    "investmentGoals": [
+      "Retirement",
+      "House Purchase",
+      "Wealth Building"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-03-24T20:33:35.940Z"
+  },
+  {
+    "id": "investor-0050",
+    "name": "Anita Zboncak V",
+    "email": "kaitlin_dubuque98@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=61216de2-671c-4318-a9eb-1f4138141d8a",
+    "phone": "+912870734343",
+    "portfolio": {
+      "equity": 62,
+      "fixedIncome": 23.9,
+      "gold": 5.4,
+      "realEstate": 4.3,
+      "crypto": 4.3,
+      "riskLevel": "aggressive",
+      "totalValue": "3932130"
+    },
+    "investmentGoals": [
+      "Child Education",
+      "House Purchase",
+      "Retirement"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2024-11-30T23:12:58.432Z"
+  },
+  {
+    "id": "investor-0051",
+    "name": "Ms. Connie Lehner",
+    "email": "gust13@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=b6e21352-cd55-40b5-9b08-26c7aaf31475",
+    "phone": "+915862787906",
+    "portfolio": {
+      "equity": 62.1,
+      "fixedIncome": 17.2,
+      "gold": 12.6,
+      "realEstate": 4.6,
+      "crypto": 3.4,
+      "riskLevel": "aggressive",
+      "totalValue": "1926418"
+    },
+    "investmentGoals": [
+      "Tax Savings",
+      "House Purchase",
+      "Wealth Building"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-10-23T02:30:18.210Z"
+  },
+  {
+    "id": "investor-0052",
+    "name": "Howard Wolff-Schultz",
+    "email": "chad.johnston48@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=e7772b0f-8566-4ad2-815c-54f33b06638f",
+    "phone": "+913473943024",
+    "portfolio": {
+      "equity": 52.2,
+      "fixedIncome": 32.6,
+      "gold": 5.4,
+      "realEstate": 5.4,
+      "crypto": 4.3,
+      "riskLevel": "moderate",
+      "totalValue": "1039150"
+    },
+    "investmentGoals": [
+      "House Purchase"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-08-15T08:21:10.601Z"
+  },
+  {
+    "id": "investor-0053",
+    "name": "Shirley Hudson",
+    "email": "avis81@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=9232bf22-d8ce-47f4-8ca0-e50193b7ac49",
+    "phone": "+918059296083",
+    "portfolio": {
+      "equity": 68.4,
+      "fixedIncome": 21.1,
+      "gold": 10.5,
+      "realEstate": 0,
+      "crypto": 0,
+      "riskLevel": "aggressive",
+      "totalValue": "7176839"
+    },
+    "investmentGoals": [
+      "Tax Savings",
+      "Retirement"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2024-12-03T03:31:43.160Z"
+  },
+  {
+    "id": "investor-0054",
+    "name": "Tim Sipes",
+    "email": "jazmyn.satterfield9@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=29548828-10ea-459f-a84a-b079940c036e",
+    "phone": "+917187881106",
+    "portfolio": {
+      "equity": 60.3,
+      "fixedIncome": 19,
+      "gold": 11.9,
+      "realEstate": 7.1,
+      "crypto": 1.6,
+      "riskLevel": "aggressive",
+      "totalValue": "950801"
+    },
+    "investmentGoals": [
+      "Tax Savings"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-08-21T01:43:45.023Z"
+  },
+  {
+    "id": "investor-0055",
+    "name": "Pat Moen",
+    "email": "stella.stark@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=5136bd0d-a1fa-4a5a-a0d4-efe5e3ed5ce1",
+    "phone": "+919391975496",
+    "portfolio": {
+      "equity": 61.4,
+      "fixedIncome": 17,
+      "gold": 13.6,
+      "realEstate": 8,
+      "crypto": 0,
+      "riskLevel": "aggressive",
+      "totalValue": "3702280"
+    },
+    "investmentGoals": [
+      "Tax Savings"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-03-01T10:52:03.176Z"
+  },
+  {
+    "id": "investor-0056",
+    "name": "Jamie Gislason",
+    "email": "enrique87@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=2df96d32-4108-4001-ada8-5ed591bc7c14",
+    "phone": "+910139507830",
+    "portfolio": {
+      "equity": 63.7,
+      "fixedIncome": 23.1,
+      "gold": 8.8,
+      "realEstate": 2.2,
+      "crypto": 2.2,
+      "riskLevel": "aggressive",
+      "totalValue": "8666113"
+    },
+    "investmentGoals": [
+      "Child Education"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-06-05T01:57:58.276Z"
+  },
+  {
+    "id": "investor-0057",
+    "name": "Margaret Dicki",
+    "email": "ada_ferry13@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=f9460ed0-032e-4274-9df0-92cd3c19c56d",
+    "phone": "+915446848863",
+    "portfolio": {
+      "equity": 55.6,
+      "fixedIncome": 24.4,
+      "gold": 10,
+      "realEstate": 5.6,
+      "crypto": 4.4,
+      "riskLevel": "moderate",
+      "totalValue": "4228137"
+    },
+    "investmentGoals": [
+      "House Purchase"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-04-22T01:17:44.228Z"
+  },
+  {
+    "id": "investor-0058",
+    "name": "Sherry Ondricka",
+    "email": "alvis_hackett-ruecker@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=e642fb3c-a579-4091-b662-089f09007623",
+    "phone": "+916261477716",
+    "portfolio": {
+      "equity": 58.4,
+      "fixedIncome": 25.8,
+      "gold": 10.1,
+      "realEstate": 3.4,
+      "crypto": 2.2,
+      "riskLevel": "moderate",
+      "totalValue": "9567877"
+    },
+    "investmentGoals": [
+      "House Purchase"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2024-11-25T04:17:36.105Z"
+  },
+  {
+    "id": "investor-0059",
+    "name": "Rhonda Skiles",
+    "email": "jefferey32@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=ca0119e9-84d7-499e-8f4e-1ae5ba1c0848",
+    "phone": "+911326532439",
+    "portfolio": {
+      "equity": 62.3,
+      "fixedIncome": 24.6,
+      "gold": 7.4,
+      "realEstate": 2.5,
+      "crypto": 3.3,
+      "riskLevel": "aggressive",
+      "totalValue": "6281397"
+    },
+    "investmentGoals": [
+      "House Purchase",
+      "Child Education",
+      "Tax Savings"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-03-09T22:09:59.678Z"
+  },
+  {
+    "id": "investor-0060",
+    "name": "Sharon Windler",
+    "email": "madelyn42@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=a22c9bc1-c9be-4e57-abb0-ba1f4f76c0de",
+    "phone": "+911358076420",
+    "portfolio": {
+      "equity": 66.7,
+      "fixedIncome": 16.7,
+      "gold": 10.5,
+      "realEstate": 1.8,
+      "crypto": 4.4,
+      "riskLevel": "aggressive",
+      "totalValue": "3023011"
+    },
+    "investmentGoals": [
+      "Wealth Building",
+      "Child Education"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-03-26T13:32:02.649Z"
+  },
+  {
+    "id": "investor-0061",
+    "name": "Alexandra Runolfsson",
+    "email": "estel93@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=50d1cc94-52fe-4f30-80ca-ce2cc52152e8",
+    "phone": "+910487171514",
+    "portfolio": {
+      "equity": 58,
+      "fixedIncome": 25,
+      "gold": 7,
+      "realEstate": 6,
+      "crypto": 4,
+      "riskLevel": "moderate",
+      "totalValue": "8700608"
+    },
+    "investmentGoals": [
+      "Tax Savings"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-07-05T10:25:45.346Z"
+  },
+  {
+    "id": "investor-0062",
+    "name": "Craig Kassulke",
+    "email": "billie_morissette@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=850a5aab-c8a3-47d2-adb1-1eebf4ee4381",
+    "phone": "+915143509786",
+    "portfolio": {
+      "equity": 57.1,
+      "fixedIncome": 27.5,
+      "gold": 9.9,
+      "realEstate": 5.5,
+      "crypto": 0,
+      "riskLevel": "moderate",
+      "totalValue": "1858761"
+    },
+    "investmentGoals": [
+      "Retirement",
+      "House Purchase"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-09-16T14:27:56.318Z"
+  },
+  {
+    "id": "investor-0063",
+    "name": "John Jerde-Ondricka",
+    "email": "katlynn13@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=a5693e83-83b2-4f6c-9c2b-9ebb8fd7c184",
+    "phone": "+912109873985",
+    "portfolio": {
+      "equity": 52.2,
+      "fixedIncome": 28.9,
+      "gold": 7.8,
+      "realEstate": 10,
+      "crypto": 1.1,
+      "riskLevel": "moderate",
+      "totalValue": "8453346"
+    },
+    "investmentGoals": [
+      "Tax Savings",
+      "Wealth Building",
+      "Child Education"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-03-04T06:41:55.979Z"
+  },
+  {
+    "id": "investor-0064",
+    "name": "Jay Turner",
+    "email": "edyth_beer@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=7b6cda2e-a3fa-4b02-9df1-af964e5f7f5e",
+    "phone": "+918582617875",
+    "portfolio": {
+      "equity": 66.3,
+      "fixedIncome": 18.4,
+      "gold": 7.1,
+      "realEstate": 6.1,
+      "crypto": 2,
+      "riskLevel": "aggressive",
+      "totalValue": "4538193"
+    },
+    "investmentGoals": [
+      "Wealth Building",
+      "Retirement",
+      "Child Education"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-01-16T10:10:35.622Z"
+  },
+  {
+    "id": "investor-0065",
+    "name": "Lance Waters",
+    "email": "mandy_mertz29@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=71eca4fd-c2a8-412e-8472-0379ca9b3d51",
+    "phone": "+910198960342",
+    "portfolio": {
+      "equity": 54.3,
+      "fixedIncome": 27.2,
+      "gold": 11.1,
+      "realEstate": 6.2,
+      "crypto": 1.2,
+      "riskLevel": "moderate",
+      "totalValue": "9924563"
+    },
+    "investmentGoals": [
+      "House Purchase",
+      "Wealth Building"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-07-03T15:31:44.263Z"
+  },
+  {
+    "id": "investor-0066",
+    "name": "Angie Welch",
+    "email": "glennie37@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d0114709-f269-434b-a8cc-4860b32412ce",
+    "phone": "+911062254347",
+    "portfolio": {
+      "equity": 54.2,
+      "fixedIncome": 22.9,
+      "gold": 12.7,
+      "realEstate": 7.6,
+      "crypto": 2.5,
+      "riskLevel": "moderate",
+      "totalValue": "9098019"
+    },
+    "investmentGoals": [
+      "Wealth Building"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-04-27T15:30:38.989Z"
+  },
+  {
+    "id": "investor-0067",
+    "name": "Lance Wuckert",
+    "email": "bo_wuckert@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=434e4a5b-a88d-4e4b-8296-148fdb1283b5",
+    "phone": "+919896369841",
+    "portfolio": {
+      "equity": 51.3,
+      "fixedIncome": 24.4,
+      "gold": 15.4,
+      "realEstate": 9,
+      "crypto": 0,
+      "riskLevel": "moderate",
+      "totalValue": "9178427"
+    },
+    "investmentGoals": [
+      "Wealth Building",
+      "Child Education",
+      "Retirement"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-04-21T10:45:36.709Z"
+  },
+  {
+    "id": "investor-0068",
+    "name": "Pam Lehner DDS",
+    "email": "kirk56@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=be430dcd-cf8a-4173-879d-9d4c5fb03d57",
+    "phone": "+913151463499",
+    "portfolio": {
+      "equity": 62.9,
+      "fixedIncome": 16.5,
+      "gold": 14.4,
+      "realEstate": 4.1,
+      "crypto": 2.1,
+      "riskLevel": "aggressive",
+      "totalValue": "2324819"
+    },
+    "investmentGoals": [
+      "Retirement",
+      "House Purchase"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-03-12T05:14:15.055Z"
+  },
+  {
+    "id": "investor-0069",
+    "name": "Dr. Bruce Koepp",
+    "email": "alexandrea_monahan60@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=e3b15000-b738-47d2-80f9-1cadeee51d81",
+    "phone": "+913984576581",
+    "portfolio": {
+      "equity": 63.1,
+      "fixedIncome": 21.4,
+      "gold": 11.9,
+      "realEstate": 2.4,
+      "crypto": 1.2,
+      "riskLevel": "aggressive",
+      "totalValue": "3841578"
+    },
+    "investmentGoals": [
+      "House Purchase"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-02-06T13:26:52.442Z"
+  },
+  {
+    "id": "investor-0070",
+    "name": "Mrs. Terri Kris",
+    "email": "jaydon_walter@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=058da9f0-fb0f-40f8-a86d-4757b7b722f1",
+    "phone": "+910347607992",
+    "portfolio": {
+      "equity": 74.8,
+      "fixedIncome": 15.5,
+      "gold": 8.7,
+      "realEstate": 1,
+      "crypto": 0,
+      "riskLevel": "aggressive",
+      "totalValue": "9389170"
+    },
+    "investmentGoals": [
+      "Child Education",
+      "House Purchase",
+      "Tax Savings"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-09-27T07:01:07.448Z"
+  },
+  {
+    "id": "investor-0071",
+    "name": "Tonya McDermott-Ankunding",
+    "email": "monte.waters23@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=ecdbdc4c-3e36-45c4-a428-53abcf31ed4e",
+    "phone": "+919326223807",
+    "portfolio": {
+      "equity": 46.2,
+      "fixedIncome": 25.3,
+      "gold": 12.1,
+      "realEstate": 11,
+      "crypto": 5.5,
+      "riskLevel": "moderate",
+      "totalValue": "9905020"
+    },
+    "investmentGoals": [
+      "Tax Savings"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-03-15T21:00:52.246Z"
+  },
+  {
+    "id": "investor-0072",
+    "name": "Brent Beahan",
+    "email": "adriana_goyette@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=593a9315-e3b8-4dc7-b2be-4c3f607f4c6b",
+    "phone": "+917248568814",
+    "portfolio": {
+      "equity": 64.8,
+      "fixedIncome": 12.4,
+      "gold": 14.3,
+      "realEstate": 8.6,
+      "crypto": 0,
+      "riskLevel": "aggressive",
+      "totalValue": "6900185"
+    },
+    "investmentGoals": [
+      "Wealth Building",
+      "Tax Savings",
+      "Child Education"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-07-08T13:47:12.816Z"
+  },
+  {
+    "id": "investor-0073",
+    "name": "Jimmy Bergnaum",
+    "email": "carleton.langosh-hills@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=14ab8297-3e46-4f0c-aed9-8856cdaaee8f",
+    "phone": "+914501614124",
+    "portfolio": {
+      "equity": 65.9,
+      "fixedIncome": 24.4,
+      "gold": 6.1,
+      "realEstate": 1.2,
+      "crypto": 2.4,
+      "riskLevel": "aggressive",
+      "totalValue": "8842559"
+    },
+    "investmentGoals": [
+      "Wealth Building",
+      "House Purchase",
+      "Child Education"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-03-18T11:37:23.356Z"
+  },
+  {
+    "id": "investor-0074",
+    "name": "Joann Carroll",
+    "email": "manuel_ebert75@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=6959e5c1-21a8-4b03-a898-c0d6888bbaac",
+    "phone": "+918229316295",
+    "portfolio": {
+      "equity": 69.9,
+      "fixedIncome": 20.4,
+      "gold": 5.3,
+      "realEstate": 2.7,
+      "crypto": 1.8,
+      "riskLevel": "aggressive",
+      "totalValue": "1271116"
+    },
+    "investmentGoals": [
+      "Retirement"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-08-03T12:31:02.965Z"
+  },
+  {
+    "id": "investor-0075",
+    "name": "Joyce Keeling",
+    "email": "sabina.breitenberg-shanahan@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=1f5b2e12-5e26-4aa3-934a-3a6f2df8cbfe",
+    "phone": "+917643826964",
+    "portfolio": {
+      "equity": 62.5,
+      "fixedIncome": 20.3,
+      "gold": 9.4,
+      "realEstate": 7.8,
+      "crypto": 0,
+      "riskLevel": "aggressive",
+      "totalValue": "2762436"
+    },
+    "investmentGoals": [
+      "Retirement",
+      "Tax Savings",
+      "House Purchase"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2024-11-18T15:22:53.183Z"
+  },
+  {
+    "id": "investor-0076",
+    "name": "Rachael Kassulke-Harris",
+    "email": "ned_lind42@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=5b0fe637-64f8-4500-a9da-e483a1d4b53c",
+    "phone": "+912226784990",
+    "portfolio": {
+      "equity": 60.2,
+      "fixedIncome": 18.6,
+      "gold": 10.2,
+      "realEstate": 7.6,
+      "crypto": 3.4,
+      "riskLevel": "aggressive",
+      "totalValue": "3327476"
+    },
+    "investmentGoals": [
+      "Retirement"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-03-29T20:14:15.245Z"
+  },
+  {
+    "id": "investor-0077",
+    "name": "Edwin Abshire",
+    "email": "timothy.johns46@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=6aa558ab-5b92-4d3d-b2eb-df8a8ab5eeb9",
+    "phone": "+914305540129",
+    "portfolio": {
+      "equity": 52.9,
+      "fixedIncome": 24.7,
+      "gold": 9.4,
+      "realEstate": 9.4,
+      "crypto": 3.5,
+      "riskLevel": "moderate",
+      "totalValue": "7160773"
+    },
+    "investmentGoals": [
+      "House Purchase",
+      "Retirement",
+      "Tax Savings"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-06-21T16:14:41.335Z"
+  },
+  {
+    "id": "investor-0078",
+    "name": "Sandy Bins",
+    "email": "thad_hahn@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=0b588b73-3e84-414d-9f7f-6149aa09f0e6",
+    "phone": "+919970776399",
+    "portfolio": {
+      "equity": 63,
+      "fixedIncome": 10.2,
+      "gold": 13.9,
+      "realEstate": 8.3,
+      "crypto": 4.6,
+      "riskLevel": "aggressive",
+      "totalValue": "4966355"
+    },
+    "investmentGoals": [
+      "Child Education"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-09-06T08:15:43.776Z"
+  },
+  {
+    "id": "investor-0079",
+    "name": "Kurt Schmidt",
+    "email": "cyril.king50@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=87d08a85-1a6b-4926-851e-bac9dcd85483",
+    "phone": "+917271740517",
+    "portfolio": {
+      "equity": 53.3,
+      "fixedIncome": 15.6,
+      "gold": 16.7,
+      "realEstate": 11.1,
+      "crypto": 3.3,
+      "riskLevel": "moderate",
+      "totalValue": "7538760"
+    },
+    "investmentGoals": [
+      "Child Education",
+      "House Purchase"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-01-29T09:16:53.620Z"
+  },
+  {
+    "id": "investor-0080",
+    "name": "Amelia Murray",
+    "email": "oscar_ortiz42@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=11c6d53e-adba-4bae-b92c-99b490c74884",
+    "phone": "+919226881478",
+    "portfolio": {
+      "equity": 64.3,
+      "fixedIncome": 16.7,
+      "gold": 16.7,
+      "realEstate": 0,
+      "crypto": 2.4,
+      "riskLevel": "aggressive",
+      "totalValue": "7261489"
+    },
+    "investmentGoals": [
+      "Child Education",
+      "Retirement"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2024-12-29T18:15:30.151Z"
+  },
+  {
+    "id": "investor-0081",
+    "name": "Randal Keebler",
+    "email": "agustina.becker@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=5c417a99-99cb-4f32-ace0-94ba58b56f20",
+    "phone": "+912387038363",
+    "portfolio": {
+      "equity": 60.5,
+      "fixedIncome": 22.4,
+      "gold": 13.2,
+      "realEstate": 2.6,
+      "crypto": 1.3,
+      "riskLevel": "aggressive",
+      "totalValue": "4800654"
+    },
+    "investmentGoals": [
+      "Child Education"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-05-20T15:29:19.181Z"
+  },
+  {
+    "id": "investor-0082",
+    "name": "Ms. Robyn Koss",
+    "email": "art_kertzmann32@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=70c57ef9-f741-4eb7-94a8-aa0f23650113",
+    "phone": "+910229185688",
+    "portfolio": {
+      "equity": 71.8,
+      "fixedIncome": 10.9,
+      "gold": 12.7,
+      "realEstate": 4.5,
+      "crypto": 0,
+      "riskLevel": "aggressive",
+      "totalValue": "2860136"
+    },
+    "investmentGoals": [
+      "House Purchase"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-03-03T02:12:06.788Z"
+  },
+  {
+    "id": "investor-0083",
+    "name": "Gerard Windler",
+    "email": "gilda4@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=192e07b6-750a-4feb-a70e-81a38e18c025",
+    "phone": "+917954251746",
+    "portfolio": {
+      "equity": 55.1,
+      "fixedIncome": 26.2,
+      "gold": 4.7,
+      "realEstate": 9.3,
+      "crypto": 4.7,
+      "riskLevel": "moderate",
+      "totalValue": "1945923"
+    },
+    "investmentGoals": [
+      "Tax Savings"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-05-10T12:36:53.177Z"
+  },
+  {
+    "id": "investor-0084",
+    "name": "Nichole Barrows",
+    "email": "emory_kulas@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=a832075d-e92e-4814-be0d-a73d8f47da4c",
+    "phone": "+913485211601",
+    "portfolio": {
+      "equity": 58.2,
+      "fixedIncome": 22.4,
+      "gold": 14.3,
+      "realEstate": 3.1,
+      "crypto": 2,
+      "riskLevel": "moderate",
+      "totalValue": "1066893"
+    },
+    "investmentGoals": [
+      "House Purchase",
+      "Tax Savings"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-05-17T15:37:55.708Z"
+  },
+  {
+    "id": "investor-0085",
+    "name": "Karla Hegmann",
+    "email": "natalie.zulauf48@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=a58d127d-9535-467a-9ffb-5a5d7c4bd3b0",
+    "phone": "+911463415825",
+    "portfolio": {
+      "equity": 55.3,
+      "fixedIncome": 18.4,
+      "gold": 18.4,
+      "realEstate": 6.6,
+      "crypto": 1.3,
+      "riskLevel": "moderate",
+      "totalValue": "5589668"
+    },
+    "investmentGoals": [
+      "Tax Savings",
+      "Wealth Building"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-10-18T18:53:40.337Z"
+  },
+  {
+    "id": "investor-0086",
+    "name": "Bryant Parker",
+    "email": "victor39@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=5226f12d-61ab-46d9-adee-eb466df2160c",
+    "phone": "+910131866670",
+    "portfolio": {
+      "equity": 76,
+      "fixedIncome": 13.5,
+      "gold": 9.4,
+      "realEstate": 1,
+      "crypto": 0,
+      "riskLevel": "aggressive",
+      "totalValue": "3472409"
+    },
+    "investmentGoals": [
+      "Wealth Building"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2024-12-08T21:00:13.434Z"
+  },
+  {
+    "id": "investor-0087",
+    "name": "Eleanor Littel",
+    "email": "helene.farrell@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=8cd88e7d-c1b4-48ab-9541-16f0dc31d2dd",
+    "phone": "+910729864885",
+    "portfolio": {
+      "equity": 61.9,
+      "fixedIncome": 25.8,
+      "gold": 7.2,
+      "realEstate": 2.1,
+      "crypto": 3.1,
+      "riskLevel": "aggressive",
+      "totalValue": "8353872"
+    },
+    "investmentGoals": [
+      "Wealth Building",
+      "Tax Savings"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-02-01T07:32:21.960Z"
+  },
+  {
+    "id": "investor-0088",
+    "name": "Moses Bergstrom-Prosacco",
+    "email": "vern_kovacek-rodriguez@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=8e8bbdb1-cfe1-4f1c-9331-239e54351c46",
+    "phone": "+918526717782",
+    "portfolio": {
+      "equity": 67.2,
+      "fixedIncome": 21.9,
+      "gold": 10.9,
+      "realEstate": 0,
+      "crypto": 0,
+      "riskLevel": "aggressive",
+      "totalValue": "1072413"
+    },
+    "investmentGoals": [
+      "Wealth Building",
+      "House Purchase",
+      "Retirement"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-03-29T17:48:53.745Z"
+  },
+  {
+    "id": "investor-0089",
+    "name": "Joshua Torp",
+    "email": "magnus.koelpin@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=110976a0-8ffd-4202-b75f-7ca14e6981b8",
+    "phone": "+911379083296",
+    "portfolio": {
+      "equity": 64.1,
+      "fixedIncome": 17.5,
+      "gold": 4.9,
+      "realEstate": 9.7,
+      "crypto": 3.9,
+      "riskLevel": "aggressive",
+      "totalValue": "8552723"
+    },
+    "investmentGoals": [
+      "House Purchase",
+      "Retirement"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-02-05T18:27:43.838Z"
+  },
+  {
+    "id": "investor-0090",
+    "name": "Nellie Dibbert",
+    "email": "zola_pacocha@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=226d778b-0b93-40f7-b7aa-ef6be431cdd3",
+    "phone": "+910012387040",
+    "portfolio": {
+      "equity": 67.3,
+      "fixedIncome": 17.3,
+      "gold": 11.5,
+      "realEstate": 1.9,
+      "crypto": 1.9,
+      "riskLevel": "aggressive",
+      "totalValue": "2245560"
+    },
+    "investmentGoals": [
+      "Child Education"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-07-15T00:53:58.101Z"
+  },
+  {
+    "id": "investor-0091",
+    "name": "Shawna Kshlerin",
+    "email": "tod.nicolas@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=ac6f910f-d27b-479b-adfc-2b7c2bf446af",
+    "phone": "+919524390408",
+    "portfolio": {
+      "equity": 51.8,
+      "fixedIncome": 33.7,
+      "gold": 6,
+      "realEstate": 7.2,
+      "crypto": 1.2,
+      "riskLevel": "moderate",
+      "totalValue": "6902965"
+    },
+    "investmentGoals": [
+      "Retirement"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-07-22T04:53:46.340Z"
+  },
+  {
+    "id": "investor-0092",
+    "name": "Jacqueline Koelpin",
+    "email": "gracie_little25@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=a9853bcc-a842-4c71-a62f-3c95304c5035",
+    "phone": "+919111662883",
+    "portfolio": {
+      "equity": 53.5,
+      "fixedIncome": 24.8,
+      "gold": 13.9,
+      "realEstate": 4,
+      "crypto": 4,
+      "riskLevel": "moderate",
+      "totalValue": "7450381"
+    },
+    "investmentGoals": [
+      "Tax Savings",
+      "House Purchase"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-03-19T21:05:27.892Z"
+  },
+  {
+    "id": "investor-0093",
+    "name": "Carolyn Schumm",
+    "email": "teresa.marquardt@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d9d68bdc-00d5-4773-af1d-2355fb71386a",
+    "phone": "+913028303560",
+    "portfolio": {
+      "equity": 63.3,
+      "fixedIncome": 17.3,
+      "gold": 6.1,
+      "realEstate": 10.2,
+      "crypto": 3.1,
+      "riskLevel": "aggressive",
+      "totalValue": "8920536"
+    },
+    "investmentGoals": [
+      "Retirement"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-06-30T07:48:19.898Z"
+  },
+  {
+    "id": "investor-0094",
+    "name": "Muriel Walsh",
+    "email": "corine_howe54@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=6fa79f61-5395-4bc3-87d4-4f028e48220e",
+    "phone": "+911430429984",
+    "portfolio": {
+      "equity": 51.2,
+      "fixedIncome": 32.9,
+      "gold": 13.4,
+      "realEstate": 2.4,
+      "crypto": 0,
+      "riskLevel": "moderate",
+      "totalValue": "4780748"
+    },
+    "investmentGoals": [
+      "Child Education",
+      "Wealth Building"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-05-28T00:49:15.544Z"
+  },
+  {
+    "id": "investor-0095",
+    "name": "Jan Balistreri DDS",
+    "email": "franz62@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=3d7d4df0-fc4e-45de-9813-0a7dc5bf4982",
+    "phone": "+915343833240",
+    "portfolio": {
+      "equity": 54.8,
+      "fixedIncome": 17.9,
+      "gold": 11.9,
+      "realEstate": 9.5,
+      "crypto": 6,
+      "riskLevel": "moderate",
+      "totalValue": "5148913"
+    },
+    "investmentGoals": [
+      "Child Education"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-02-12T06:16:28.160Z"
+  },
+  {
+    "id": "investor-0096",
+    "name": "Ken Mann",
+    "email": "skye67@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d26ee5ae-33b5-48f7-96ad-0970efb4252b",
+    "phone": "+916604854967",
+    "portfolio": {
+      "equity": 61,
+      "fixedIncome": 22,
+      "gold": 8.9,
+      "realEstate": 6.5,
+      "crypto": 1.6,
+      "riskLevel": "aggressive",
+      "totalValue": "1985820"
+    },
+    "investmentGoals": [
+      "Child Education"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-04-25T05:44:45.843Z"
+  },
+  {
+    "id": "investor-0097",
+    "name": "Regina Von",
+    "email": "loren.bechtelar85@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=b4871606-7873-4541-b4f5-e9ed6152f008",
+    "phone": "+914612768972",
+    "portfolio": {
+      "equity": 63.9,
+      "fixedIncome": 11.1,
+      "gold": 13.9,
+      "realEstate": 7.4,
+      "crypto": 3.7,
+      "riskLevel": "aggressive",
+      "totalValue": "5529043"
+    },
+    "investmentGoals": [
+      "House Purchase",
+      "Retirement",
+      "Tax Savings"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-02-13T08:26:59.346Z"
+  },
+  {
+    "id": "investor-0098",
+    "name": "Julie Fay",
+    "email": "arnaldo44@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=7a0b77c7-406c-40c1-a3f6-c6d54fa95518",
+    "phone": "+917418249530",
+    "portfolio": {
+      "equity": 65.5,
+      "fixedIncome": 19,
+      "gold": 4.3,
+      "realEstate": 8.6,
+      "crypto": 2.6,
+      "riskLevel": "aggressive",
+      "totalValue": "2599260"
+    },
+    "investmentGoals": [
+      "Wealth Building"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2024-11-07T14:29:20.296Z"
+  },
+  {
+    "id": "investor-0099",
+    "name": "Beverly Pacocha",
+    "email": "hortense_crist25@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=21e81048-f599-4800-988b-157956dcaa12",
+    "phone": "+911029632684",
+    "portfolio": {
+      "equity": 56.6,
+      "fixedIncome": 18.1,
+      "gold": 13.3,
+      "realEstate": 8.4,
+      "crypto": 3.6,
+      "riskLevel": "moderate",
+      "totalValue": "8053602"
+    },
+    "investmentGoals": [
+      "Child Education",
+      "House Purchase"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-07-01T19:11:42.502Z"
+  },
+  {
+    "id": "investor-0100",
+    "name": "Ann Miller",
+    "email": "edd.schaden@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=fb94d64a-b4bd-41f3-99db-813a0a7c08d7",
+    "phone": "+913206846115",
+    "portfolio": {
+      "equity": 67,
+      "fixedIncome": 22,
+      "gold": 8,
+      "realEstate": 2,
+      "crypto": 1,
+      "riskLevel": "aggressive",
+      "totalValue": "859512"
+    },
+    "investmentGoals": [
+      "Wealth Building",
+      "Retirement",
+      "Tax Savings"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-04-05T00:32:45.918Z"
+  },
+  {
+    "id": "investor-0101",
+    "name": "Dale Hauck",
+    "email": "margot77@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=43c15879-f7ce-44a1-b968-de0ba7401faa",
+    "phone": "+915325374495",
+    "portfolio": {
+      "equity": 63.2,
+      "fixedIncome": 14.7,
+      "gold": 10.5,
+      "realEstate": 8.4,
+      "crypto": 3.2,
+      "riskLevel": "aggressive",
+      "totalValue": "3869826"
+    },
+    "investmentGoals": [
+      "Wealth Building"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-08-07T17:56:14.227Z"
+  },
+  {
+    "id": "investor-0102",
+    "name": "Ben Murray",
+    "email": "malvina_macejkovic@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=b8e7cf75-7eb9-4624-8b35-54aedac01d01",
+    "phone": "+913522696766",
+    "portfolio": {
+      "equity": 52.3,
+      "fixedIncome": 29.1,
+      "gold": 7,
+      "realEstate": 10.5,
+      "crypto": 1.2,
+      "riskLevel": "moderate",
+      "totalValue": "9856906"
+    },
+    "investmentGoals": [
+      "Wealth Building",
+      "Tax Savings"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-08-05T15:27:18.150Z"
+  },
+  {
+    "id": "investor-0103",
+    "name": "Mr. Darren Senger-Runolfsdottir",
+    "email": "adelbert99@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=ae676f63-83b1-4207-98ad-b1f3cafa30b9",
+    "phone": "+910255265221",
+    "portfolio": {
+      "equity": 65.1,
+      "fixedIncome": 16.9,
+      "gold": 14.5,
+      "realEstate": 1.2,
+      "crypto": 2.4,
+      "riskLevel": "aggressive",
+      "totalValue": "3750536"
+    },
+    "investmentGoals": [
+      "Wealth Building",
+      "Tax Savings"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-07-28T06:49:15.103Z"
+  },
+  {
+    "id": "investor-0104",
+    "name": "Mrs. Joanne Haag",
+    "email": "pauline_mckenzie@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=0b0550d7-5ee4-487e-93da-05c9ced312ab",
+    "phone": "+910456739759",
+    "portfolio": {
+      "equity": 64.4,
+      "fixedIncome": 15.3,
+      "gold": 11.9,
+      "realEstate": 5.9,
+      "crypto": 2.5,
+      "riskLevel": "aggressive",
+      "totalValue": "1770120"
+    },
+    "investmentGoals": [
+      "Wealth Building",
+      "House Purchase",
+      "Tax Savings"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-02-18T22:52:35.175Z"
+  },
+  {
+    "id": "investor-0105",
+    "name": "Gloria Pfannerstill",
+    "email": "bianka50@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d771c67f-2205-43b2-b772-7ded35b55038",
+    "phone": "+915633395499",
+    "portfolio": {
+      "equity": 58.6,
+      "fixedIncome": 28.3,
+      "gold": 6.1,
+      "realEstate": 5.1,
+      "crypto": 2,
+      "riskLevel": "moderate",
+      "totalValue": "2088555"
+    },
+    "investmentGoals": [
+      "Tax Savings",
+      "Retirement",
+      "Wealth Building"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-10-01T18:07:27.778Z"
+  },
+  {
+    "id": "investor-0106",
+    "name": "Brett Schiller I",
+    "email": "alene93@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=9c73d515-a968-489a-9f39-a35919ee938b",
+    "phone": "+910589568697",
+    "portfolio": {
+      "equity": 53.5,
+      "fixedIncome": 27.7,
+      "gold": 14.9,
+      "realEstate": 4,
+      "crypto": 0,
+      "riskLevel": "moderate",
+      "totalValue": "9976326"
+    },
+    "investmentGoals": [
+      "House Purchase",
+      "Tax Savings"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2024-12-12T13:24:46.250Z"
+  },
+  {
+    "id": "investor-0107",
+    "name": "Kayla Fahey",
+    "email": "zoila.kautzer@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=c3fcb3b5-1e71-46e7-83ea-d2fb46d38a02",
+    "phone": "+912782417872",
+    "portfolio": {
+      "equity": 52.7,
+      "fixedIncome": 17.6,
+      "gold": 15.4,
+      "realEstate": 8.8,
+      "crypto": 5.5,
+      "riskLevel": "moderate",
+      "totalValue": "1411716"
+    },
+    "investmentGoals": [
+      "Tax Savings",
+      "House Purchase",
+      "Child Education"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-07-08T01:35:07.580Z"
+  },
+  {
+    "id": "investor-0108",
+    "name": "Vincent Gerlach",
+    "email": "cristina_ferry@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=4c0db9e2-f242-4fd7-ac96-a4f8f47c9c5c",
+    "phone": "+913620259466",
+    "portfolio": {
+      "equity": 61.1,
+      "fixedIncome": 27.8,
+      "gold": 9.3,
+      "realEstate": 0.9,
+      "crypto": 0.9,
+      "riskLevel": "aggressive",
+      "totalValue": "557942"
+    },
+    "investmentGoals": [
+      "Tax Savings"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2024-11-17T07:26:27.247Z"
+  },
+  {
+    "id": "investor-0109",
+    "name": "Francis Koelpin",
+    "email": "kacie_runolfsson@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=e001b1ad-7c39-4d40-9d10-edd63fa47099",
+    "phone": "+917863225728",
+    "portfolio": {
+      "equity": 48.8,
+      "fixedIncome": 29.3,
+      "gold": 14.6,
+      "realEstate": 1.2,
+      "crypto": 6.1,
+      "riskLevel": "moderate",
+      "totalValue": "6375145"
+    },
+    "investmentGoals": [
+      "Child Education",
+      "Retirement",
+      "Tax Savings"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-07-18T23:32:27.766Z"
+  },
+  {
+    "id": "investor-0110",
+    "name": "Lonnie Willms IV",
+    "email": "tevin.moore69@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=5381858e-bc50-4a8b-8277-e036375dc252",
+    "phone": "+919266771917",
+    "portfolio": {
+      "equity": 69.6,
+      "fixedIncome": 14.8,
+      "gold": 5.2,
+      "realEstate": 7,
+      "crypto": 3.5,
+      "riskLevel": "aggressive",
+      "totalValue": "8160320"
+    },
+    "investmentGoals": [
+      "Tax Savings",
+      "House Purchase"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-08-18T02:55:10.461Z"
+  },
+  {
+    "id": "investor-0111",
+    "name": "Cecil Volkman",
+    "email": "bethel9@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=593eff26-0208-4bf4-9a0d-f5a97322434e",
+    "phone": "+913809771799",
+    "portfolio": {
+      "equity": 48.9,
+      "fixedIncome": 23.9,
+      "gold": 15.9,
+      "realEstate": 9.1,
+      "crypto": 2.3,
+      "riskLevel": "moderate",
+      "totalValue": "7829493"
+    },
+    "investmentGoals": [
+      "Tax Savings"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-05-09T04:08:54.897Z"
+  },
+  {
+    "id": "investor-0112",
+    "name": "Marian Hermann V",
+    "email": "ayden.ankunding@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=ee6affc6-3a66-42f2-b938-23799db7d9b4",
+    "phone": "+919995891132",
+    "portfolio": {
+      "equity": 59.2,
+      "fixedIncome": 22.3,
+      "gold": 9.2,
+      "realEstate": 5.4,
+      "crypto": 3.8,
+      "riskLevel": "moderate",
+      "totalValue": "1205276"
+    },
+    "investmentGoals": [
+      "House Purchase",
+      "Child Education"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-05-14T16:29:18.141Z"
+  },
+  {
+    "id": "investor-0113",
+    "name": "Glen Koelpin",
+    "email": "fabian_kshlerin56@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=8d2143b2-139f-44d4-abc0-743bae925c16",
+    "phone": "+919493813778",
+    "portfolio": {
+      "equity": 75.6,
+      "fixedIncome": 14,
+      "gold": 5.8,
+      "realEstate": 0,
+      "crypto": 4.7,
+      "riskLevel": "aggressive",
+      "totalValue": "5272370"
+    },
+    "investmentGoals": [
+      "Child Education",
+      "House Purchase",
+      "Tax Savings"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-06-27T09:42:19.865Z"
+  },
+  {
+    "id": "investor-0114",
+    "name": "Penny D'Amore-Friesen",
+    "email": "gillian.greenholt-brekke@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=c87a135f-1636-42fb-aa0c-370d2db99f16",
+    "phone": "+916089810042",
+    "portfolio": {
+      "equity": 58.8,
+      "fixedIncome": 20,
+      "gold": 10.6,
+      "realEstate": 10.6,
+      "crypto": 0,
+      "riskLevel": "moderate",
+      "totalValue": "3323874"
+    },
+    "investmentGoals": [
+      "Wealth Building",
+      "Child Education",
+      "Retirement"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-08-07T21:48:07.369Z"
+  },
+  {
+    "id": "investor-0115",
+    "name": "Mark Kunze",
+    "email": "alta.kohler72@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=6eae8e53-ab80-4396-9b47-e8aacef05c12",
+    "phone": "+918571374040",
+    "portfolio": {
+      "equity": 65.3,
+      "fixedIncome": 15.3,
+      "gold": 7.6,
+      "realEstate": 7.6,
+      "crypto": 4.2,
+      "riskLevel": "aggressive",
+      "totalValue": "5893395"
+    },
+    "investmentGoals": [
+      "Wealth Building"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-09-11T12:56:44.495Z"
+  },
+  {
+    "id": "investor-0116",
+    "name": "Kayla Auer",
+    "email": "pierre64@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=0b7adb81-f09f-4808-a202-1fa24d00ba63",
+    "phone": "+914190476230",
+    "portfolio": {
+      "equity": 61.3,
+      "fixedIncome": 20.7,
+      "gold": 13.5,
+      "realEstate": 4.5,
+      "crypto": 0,
+      "riskLevel": "aggressive",
+      "totalValue": "1439864"
+    },
+    "investmentGoals": [
+      "Wealth Building",
+      "Child Education",
+      "House Purchase"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-10-23T02:22:41.088Z"
+  },
+  {
+    "id": "investor-0117",
+    "name": "Marion Wuckert Jr.",
+    "email": "blaze23@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=3f1542fe-4543-4f10-926d-6f9a0bffcaf5",
+    "phone": "+913704813737",
+    "portfolio": {
+      "equity": 57.1,
+      "fixedIncome": 27.5,
+      "gold": 13.2,
+      "realEstate": 1.1,
+      "crypto": 1.1,
+      "riskLevel": "moderate",
+      "totalValue": "8092465"
+    },
+    "investmentGoals": [
+      "Wealth Building",
+      "Child Education"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-10-26T04:23:28.482Z"
+  },
+  {
+    "id": "investor-0118",
+    "name": "Lucas Boyle",
+    "email": "chase.bogan@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=fd68b311-4dad-44bf-9331-daf3b9ab17b5",
+    "phone": "+910846221945",
+    "portfolio": {
+      "equity": 59.8,
+      "fixedIncome": 20.7,
+      "gold": 11.5,
+      "realEstate": 4.6,
+      "crypto": 3.4,
+      "riskLevel": "moderate",
+      "totalValue": "7170118"
+    },
+    "investmentGoals": [
+      "Tax Savings",
+      "House Purchase"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-10-02T19:02:52.073Z"
+  },
+  {
+    "id": "investor-0119",
+    "name": "Michele Hegmann",
+    "email": "brianne.white@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=59d7fb22-3cac-4c17-9bf8-1d2a623effb1",
+    "phone": "+910890172058",
+    "portfolio": {
+      "equity": 62,
+      "fixedIncome": 21.7,
+      "gold": 15.2,
+      "realEstate": 0,
+      "crypto": 1.1,
+      "riskLevel": "aggressive",
+      "totalValue": "822131"
+    },
+    "investmentGoals": [
+      "Retirement",
+      "Tax Savings"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-05-12T21:14:11.431Z"
+  },
+  {
+    "id": "investor-0120",
+    "name": "Hazel Torphy III",
+    "email": "sharon_bosco43@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=f0d49273-aff4-4661-9cfe-1bdd88d63c97",
+    "phone": "+913483845057",
+    "portfolio": {
+      "equity": 56,
+      "fixedIncome": 12.1,
+      "gold": 16.5,
+      "realEstate": 9.9,
+      "crypto": 5.5,
+      "riskLevel": "moderate",
+      "totalValue": "2047650"
+    },
+    "investmentGoals": [
+      "Tax Savings",
+      "House Purchase",
+      "Retirement"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-04-21T22:18:55.875Z"
+  },
+  {
+    "id": "investor-0121",
+    "name": "Nelson MacGyver",
+    "email": "gus41@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=b681aff5-d867-4804-b468-6b27b5ac8dd7",
+    "phone": "+910010674098",
+    "portfolio": {
+      "equity": 61.8,
+      "fixedIncome": 23.6,
+      "gold": 12.2,
+      "realEstate": 0,
+      "crypto": 2.4,
+      "riskLevel": "aggressive",
+      "totalValue": "7921943"
+    },
+    "investmentGoals": [
+      "Tax Savings"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-03-25T08:51:23.580Z"
+  },
+  {
+    "id": "investor-0122",
+    "name": "Allison MacGyver",
+    "email": "anjali.upton@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=aadc302c-e52a-4e82-aff7-3b2cd16a6058",
+    "phone": "+914908117283",
+    "portfolio": {
+      "equity": 48.2,
+      "fixedIncome": 25.3,
+      "gold": 16.9,
+      "realEstate": 3.6,
+      "crypto": 6,
+      "riskLevel": "moderate",
+      "totalValue": "3031590"
+    },
+    "investmentGoals": [
+      "Retirement",
+      "House Purchase"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-08-18T19:58:18.656Z"
+  },
+  {
+    "id": "investor-0123",
+    "name": "Naomi Willms",
+    "email": "wilber.cassin@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=f85f5c12-2c97-4f1b-be40-14d5d08087ea",
+    "phone": "+913543686714",
+    "portfolio": {
+      "equity": 57.5,
+      "fixedIncome": 15,
+      "gold": 15,
+      "realEstate": 7.5,
+      "crypto": 5,
+      "riskLevel": "moderate",
+      "totalValue": "6700102"
+    },
+    "investmentGoals": [
+      "Retirement",
+      "House Purchase"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-06-13T04:58:36.426Z"
+  },
+  {
+    "id": "investor-0124",
+    "name": "Gilberto Grant",
+    "email": "alicia68@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=e69c39e4-8398-449b-a2da-04a1a254faf1",
+    "phone": "+915249998555",
+    "portfolio": {
+      "equity": 56.3,
+      "fixedIncome": 18.4,
+      "gold": 12.6,
+      "realEstate": 9.2,
+      "crypto": 3.4,
+      "riskLevel": "moderate",
+      "totalValue": "3432277"
+    },
+    "investmentGoals": [
+      "Child Education",
+      "Retirement"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-04-29T19:39:47.205Z"
+  },
+  {
+    "id": "investor-0125",
+    "name": "Michele Thiel-Monahan",
+    "email": "terry11@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=59d8c140-85d9-4042-a010-b9405af212dc",
+    "phone": "+915796707684",
+    "portfolio": {
+      "equity": 75,
+      "fixedIncome": 11.5,
+      "gold": 6.7,
+      "realEstate": 2.9,
+      "crypto": 3.8,
+      "riskLevel": "aggressive",
+      "totalValue": "5797466"
+    },
+    "investmentGoals": [
+      "Wealth Building"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2024-11-25T21:11:18.037Z"
+  },
+  {
+    "id": "investor-0126",
+    "name": "Erma Ullrich",
+    "email": "dion_wiegand17@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=122ff48a-ea21-44b5-868d-9d10eed4f64b",
+    "phone": "+910912640440",
+    "portfolio": {
+      "equity": 49,
+      "fixedIncome": 31.3,
+      "gold": 12.5,
+      "realEstate": 6.3,
+      "crypto": 1,
+      "riskLevel": "moderate",
+      "totalValue": "766185"
+    },
+    "investmentGoals": [
+      "Wealth Building"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-10-24T21:09:00.819Z"
+  },
+  {
+    "id": "investor-0127",
+    "name": "Jerome Kilback",
+    "email": "leopold_hand@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=bfb7f699-3fb2-466c-8058-f480736af5da",
+    "phone": "+913387271449",
+    "portfolio": {
+      "equity": 68.1,
+      "fixedIncome": 13.8,
+      "gold": 8.5,
+      "realEstate": 7.4,
+      "crypto": 2.1,
+      "riskLevel": "aggressive",
+      "totalValue": "6247344"
+    },
+    "investmentGoals": [
+      "Child Education",
+      "Tax Savings"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-01-26T01:58:40.447Z"
+  },
+  {
+    "id": "investor-0128",
+    "name": "Mario Rowe",
+    "email": "moses.vonrueden-hartmann@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=05925d69-1cf0-44ed-8ea1-50c4436c2707",
+    "phone": "+911031529520",
+    "portfolio": {
+      "equity": 61.5,
+      "fixedIncome": 21.1,
+      "gold": 13.8,
+      "realEstate": 0,
+      "crypto": 3.7,
+      "riskLevel": "aggressive",
+      "totalValue": "7470203"
+    },
+    "investmentGoals": [
+      "Wealth Building",
+      "Tax Savings"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-04-26T14:16:45.381Z"
+  },
+  {
+    "id": "investor-0129",
+    "name": "Kristy Jenkins PhD",
+    "email": "henriette3@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=9a3b3653-43b7-42e9-8ec1-b4485d4a0143",
+    "phone": "+912248234167",
+    "portfolio": {
+      "equity": 51.7,
+      "fixedIncome": 24.1,
+      "gold": 10.3,
+      "realEstate": 11.5,
+      "crypto": 2.3,
+      "riskLevel": "moderate",
+      "totalValue": "7315020"
+    },
+    "investmentGoals": [
+      "Child Education"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-06-27T13:21:49.320Z"
+  },
+  {
+    "id": "investor-0130",
+    "name": "Dawn Crona-Jerde",
+    "email": "kian_schmeler12@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=a37ff83d-b949-464b-b662-e377f3c2fb1a",
+    "phone": "+915519152661",
+    "portfolio": {
+      "equity": 53.8,
+      "fixedIncome": 28,
+      "gold": 16.1,
+      "realEstate": 1.1,
+      "crypto": 1.1,
+      "riskLevel": "moderate",
+      "totalValue": "5814369"
+    },
+    "investmentGoals": [
+      "Tax Savings",
+      "House Purchase",
+      "Wealth Building"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-08-16T13:30:18.739Z"
+  },
+  {
+    "id": "investor-0131",
+    "name": "Marsha Block",
+    "email": "kadin.jacobi@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=2ced2805-cabf-481d-b6c4-73e3fbe1767e",
+    "phone": "+918528542669",
+    "portfolio": {
+      "equity": 57,
+      "fixedIncome": 24,
+      "gold": 9,
+      "realEstate": 10,
+      "crypto": 0,
+      "riskLevel": "moderate",
+      "totalValue": "6109152"
+    },
+    "investmentGoals": [
+      "Wealth Building",
+      "Child Education"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-10-27T14:35:21.359Z"
+  },
+  {
+    "id": "investor-0132",
+    "name": "Fred Carter",
+    "email": "alanis.langworth83@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=f54e6768-5183-41b8-b342-f8c1f27a4251",
+    "phone": "+914760521298",
+    "portfolio": {
+      "equity": 60.5,
+      "fixedIncome": 12.8,
+      "gold": 12.8,
+      "realEstate": 11.6,
+      "crypto": 2.3,
+      "riskLevel": "aggressive",
+      "totalValue": "3932338"
+    },
+    "investmentGoals": [
+      "House Purchase",
+      "Child Education"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2024-11-11T15:45:39.220Z"
+  },
+  {
+    "id": "investor-0133",
+    "name": "Monique Conn",
+    "email": "zackary37@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=25a0708b-a45f-4adc-b070-d69525d470ca",
+    "phone": "+916529315518",
+    "portfolio": {
+      "equity": 57.4,
+      "fixedIncome": 21.8,
+      "gold": 7.9,
+      "realEstate": 8.9,
+      "crypto": 4,
+      "riskLevel": "moderate",
+      "totalValue": "3049401"
+    },
+    "investmentGoals": [
+      "Wealth Building"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-06-07T11:35:53.298Z"
+  },
+  {
+    "id": "investor-0134",
+    "name": "Sheri Simonis",
+    "email": "treva.lowe@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=7494fd44-166c-444d-88ae-c15101b64467",
+    "phone": "+910474957754",
+    "portfolio": {
+      "equity": 59.1,
+      "fixedIncome": 28.4,
+      "gold": 5.7,
+      "realEstate": 1.1,
+      "crypto": 5.7,
+      "riskLevel": "moderate",
+      "totalValue": "1679495"
+    },
+    "investmentGoals": [
+      "Child Education",
+      "Wealth Building"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-02-19T19:13:25.197Z"
+  },
+  {
+    "id": "investor-0135",
+    "name": "Jacquelyn Lindgren",
+    "email": "crawford67@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=3924a93e-c1f1-4538-8988-03a5493724c8",
+    "phone": "+919170345361",
+    "portfolio": {
+      "equity": 50.6,
+      "fixedIncome": 20.5,
+      "gold": 18.1,
+      "realEstate": 6,
+      "crypto": 4.8,
+      "riskLevel": "moderate",
+      "totalValue": "8282519"
+    },
+    "investmentGoals": [
+      "Child Education",
+      "Wealth Building",
+      "Retirement"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2024-12-05T14:53:32.319Z"
+  },
+  {
+    "id": "investor-0136",
+    "name": "Ryan Satterfield",
+    "email": "erica51@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=9e2f1929-653b-4134-88cc-75fa18376046",
+    "phone": "+916113737738",
+    "portfolio": {
+      "equity": 71,
+      "fixedIncome": 15.1,
+      "gold": 7.5,
+      "realEstate": 4.3,
+      "crypto": 2.2,
+      "riskLevel": "aggressive",
+      "totalValue": "7439525"
+    },
+    "investmentGoals": [
+      "House Purchase"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-03-24T00:57:25.428Z"
+  },
+  {
+    "id": "investor-0137",
+    "name": "Miss Maria Paucek III",
+    "email": "izabella.dicki97@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=67f65dbe-bd69-4040-9444-34f5edb4bcbf",
+    "phone": "+919242718454",
+    "portfolio": {
+      "equity": 59.1,
+      "fixedIncome": 26.1,
+      "gold": 11.3,
+      "realEstate": 2.6,
+      "crypto": 0.9,
+      "riskLevel": "moderate",
+      "totalValue": "6307573"
+    },
+    "investmentGoals": [
+      "Tax Savings",
+      "Retirement",
+      "House Purchase"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-08-31T23:28:47.304Z"
+  },
+  {
+    "id": "investor-0138",
+    "name": "Rogelio Lakin-Sporer",
+    "email": "elwyn94@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=4f2f2ce2-7c16-40e1-933f-84d624d713a0",
+    "phone": "+913855375834",
+    "portfolio": {
+      "equity": 51.1,
+      "fixedIncome": 31.8,
+      "gold": 6.8,
+      "realEstate": 10.2,
+      "crypto": 0,
+      "riskLevel": "moderate",
+      "totalValue": "9586511"
+    },
+    "investmentGoals": [
+      "Child Education",
+      "House Purchase",
+      "Tax Savings"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-05-10T03:20:51.929Z"
+  },
+  {
+    "id": "investor-0139",
+    "name": "Ray Daugherty",
+    "email": "electa_mertz-rohan@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=b4453f32-abbc-4554-ba43-7c4a2cc6108b",
+    "phone": "+917859597995",
+    "portfolio": {
+      "equity": 65,
+      "fixedIncome": 21.7,
+      "gold": 10.8,
+      "realEstate": 0.8,
+      "crypto": 1.7,
+      "riskLevel": "aggressive",
+      "totalValue": "9901516"
+    },
+    "investmentGoals": [
+      "Retirement"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-04-04T07:14:39.632Z"
+  },
+  {
+    "id": "investor-0140",
+    "name": "Kristie Stokes",
+    "email": "marcus70@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d8124e2e-5946-4172-bf25-5b7ec87e0901",
+    "phone": "+913521767291",
+    "portfolio": {
+      "equity": 62.9,
+      "fixedIncome": 18,
+      "gold": 15.7,
+      "realEstate": 3.4,
+      "crypto": 0,
+      "riskLevel": "aggressive",
+      "totalValue": "7077874"
+    },
+    "investmentGoals": [
+      "Wealth Building",
+      "Child Education"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-03-25T12:39:12.129Z"
+  },
+  {
+    "id": "investor-0141",
+    "name": "Mr. Jaime Langworth",
+    "email": "uriah.windler@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=4aa734a0-d3f3-40d8-89f9-d58e6477423c",
+    "phone": "+916894743445",
+    "portfolio": {
+      "equity": 69.4,
+      "fixedIncome": 16.2,
+      "gold": 5.4,
+      "realEstate": 4.5,
+      "crypto": 4.5,
+      "riskLevel": "aggressive",
+      "totalValue": "6694184"
+    },
+    "investmentGoals": [
+      "Tax Savings",
+      "Child Education"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-02-20T00:28:35.575Z"
+  },
+  {
+    "id": "investor-0142",
+    "name": "Mr. Reginald Bergnaum",
+    "email": "abner_monahan@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=24c4e3f7-2c6d-49dd-8d6b-59784215c946",
+    "phone": "+917258338235",
+    "portfolio": {
+      "equity": 60.9,
+      "fixedIncome": 24.5,
+      "gold": 9.1,
+      "realEstate": 0.9,
+      "crypto": 4.5,
+      "riskLevel": "aggressive",
+      "totalValue": "5449873"
+    },
+    "investmentGoals": [
+      "Retirement",
+      "Child Education"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-04-07T21:46:54.823Z"
+  },
+  {
+    "id": "investor-0143",
+    "name": "Neil Nienow",
+    "email": "brenden21@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=ff004417-a94c-4832-87b7-df08590c4ca7",
+    "phone": "+918557330857",
+    "portfolio": {
+      "equity": 61.8,
+      "fixedIncome": 25.5,
+      "gold": 5.9,
+      "realEstate": 2,
+      "crypto": 4.9,
+      "riskLevel": "aggressive",
+      "totalValue": "8535347"
+    },
+    "investmentGoals": [
+      "Retirement",
+      "House Purchase"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-09-24T14:54:36.084Z"
+  },
+  {
+    "id": "investor-0144",
+    "name": "Edna Kautzer-O'Reilly",
+    "email": "selina58@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=e75e1ac6-ad5e-43f7-b5e7-fd7ea44722a9",
+    "phone": "+919017996798",
+    "portfolio": {
+      "equity": 58.3,
+      "fixedIncome": 22.3,
+      "gold": 13.6,
+      "realEstate": 1,
+      "crypto": 4.9,
+      "riskLevel": "moderate",
+      "totalValue": "3553113"
+    },
+    "investmentGoals": [
+      "Wealth Building",
+      "Child Education"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-01-12T13:31:09.491Z"
+  },
+  {
+    "id": "investor-0145",
+    "name": "Alberto Frami",
+    "email": "finn94@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=f61e5ed5-1fff-4a50-91aa-c6f23063cb05",
+    "phone": "+913970957945",
+    "portfolio": {
+      "equity": 61.5,
+      "fixedIncome": 17.1,
+      "gold": 11.1,
+      "realEstate": 7.7,
+      "crypto": 2.6,
+      "riskLevel": "aggressive",
+      "totalValue": "4846971"
+    },
+    "investmentGoals": [
+      "Retirement",
+      "House Purchase"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-05-20T12:55:07.972Z"
+  },
+  {
+    "id": "investor-0146",
+    "name": "Craig Armstrong",
+    "email": "trevion_orn@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=adec57c0-f07a-412c-8ab7-121b8330c072",
+    "phone": "+918915426669",
+    "portfolio": {
+      "equity": 47.8,
+      "fixedIncome": 30.4,
+      "gold": 12,
+      "realEstate": 7.6,
+      "crypto": 2.2,
+      "riskLevel": "moderate",
+      "totalValue": "8692430"
+    },
+    "investmentGoals": [
+      "House Purchase"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2024-12-24T03:05:56.978Z"
+  },
+  {
+    "id": "investor-0147",
+    "name": "Courtney Pfannerstill",
+    "email": "elsa_schmidt@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=53b25159-907f-47b6-ba4e-3873f8b5ec19",
+    "phone": "+918841088097",
+    "portfolio": {
+      "equity": 55.3,
+      "fixedIncome": 23.5,
+      "gold": 7.1,
+      "realEstate": 11.8,
+      "crypto": 2.4,
+      "riskLevel": "moderate",
+      "totalValue": "3792123"
+    },
+    "investmentGoals": [
+      "Tax Savings",
+      "Child Education"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-08-13T01:46:53.898Z"
+  },
+  {
+    "id": "investor-0148",
+    "name": "Jill Sanford",
+    "email": "zella.paucek74@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=a1200f8f-54da-4170-9b78-48f80413b45c",
+    "phone": "+917939613620",
+    "portfolio": {
+      "equity": 66.9,
+      "fixedIncome": 16.9,
+      "gold": 7.6,
+      "realEstate": 5.9,
+      "crypto": 2.5,
+      "riskLevel": "aggressive",
+      "totalValue": "9473389"
+    },
+    "investmentGoals": [
+      "House Purchase",
+      "Child Education",
+      "Retirement"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-09-25T05:08:35.409Z"
+  },
+  {
+    "id": "investor-0149",
+    "name": "Dr. Jan Walter",
+    "email": "earline.ferry48@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=e1645a2d-b4e4-445e-8087-8a6153c6338d",
+    "phone": "+911177383498",
+    "portfolio": {
+      "equity": 68.2,
+      "fixedIncome": 20,
+      "gold": 10,
+      "realEstate": 0,
+      "crypto": 1.8,
+      "riskLevel": "aggressive",
+      "totalValue": "9666671"
+    },
+    "investmentGoals": [
+      "Tax Savings",
+      "House Purchase"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-02-09T23:00:44.526Z"
+  },
+  {
+    "id": "investor-0150",
+    "name": "Dana Schumm",
+    "email": "luther.bauch@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=41b63dfd-be91-4ac1-93f5-ad73979d28e6",
+    "phone": "+919065973416",
+    "portfolio": {
+      "equity": 63.2,
+      "fixedIncome": 23.2,
+      "gold": 7.4,
+      "realEstate": 5.3,
+      "crypto": 1.1,
+      "riskLevel": "aggressive",
+      "totalValue": "7991007"
+    },
+    "investmentGoals": [
+      "House Purchase",
+      "Retirement",
+      "Tax Savings"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-06-24T03:56:28.150Z"
+  },
+  {
+    "id": "investor-0151",
+    "name": "Dr. Nicholas Gusikowski",
+    "email": "demetris.fay@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=e4767c5e-1c3a-4cd7-99b3-c7e0367ffd78",
+    "phone": "+918948849227",
+    "portfolio": {
+      "equity": 59,
+      "fixedIncome": 22,
+      "gold": 10,
+      "realEstate": 6,
+      "crypto": 3,
+      "riskLevel": "moderate",
+      "totalValue": "8275921"
+    },
+    "investmentGoals": [
+      "House Purchase"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-09-30T08:30:07.899Z"
+  },
+  {
+    "id": "investor-0152",
+    "name": "Dr. Brent Walsh",
+    "email": "darrel_donnelly@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=56906b77-b646-4481-9bca-751a5cff97d0",
+    "phone": "+917855119573",
+    "portfolio": {
+      "equity": 62.6,
+      "fixedIncome": 13.2,
+      "gold": 12.1,
+      "realEstate": 7.7,
+      "crypto": 4.4,
+      "riskLevel": "aggressive",
+      "totalValue": "2350321"
+    },
+    "investmentGoals": [
+      "House Purchase"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-07-29T21:21:03.300Z"
+  },
+  {
+    "id": "investor-0153",
+    "name": "Mr. Jonathan Schulist",
+    "email": "erika.upton@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=604a1639-9645-4f19-8bdd-b25078946205",
+    "phone": "+913983268659",
+    "portfolio": {
+      "equity": 49.4,
+      "fixedIncome": 24.7,
+      "gold": 16.9,
+      "realEstate": 3.4,
+      "crypto": 5.6,
+      "riskLevel": "moderate",
+      "totalValue": "524671"
+    },
+    "investmentGoals": [
+      "Retirement",
+      "House Purchase",
+      "Tax Savings"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-05-21T22:03:26.268Z"
+  },
+  {
+    "id": "investor-0154",
+    "name": "Francis Hills",
+    "email": "humberto_wintheiser-gerhold@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=a515adff-5fa5-4134-8993-a911f5539572",
+    "phone": "+915938030567",
+    "portfolio": {
+      "equity": 51.2,
+      "fixedIncome": 29.8,
+      "gold": 11.9,
+      "realEstate": 1.2,
+      "crypto": 6,
+      "riskLevel": "moderate",
+      "totalValue": "4012232"
+    },
+    "investmentGoals": [
+      "Child Education",
+      "Tax Savings"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-07-27T00:16:04.554Z"
+  },
+  {
+    "id": "investor-0155",
+    "name": "Mrs. Angela Ziemann",
+    "email": "ofelia_powlowski7@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=8a0bff36-280a-4a2d-a0a6-3991f7ebbc5a",
+    "phone": "+916092795880",
+    "portfolio": {
+      "equity": 67.4,
+      "fixedIncome": 15.8,
+      "gold": 8.4,
+      "realEstate": 3.2,
+      "crypto": 5.3,
+      "riskLevel": "aggressive",
+      "totalValue": "8833705"
+    },
+    "investmentGoals": [
+      "Wealth Building",
+      "House Purchase"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2024-12-23T20:21:03.538Z"
+  },
+  {
+    "id": "investor-0156",
+    "name": "Mrs. Hilda Shanahan",
+    "email": "david.lesch58@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=e0b167aa-b49e-459b-8fe3-1c03c70d5c49",
+    "phone": "+914779089865",
+    "portfolio": {
+      "equity": 63.5,
+      "fixedIncome": 10.6,
+      "gold": 11.5,
+      "realEstate": 9.6,
+      "crypto": 4.8,
+      "riskLevel": "aggressive",
+      "totalValue": "5159299"
+    },
+    "investmentGoals": [
+      "Wealth Building"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-09-20T20:30:27.935Z"
+  },
+  {
+    "id": "investor-0157",
+    "name": "Joanna Hansen",
+    "email": "furman81@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=e9e9652a-c6d7-4ecf-8bd9-a8af0076794a",
+    "phone": "+916116948095",
+    "portfolio": {
+      "equity": 58.6,
+      "fixedIncome": 26.4,
+      "gold": 12.6,
+      "realEstate": 1.1,
+      "crypto": 1.1,
+      "riskLevel": "moderate",
+      "totalValue": "3625690"
+    },
+    "investmentGoals": [
+      "House Purchase"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2024-11-19T18:40:45.822Z"
+  },
+  {
+    "id": "investor-0158",
+    "name": "Rafael Cremin",
+    "email": "jamil97@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=0c3f1f91-7b1e-41d4-8000-0fa64fe13c4d",
+    "phone": "+915542358865",
+    "portfolio": {
+      "equity": 64.5,
+      "fixedIncome": 19.8,
+      "gold": 12.4,
+      "realEstate": 0,
+      "crypto": 3.3,
+      "riskLevel": "aggressive",
+      "totalValue": "3725296"
+    },
+    "investmentGoals": [
+      "House Purchase"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2024-11-03T15:41:40.658Z"
+  },
+  {
+    "id": "investor-0159",
+    "name": "Mr. Terry Keebler V",
+    "email": "alisa47@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=0671862a-4027-4dcd-a308-353078f57c3d",
+    "phone": "+915896397205",
+    "portfolio": {
+      "equity": 76.5,
+      "fixedIncome": 11.8,
+      "gold": 5.9,
+      "realEstate": 5.9,
+      "crypto": 0,
+      "riskLevel": "aggressive",
+      "totalValue": "6785607"
+    },
+    "investmentGoals": [
+      "Retirement"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2024-11-28T03:09:41.070Z"
+  },
+  {
+    "id": "investor-0160",
+    "name": "Estelle Ullrich",
+    "email": "mason76@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d1a7b636-c0fc-4e9c-974e-c8991178c1f7",
+    "phone": "+911799335155",
+    "portfolio": {
+      "equity": 59.5,
+      "fixedIncome": 20.7,
+      "gold": 9.9,
+      "realEstate": 9,
+      "crypto": 0.9,
+      "riskLevel": "moderate",
+      "totalValue": "6909701"
+    },
+    "investmentGoals": [
+      "Wealth Building",
+      "Retirement",
+      "Tax Savings"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-10-24T07:33:47.366Z"
+  },
+  {
+    "id": "investor-0161",
+    "name": "Mr. Bob White",
+    "email": "kenya.oreilly48@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=683d1592-6da0-4940-9d4f-812de5da63c3",
+    "phone": "+910949898861",
+    "portfolio": {
+      "equity": 56.1,
+      "fixedIncome": 19.5,
+      "gold": 9.8,
+      "realEstate": 9.8,
+      "crypto": 4.9,
+      "riskLevel": "moderate",
+      "totalValue": "6531987"
+    },
+    "investmentGoals": [
+      "Retirement"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2024-11-11T10:19:38.052Z"
+  },
+  {
+    "id": "investor-0162",
+    "name": "Francis Hartmann MD",
+    "email": "selina_armstrong@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=34fa4b06-062d-4c0e-a439-ecda63a47c3a",
+    "phone": "+912925115155",
+    "portfolio": {
+      "equity": 51,
+      "fixedIncome": 26,
+      "gold": 11,
+      "realEstate": 7,
+      "crypto": 5,
+      "riskLevel": "moderate",
+      "totalValue": "9024090"
+    },
+    "investmentGoals": [
+      "Wealth Building",
+      "Child Education",
+      "House Purchase"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-04-04T03:02:45.352Z"
+  },
+  {
+    "id": "investor-0163",
+    "name": "Nichole Haley",
+    "email": "karl.hessel@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=d1c5be05-60d7-477c-81b9-b8800980917f",
+    "phone": "+919856572260",
+    "portfolio": {
+      "equity": 64.6,
+      "fixedIncome": 11.1,
+      "gold": 14.1,
+      "realEstate": 10.1,
+      "crypto": 0,
+      "riskLevel": "aggressive",
+      "totalValue": "8336852"
+    },
+    "investmentGoals": [
+      "Retirement",
+      "Child Education",
+      "House Purchase"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-05-09T12:46:12.412Z"
+  },
+  {
+    "id": "investor-0164",
+    "name": "Vickie Herzog",
+    "email": "meaghan86@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=e695cfdc-7699-4ee2-93c0-0ddb94d4b4ac",
+    "phone": "+910976225677",
+    "portfolio": {
+      "equity": 62.9,
+      "fixedIncome": 19.6,
+      "gold": 12.4,
+      "realEstate": 3.1,
+      "crypto": 2.1,
+      "riskLevel": "aggressive",
+      "totalValue": "2591976"
+    },
+    "investmentGoals": [
+      "Child Education",
+      "Retirement"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-10-16T07:14:37.710Z"
+  },
+  {
+    "id": "investor-0165",
+    "name": "Marty Schiller IV",
+    "email": "elbert.rodriguez@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=3edb9934-337a-44a7-a5f6-66fc51adc73b",
+    "phone": "+914413171184",
+    "portfolio": {
+      "equity": 64.8,
+      "fixedIncome": 19.7,
+      "gold": 9.8,
+      "realEstate": 4.1,
+      "crypto": 1.6,
+      "riskLevel": "aggressive",
+      "totalValue": "3558226"
+    },
+    "investmentGoals": [
+      "Child Education",
+      "Tax Savings"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2024-12-16T17:36:11.221Z"
+  },
+  {
+    "id": "investor-0166",
+    "name": "Mrs. Kristy Blanda PhD",
+    "email": "otis.kuhic@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=35759127-58e6-4d7a-aaf9-62cdf998ac9e",
+    "phone": "+915221000186",
+    "portfolio": {
+      "equity": 64.9,
+      "fixedIncome": 12.8,
+      "gold": 10.6,
+      "realEstate": 8.5,
+      "crypto": 3.2,
+      "riskLevel": "aggressive",
+      "totalValue": "1099637"
+    },
+    "investmentGoals": [
+      "Child Education"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-05-19T21:05:35.896Z"
+  },
+  {
+    "id": "investor-0167",
+    "name": "Juan McClure",
+    "email": "lizeth.skiles1@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=eb645ade-d473-4927-9681-56732f54e81b",
+    "phone": "+912388424275",
+    "portfolio": {
+      "equity": 61.6,
+      "fixedIncome": 17,
+      "gold": 12.5,
+      "realEstate": 7.1,
+      "crypto": 1.8,
+      "riskLevel": "aggressive",
+      "totalValue": "5891464"
+    },
+    "investmentGoals": [
+      "Tax Savings"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-01-10T11:51:41.250Z"
+  },
+  {
+    "id": "investor-0168",
+    "name": "Jacqueline McClure",
+    "email": "jerald_hyatt@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=aab738d2-1a1b-46b7-b854-c57a2c8a305f",
+    "phone": "+913395307879",
+    "portfolio": {
+      "equity": 62.9,
+      "fixedIncome": 21.3,
+      "gold": 11.2,
+      "realEstate": 0,
+      "crypto": 4.5,
+      "riskLevel": "aggressive",
+      "totalValue": "2066407"
+    },
+    "investmentGoals": [
+      "Wealth Building",
+      "Child Education",
+      "Tax Savings"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-07-23T06:04:14.359Z"
+  },
+  {
+    "id": "investor-0169",
+    "name": "Leonard Wisozk",
+    "email": "josiah_kihn@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=a8eca053-69bf-4fd8-bcac-45f7b3eaa2a7",
+    "phone": "+911220664870",
+    "portfolio": {
+      "equity": 60.4,
+      "fixedIncome": 13.9,
+      "gold": 14.9,
+      "realEstate": 8.9,
+      "crypto": 2,
+      "riskLevel": "aggressive",
+      "totalValue": "8912885"
+    },
+    "investmentGoals": [
+      "Retirement",
+      "Wealth Building",
+      "House Purchase"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-06-02T20:08:33.528Z"
+  },
+  {
+    "id": "investor-0170",
+    "name": "Louise Reynolds-Maggio",
+    "email": "claire.grimes79@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=ff6fc655-8a29-4bca-8aa4-fe526fa32c59",
+    "phone": "+910682497624",
+    "portfolio": {
+      "equity": 61.4,
+      "fixedIncome": 21.6,
+      "gold": 15.9,
+      "realEstate": 1.1,
+      "crypto": 0,
+      "riskLevel": "aggressive",
+      "totalValue": "811220"
+    },
+    "investmentGoals": [
+      "House Purchase",
+      "Retirement"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-07-09T08:56:25.292Z"
+  },
+  {
+    "id": "investor-0171",
+    "name": "Alberto Smitham",
+    "email": "genoveva66@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=9564dd56-61ef-439b-8ab1-c6875a3fd651",
+    "phone": "+914109254879",
+    "portfolio": {
+      "equity": 51.2,
+      "fixedIncome": 25,
+      "gold": 17.5,
+      "realEstate": 3.8,
+      "crypto": 2.5,
+      "riskLevel": "moderate",
+      "totalValue": "9131272"
+    },
+    "investmentGoals": [
+      "Tax Savings"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-05-23T23:28:43.516Z"
+  },
+  {
+    "id": "investor-0172",
+    "name": "Mr. Stanley Little",
+    "email": "antwon19@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=0edc0264-b349-4757-948f-53e8a38ac351",
+    "phone": "+919335994777",
+    "portfolio": {
+      "equity": 57.9,
+      "fixedIncome": 19.7,
+      "gold": 11.8,
+      "realEstate": 3.9,
+      "crypto": 6.6,
+      "riskLevel": "moderate",
+      "totalValue": "9256049"
+    },
+    "investmentGoals": [
+      "House Purchase"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-10-23T19:22:46.053Z"
+  },
+  {
+    "id": "investor-0173",
+    "name": "Barry Lebsack",
+    "email": "audrey.ruecker@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=a4da5ffb-ea3b-4c0f-b626-0b181ad103bb",
+    "phone": "+918744692852",
+    "portfolio": {
+      "equity": 76.3,
+      "fixedIncome": 15.1,
+      "gold": 7.5,
+      "realEstate": 0,
+      "crypto": 1.1,
+      "riskLevel": "aggressive",
+      "totalValue": "7032560"
+    },
+    "investmentGoals": [
+      "Tax Savings"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-06-20T10:55:33.975Z"
+  },
+  {
+    "id": "investor-0174",
+    "name": "Luis Von",
+    "email": "maybell_veum15@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=5562b0c0-9dac-4a8b-b784-0f197c56c1b8",
+    "phone": "+919413485314",
+    "portfolio": {
+      "equity": 60,
+      "fixedIncome": 25,
+      "gold": 8.8,
+      "realEstate": 1.3,
+      "crypto": 5,
+      "riskLevel": "moderate",
+      "totalValue": "2638161"
+    },
+    "investmentGoals": [
+      "Child Education"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2024-11-16T08:33:14.975Z"
+  },
+  {
+    "id": "investor-0175",
+    "name": "Alexandra Harber",
+    "email": "mohamed_murray87@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=03899d48-6386-4d72-b7a7-0b06ae47e398",
+    "phone": "+918544542651",
+    "portfolio": {
+      "equity": 64.5,
+      "fixedIncome": 23.1,
+      "gold": 12.4,
+      "realEstate": 0,
+      "crypto": 0,
+      "riskLevel": "aggressive",
+      "totalValue": "7885358"
+    },
+    "investmentGoals": [
+      "Tax Savings",
+      "Retirement",
+      "Child Education"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-07-26T10:26:54.268Z"
+  },
+  {
+    "id": "investor-0176",
+    "name": "Allan Muller",
+    "email": "rae.block68@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=be892045-4d34-461f-b13e-59e6376a0370",
+    "phone": "+911861201120",
+    "portfolio": {
+      "equity": 57.1,
+      "fixedIncome": 19,
+      "gold": 15.5,
+      "realEstate": 8.3,
+      "crypto": 0,
+      "riskLevel": "moderate",
+      "totalValue": "9139327"
+    },
+    "investmentGoals": [
+      "Tax Savings",
+      "Wealth Building",
+      "Child Education"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-09-13T19:51:57.385Z"
+  },
+  {
+    "id": "investor-0177",
+    "name": "Roosevelt Shanahan III",
+    "email": "randy.runolfsdottir55@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=c3c50a69-f573-425a-a375-85310392649b",
+    "phone": "+915687274894",
+    "portfolio": {
+      "equity": 54.5,
+      "fixedIncome": 29.5,
+      "gold": 9.1,
+      "realEstate": 4.5,
+      "crypto": 2.3,
+      "riskLevel": "moderate",
+      "totalValue": "2458448"
+    },
+    "investmentGoals": [
+      "Wealth Building"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-01-06T14:58:54.123Z"
+  },
+  {
+    "id": "investor-0178",
+    "name": "Joanna Gerlach",
+    "email": "laurie.cartwright@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=9b34ba5e-1b76-4a8f-ac20-bbb4c247120d",
+    "phone": "+916081152136",
+    "portfolio": {
+      "equity": 64.2,
+      "fixedIncome": 17.9,
+      "gold": 13.7,
+      "realEstate": 2.1,
+      "crypto": 2.1,
+      "riskLevel": "aggressive",
+      "totalValue": "1155350"
+    },
+    "investmentGoals": [
+      "Child Education",
+      "Tax Savings"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2024-11-06T07:22:38.580Z"
+  },
+  {
+    "id": "investor-0179",
+    "name": "Amy Toy V",
+    "email": "madalyn51@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=c289c79b-55ee-45cd-9e13-311fda3f1290",
+    "phone": "+911276146216",
+    "portfolio": {
+      "equity": 60.7,
+      "fixedIncome": 17.9,
+      "gold": 13.1,
+      "realEstate": 6,
+      "crypto": 2.4,
+      "riskLevel": "aggressive",
+      "totalValue": "2943381"
+    },
+    "investmentGoals": [
+      "Tax Savings"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-09-24T14:08:20.933Z"
+  },
+  {
+    "id": "investor-0180",
+    "name": "Constance Gerlach-Collier",
+    "email": "kathleen39@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=83def88d-ddd4-476a-b2f1-0e55b9cc934c",
+    "phone": "+910669966405",
+    "portfolio": {
+      "equity": 54.2,
+      "fixedIncome": 25.4,
+      "gold": 9.3,
+      "realEstate": 8.5,
+      "crypto": 2.5,
+      "riskLevel": "moderate",
+      "totalValue": "667335"
+    },
+    "investmentGoals": [
+      "House Purchase",
+      "Retirement"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-08-23T21:15:18.609Z"
+  },
+  {
+    "id": "investor-0181",
+    "name": "Boyd Schuppe",
+    "email": "laury.armstrong@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=f5d5f312-c0e6-45b2-8af9-55b0d3154590",
+    "phone": "+910505754052",
+    "portfolio": {
+      "equity": 48.3,
+      "fixedIncome": 32.2,
+      "gold": 14.9,
+      "realEstate": 0,
+      "crypto": 4.6,
+      "riskLevel": "moderate",
+      "totalValue": "9928643"
+    },
+    "investmentGoals": [
+      "House Purchase"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-10-16T11:02:42.118Z"
+  },
+  {
+    "id": "investor-0182",
+    "name": "Violet Stokes",
+    "email": "liliane33@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=985bdb05-05f2-4939-9990-43d1a6307b81",
+    "phone": "+917545675268",
+    "portfolio": {
+      "equity": 46.1,
+      "fixedIncome": 31.5,
+      "gold": 13.5,
+      "realEstate": 7.9,
+      "crypto": 1.1,
+      "riskLevel": "moderate",
+      "totalValue": "572283"
+    },
+    "investmentGoals": [
+      "House Purchase"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-01-12T09:50:08.500Z"
+  },
+  {
+    "id": "investor-0183",
+    "name": "Troy Hamill",
+    "email": "darby.hettinger34@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=97e4481c-bb7d-4cfe-8ef0-d99b2b81802e",
+    "phone": "+918509522462",
+    "portfolio": {
+      "equity": 63.8,
+      "fixedIncome": 20,
+      "gold": 14.3,
+      "realEstate": 1,
+      "crypto": 1,
+      "riskLevel": "aggressive",
+      "totalValue": "4225742"
+    },
+    "investmentGoals": [
+      "Wealth Building",
+      "House Purchase"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-03-19T01:53:54.288Z"
+  },
+  {
+    "id": "investor-0184",
+    "name": "Dr. Janice Nitzsche",
+    "email": "fiona.padberg5@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=63f0a9c8-9ba7-4a77-a354-86cef327a574",
+    "phone": "+913454661619",
+    "portfolio": {
+      "equity": 55.4,
+      "fixedIncome": 31.5,
+      "gold": 5.4,
+      "realEstate": 4.3,
+      "crypto": 3.3,
+      "riskLevel": "moderate",
+      "totalValue": "5335952"
+    },
+    "investmentGoals": [
+      "House Purchase",
+      "Wealth Building",
+      "Child Education"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-08-12T22:18:07.154Z"
+  },
+  {
+    "id": "investor-0185",
+    "name": "Nathan Denesik III",
+    "email": "marietta49@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=03ec9450-cdcf-405d-a94b-d15ce5c0ce9e",
+    "phone": "+917264268028",
+    "portfolio": {
+      "equity": 64.7,
+      "fixedIncome": 23.5,
+      "gold": 5.9,
+      "realEstate": 4.9,
+      "crypto": 1,
+      "riskLevel": "aggressive",
+      "totalValue": "7685059"
+    },
+    "investmentGoals": [
+      "Child Education",
+      "Retirement"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-04-29T07:25:43.285Z"
+  },
+  {
+    "id": "investor-0186",
+    "name": "Wilbur Kirlin",
+    "email": "nelle_flatley@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=aafda7f6-8f0e-4efb-87f5-d2e73527fd1f",
+    "phone": "+914104581129",
+    "portfolio": {
+      "equity": 60.5,
+      "fixedIncome": 21.1,
+      "gold": 14.5,
+      "realEstate": 3.9,
+      "crypto": 0,
+      "riskLevel": "aggressive",
+      "totalValue": "5618075"
+    },
+    "investmentGoals": [
+      "House Purchase"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-04-11T11:18:35.690Z"
+  },
+  {
+    "id": "investor-0187",
+    "name": "Laurie Schimmel",
+    "email": "delaney.koss@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=4836c2d7-4f91-42d7-ba74-d58cdc3513d3",
+    "phone": "+911163167911",
+    "portfolio": {
+      "equity": 51.7,
+      "fixedIncome": 33.3,
+      "gold": 5.7,
+      "realEstate": 4.6,
+      "crypto": 4.6,
+      "riskLevel": "moderate",
+      "totalValue": "6817957"
+    },
+    "investmentGoals": [
+      "Child Education",
+      "House Purchase"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-04-07T09:58:36.250Z"
+  },
+  {
+    "id": "investor-0188",
+    "name": "Randy Rippin",
+    "email": "augustine_armstrong-schmitt2@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=fb140cf6-f08f-494a-bd66-09d061e8a840",
+    "phone": "+918318886438",
+    "portfolio": {
+      "equity": 62.4,
+      "fixedIncome": 14.1,
+      "gold": 11.8,
+      "realEstate": 11.8,
+      "crypto": 0,
+      "riskLevel": "aggressive",
+      "totalValue": "1625289"
+    },
+    "investmentGoals": [
+      "Child Education",
+      "Wealth Building",
+      "House Purchase"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2024-11-24T00:00:52.139Z"
+  },
+  {
+    "id": "investor-0189",
+    "name": "Angel Dare",
+    "email": "noemy_williamson67@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=0784f1ad-826e-4339-b682-463d41bbabe6",
+    "phone": "+911807220681",
+    "portfolio": {
+      "equity": 60.6,
+      "fixedIncome": 21.2,
+      "gold": 7.7,
+      "realEstate": 7.7,
+      "crypto": 2.9,
+      "riskLevel": "aggressive",
+      "totalValue": "8615132"
+    },
+    "investmentGoals": [
+      "House Purchase",
+      "Tax Savings",
+      "Retirement"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-04-03T05:26:59.256Z"
+  },
+  {
+    "id": "investor-0190",
+    "name": "Eddie Littel-Crist",
+    "email": "mable99@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=ac2318cb-9d80-4a6e-8dbb-23c5aeab0998",
+    "phone": "+919279463089",
+    "portfolio": {
+      "equity": 67,
+      "fixedIncome": 13.6,
+      "gold": 9.7,
+      "realEstate": 7.8,
+      "crypto": 1.9,
+      "riskLevel": "aggressive",
+      "totalValue": "3818851"
+    },
+    "investmentGoals": [
+      "Wealth Building"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-10-03T10:35:00.138Z"
+  },
+  {
+    "id": "investor-0191",
+    "name": "Derrick Lang",
+    "email": "sandrine_kuphal@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=5a1c1a15-ad25-48eb-b7a8-edb53fea59d7",
+    "phone": "+914741498961",
+    "portfolio": {
+      "equity": 69.5,
+      "fixedIncome": 13.3,
+      "gold": 13.3,
+      "realEstate": 1,
+      "crypto": 2.9,
+      "riskLevel": "aggressive",
+      "totalValue": "6516802"
+    },
+    "investmentGoals": [
+      "Child Education",
+      "Wealth Building",
+      "Retirement"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-09-16T19:57:11.579Z"
+  },
+  {
+    "id": "investor-0192",
+    "name": "Jim Cruickshank",
+    "email": "aric9@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=e8f91aa7-b5f9-4c38-bfcc-6d239799f817",
+    "phone": "+919006589560",
+    "portfolio": {
+      "equity": 61.3,
+      "fixedIncome": 24.4,
+      "gold": 8.4,
+      "realEstate": 5,
+      "crypto": 0.8,
+      "riskLevel": "aggressive",
+      "totalValue": "6906495"
+    },
+    "investmentGoals": [
+      "House Purchase",
+      "Retirement"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-09-06T00:58:18.912Z"
+  },
+  {
+    "id": "investor-0193",
+    "name": "Byron Abernathy",
+    "email": "hellen.turcotte@hotmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=65b7962f-4c5d-4e4a-98b6-90f0352e8f7d",
+    "phone": "+916956666013",
+    "portfolio": {
+      "equity": 60.2,
+      "fixedIncome": 33,
+      "gold": 5.7,
+      "realEstate": 0,
+      "crypto": 1.1,
+      "riskLevel": "aggressive",
+      "totalValue": "2936943"
+    },
+    "investmentGoals": [
+      "Tax Savings",
+      "House Purchase",
+      "Retirement"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-05-17T20:32:08.026Z"
+  },
+  {
+    "id": "investor-0194",
+    "name": "Miss Arlene Bartoletti",
+    "email": "mariah_dicki84@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=8d0fc332-d7af-4afb-9458-509f92e6b027",
+    "phone": "+917405782943",
+    "portfolio": {
+      "equity": 76.7,
+      "fixedIncome": 11.7,
+      "gold": 9.7,
+      "realEstate": 1.9,
+      "crypto": 0,
+      "riskLevel": "aggressive",
+      "totalValue": "6389755"
+    },
+    "investmentGoals": [
+      "Child Education"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-03-05T01:01:33.402Z"
+  },
+  {
+    "id": "investor-0195",
+    "name": "Amanda Greenfelder",
+    "email": "roma.satterfield@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=43cce9f2-6385-488f-b97e-d878294d2984",
+    "phone": "+917329501595",
+    "portfolio": {
+      "equity": 54.9,
+      "fixedIncome": 27.5,
+      "gold": 10.8,
+      "realEstate": 4.9,
+      "crypto": 2,
+      "riskLevel": "moderate",
+      "totalValue": "767987"
+    },
+    "investmentGoals": [
+      "Retirement",
+      "Tax Savings"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2025-03-06T17:10:20.109Z"
+  },
+  {
+    "id": "investor-0196",
+    "name": "Owen Jakubowski",
+    "email": "heidi_crona95@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=9e4add48-97d9-429c-8eaa-32cb1e9b50e4",
+    "phone": "+913272394336",
+    "portfolio": {
+      "equity": 56.4,
+      "fixedIncome": 28.2,
+      "gold": 11.5,
+      "realEstate": 1.3,
+      "crypto": 2.6,
+      "riskLevel": "moderate",
+      "totalValue": "8262669"
+    },
+    "investmentGoals": [
+      "Child Education",
+      "Wealth Building"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-09-28T03:15:47.541Z"
+  },
+  {
+    "id": "investor-0197",
+    "name": "Roman Rolfson",
+    "email": "marta15@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=6631ddcc-fb2a-48ae-aa67-0ecb96422bb2",
+    "phone": "+919519384862",
+    "portfolio": {
+      "equity": 70.2,
+      "fixedIncome": 16,
+      "gold": 7.4,
+      "realEstate": 5.3,
+      "crypto": 1.1,
+      "riskLevel": "aggressive",
+      "totalValue": "3500378"
+    },
+    "investmentGoals": [
+      "Wealth Building",
+      "Tax Savings",
+      "Child Education"
+    ],
+    "riskTolerance": "Medium",
+    "createdAt": "2025-05-15T14:22:09.833Z"
+  },
+  {
+    "id": "investor-0198",
+    "name": "Leslie Lesch",
+    "email": "warren.feest30@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=a3c824fd-ec3e-435e-af5c-a04b8b0c8e1d",
+    "phone": "+914023915232",
+    "portfolio": {
+      "equity": 61.2,
+      "fixedIncome": 16.4,
+      "gold": 17.9,
+      "realEstate": 1.5,
+      "crypto": 3,
+      "riskLevel": "aggressive",
+      "totalValue": "3249332"
+    },
+    "investmentGoals": [
+      "Tax Savings"
+    ],
+    "riskTolerance": "Low",
+    "createdAt": "2024-11-10T04:00:36.466Z"
+  },
+  {
+    "id": "investor-0199",
+    "name": "Eunice Denesik",
+    "email": "clemmie.marquardt@yahoo.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=f7f7b621-af39-4a61-af29-7b18c674678e",
+    "phone": "+910442597739",
+    "portfolio": {
+      "equity": 57.8,
+      "fixedIncome": 28.9,
+      "gold": 8.9,
+      "realEstate": 4.4,
+      "crypto": 0,
+      "riskLevel": "moderate",
+      "totalValue": "6640372"
+    },
+    "investmentGoals": [
+      "Tax Savings",
+      "Child Education"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-03-30T13:23:24.249Z"
+  },
+  {
+    "id": "investor-0200",
+    "name": "Lucille Hamill",
+    "email": "cierra82@gmail.com",
+    "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=75ef108b-6980-44ef-8510-4e42952c592a",
+    "phone": "+911749208196",
+    "portfolio": {
+      "equity": 57.3,
+      "fixedIncome": 24.4,
+      "gold": 17.1,
+      "realEstate": 1.2,
+      "crypto": 0,
+      "riskLevel": "moderate",
+      "totalValue": "5011217"
+    },
+    "investmentGoals": [
+      "Wealth Building",
+      "Child Education"
+    ],
+    "riskTolerance": "High",
+    "createdAt": "2025-03-13T03:41:26.643Z"
+  }
+]
