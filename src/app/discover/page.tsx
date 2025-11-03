@@ -138,18 +138,7 @@ export default function DiscoverPage() {
               className="w-full"
             />
           </div>
-          {/* Availability Heatmap filter (demo visual) */}
-          <div className="mt-4 max-w-2xl">
-            <Heatmap
-              title="Overall Availability (Demo)"
-              selectedDate={(filters as any).availabilityDate}
-              onDateClick={(date) => {
-                setFilters(prev => ({ ...prev, availabilityDate: date }))
-                setPage(1)
-              }}
-              dates={(advisorsData?.data || []).flatMap((a: any) => (a.availableSlots || []).map((s: any)=>({ date: s.date, count: 1 })))}
-            />
-          </div>
+          {/* Removed heatmap from header per request */}
         </div>
       </div>
 

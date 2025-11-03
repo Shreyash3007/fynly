@@ -41,6 +41,12 @@ export default function AdvisorDashboardPage() {
   )
   const advisor = advisorDetail?.data
 
+  // Load investors managed by this advisor (based on bookings)
+  const { data: allData } = useSWR('/api/dashboard?userId=investor-demo-001', fetcher)
+  const managedInvestorIds: string[] = Array.from(
+    new Set((bookings as any[]).map((b: any) => String(b.investorId)))
+  ).slice(0, 10)
+
   const upcoming = bookings
     .filter((b: any) => b.status === 'confirmed' && new Date(b.meetingTime) > new Date())
     .sort((a: any, b: any) => new Date(a.meetingTime).getTime() - new Date(b.meetingTime).getTime())
@@ -97,6 +103,27 @@ export default function AdvisorDashboardPage() {
         meetingTime: newTime.toISOString(),
         duration: booking.duration || 60,
         notes: `Rescheduled from ${booking.id}`,
+      }),
+    })
+  }
+
+  const rescheduleBooking = async (booking: any, days: number) => {
+    const newTime = new Date(booking.meetingTime)
+    newTime.setDate(newTime.getDate() + days)
+    await fetch('/api/webhook/simulate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ bookingId: booking.id, paymentId: `sim-${Date.now()}`, status: 'cancelled' }),
+    })
+    await fetch('/api/bookings', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        advisorId,
+        investorId: booking.investorId,
+        meetingTime: newTime.toISOString(),
+        duration: booking.duration || 60,
+        notes: `Rescheduled +${days}d from ${booking.id}`,
       }),
     })
   }
@@ -190,6 +217,7 @@ export default function AdvisorDashboardPage() {
                           <div className="flex gap-2">
                             <Link href={`/demo-call/${b.id}`} prefetch><Button size="sm" variant="primary">Join</Button></Link>
                             <Button size="sm" variant="outline" onClick={() => moveBooking(b, bucket)}>Move</Button>
+                            <Button size="sm" variant="outline" onClick={() => rescheduleBooking(b, 1)}>Reschedule +1d</Button>
                             <Button size="sm" variant="ghost" onClick={() => createFollowUp(b)}>Follow-up</Button>
                           </div>
                         </div>
@@ -220,6 +248,36 @@ export default function AdvisorDashboardPage() {
                 <div className="text-2xl font-bold text-graphite-900">₹{(totalCompletedAmount/4).toFixed(2)}</div>
               </div>
             </div>
+          </CardBody>
+        </Card>
+
+        {/* Managed Clients */}
+        <Card>
+          <CardBody>
+            <h2 className="text-xl font-semibold text-graphite-900 mb-4">Managed Clients</h2>
+            {managedInvestorIds.length === 0 ? (
+              <p className="text-graphite-600">No active managed clients yet.</p>
+            ) : (
+              <div className="grid md:grid-cols-2 gap-3">
+                {managedInvestorIds.map((invId: string) => (
+                  <div key={invId} className="p-3 rounded-lg border border-graphite-200 flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full overflow-hidden bg-graphite-200">
+                        <img src={`https://i.pravatar.cc/80?u=${invId}`} alt={invId} className="w-full h-full object-cover" />
+                      </div>
+                      <div>
+                        <div className="font-medium text-graphite-900">{invId.replace('investor-', 'Investor ')}</div>
+                        <div className="text-xs text-graphite-600">Active</div>
+                      </div>
+                    </div>
+                    <div className="flex gap-2">
+                      <Button size="sm" variant="ghost" onClick={() => createFollowUp({ investorId: invId })}>Schedule</Button>
+                      <Button size="sm" variant="outline" onClick={() => alert('Chat (demo) coming soon')}>Chat</Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </CardBody>
         </Card>
 
