@@ -35,8 +35,12 @@ export async function POST(request: NextRequest) {
         : booking
     )
 
-    const dataDir = join(process.cwd(), 'data', 'seed')
-    writeFileSync(join(dataDir, 'bookings.json'), JSON.stringify(updatedBookings, null, 2))
+    try {
+      const dataDir = join(process.cwd(), 'data', 'seed')
+      writeFileSync(join(dataDir, 'bookings.json'), JSON.stringify(updatedBookings, null, 2))
+    } catch (e) {
+      console.warn('Demo webhook write skipped (read-only FS).')
+    }
 
     if (idempotencyKey) {
       processedKeys.add(idempotencyKey)

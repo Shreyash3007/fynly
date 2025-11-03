@@ -66,8 +66,13 @@ export async function POST(request: NextRequest) {
 
     // Save to file (simulated DB)
     const updatedBookings = [...(bookings || []), newBooking]
-    const dataDir = join(process.cwd(), 'data', 'seed')
-    writeFileSync(join(dataDir, 'bookings.json'), JSON.stringify(updatedBookings, null, 2))
+    try {
+      const dataDir = join(process.cwd(), 'data', 'seed')
+      writeFileSync(join(dataDir, 'bookings.json'), JSON.stringify(updatedBookings, null, 2))
+    } catch (e) {
+      // Read-only filesystem on some hosts (e.g., Vercel). For demo, ignore persist failure.
+      console.warn('Demo write skipped (read-only FS). Returning booking without persistence.')
+    }
 
     return NextResponse.json({ data: newBooking }, { status: 201 })
   } catch (error) {

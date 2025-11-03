@@ -51,7 +51,14 @@ export default function DashboardPage() {
   }
 
   if (!data) {
-    return null
+    return (
+      <div className="min-h-screen bg-smoke flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-mint-600 mx-auto mb-4" />
+          <p className="text-graphite-600">Preparing your dashboard…</p>
+        </div>
+      </div>
+    )
   }
 
   const portfolioData = data.investor?.portfolio
