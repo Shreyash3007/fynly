@@ -29,17 +29,17 @@ const DemoContext = createContext<DemoContextType | undefined>(undefined)
 // Mock users (predefined for demo)
 const MOCK_USERS = {
   investor: {
-    id: 'investor-demo-001',
+    id: 'investor-001',
     name: 'Rajesh Kumar',
     email: 'rajesh.kumar@demo.fynly.com',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=investor-demo',
+    avatar: 'https://i.pravatar.cc/150?u=investor-001',
     role: 'investor' as const,
   },
   advisor: {
-    id: 'advisor-demo-001',
+    id: 'advisor-001',
     name: 'Priya Sharma',
     email: 'priya.sharma@demo.fynly.com',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=advisor-demo',
+    avatar: 'https://i.pravatar.cc/150?u=advisor-001',
     role: 'advisor' as const,
   },
 }

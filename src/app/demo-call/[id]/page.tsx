@@ -8,6 +8,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import useSWR from 'swr'
+import { useDemoAuth } from '@/components/providers/DemoProvider'
 import { Button } from '@/components/ui/Button'
 import { Badge } from '@/components/ui/Badge'
 import { Modal } from '@/components/ui/Modal'
@@ -28,13 +29,13 @@ function PostCallSummary({ bookingId, onDone }: { bookingId: string; onDone: () 
       nextTime.setDate(nextTime.getDate() + 3)
       nextTime.setHours(11, 0, 0, 0)
 
-      // Create a new booking for the next session (investor-demo-001 with same advisor derived from existing booking is out of scope here, we simulate with first available advisor)
+      // Create a new booking for the next session (demo)
       await fetch('/api/bookings', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           advisorId: 'advisor-001',
-          investorId: 'investor-demo-001',
+          investorId: 'investor-001',
           meetingTime: nextTime.toISOString(),
           duration: 60,
           notes: `Follow-up session (auto-scheduled). Previous rating: ${rating}. ${feedback}`,
@@ -94,8 +95,13 @@ export default function DemoCallPage() {
   const [callEnded, setCallEnded] = useState(false)
   const [duration, setDuration] = useState(0)
 
-  const { data: bookingData } = useSWR(`/api/bookings?userId=investor-demo-001&role=investor`, fetcher)
-  const booking = bookingData?.data?.find((b: any) => b.id === params.id)
+  const { user, mockUsers } = useDemoAuth()
+  const investorId = user?.role === 'investor' ? user.id : mockUsers.investor.id
+  const advisorId = user?.role === 'advisor' ? user.id : mockUsers.advisor.id
+  const { data: investorBookings } = useSWR(`/api/bookings?userId=${investorId}&role=investor`, fetcher)
+  const { data: advisorBookings } = useSWR(`/api/bookings?userId=${advisorId}&role=advisor`, fetcher)
+  const combined = [...(investorBookings?.data || []), ...(advisorBookings?.data || [])]
+  const booking = combined.find((b: any) => b.id === params.id)
 
   useEffect(() => {
     let interval: NodeJS.Timeout

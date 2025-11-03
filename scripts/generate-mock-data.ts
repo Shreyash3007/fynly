@@ -110,7 +110,7 @@ function generateAdvisors() {
       id: `advisor-${String(i + 1).padStart(3, '0')}`,
       name: faker.person.fullName(),
       email: faker.internet.email().toLowerCase(),
-      avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${faker.string.uuid()}`,
+      avatar: `https://i.pravatar.cc/150?u=${faker.string.uuid()}`,
       bio: faker.lorem.paragraph({ min: 3, max: 5 }),
       expertise,
       hourlyRate: faker.number.int({ min: 500, max: 5000 }),
