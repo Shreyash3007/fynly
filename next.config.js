@@ -4,9 +4,6 @@ const nextConfig = {
   images: {
     domains: ['api.dicebear.com', 'i.pravatar.cc'],
   },
-  experimental: {
-    serverActions: true,
-  },
 }
 
 module.exports = nextConfig

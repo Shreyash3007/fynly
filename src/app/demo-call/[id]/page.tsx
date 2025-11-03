@@ -143,7 +143,7 @@ export default function DemoCallPage() {
             <div>
               <h2 className="text-2xl font-semibold mb-2">Ready to join?</h2>
               <p className="text-graphite-400 mb-6">
-                Click "Join Call" to start your demo session
+                Click &quot;Join Call&quot; to start your demo session
               </p>
               <Button variant="primary" size="lg" onClick={handleJoin} disabled={!recordingConsent}>
                 Join Call

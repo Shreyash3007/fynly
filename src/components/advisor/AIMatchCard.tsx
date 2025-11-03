@@ -46,7 +46,7 @@ export function AIMatchCard({ advisor, rationale, rank }: AIMatchCardProps) {
               <span className="text-graphite-500">•</span>
               <span className="text-sm text-graphite-700">₹{advisor.hourlyRate}/hr</span>
             </div>
-            <p className="text-sm text-graphite-600 italic mb-3">"{rationale}"</p>
+            <p className="text-sm text-graphite-600 italic mb-3">&quot;{rationale}&quot;</p>
           </div>
         </div>
         <Link href={`/advisor/${advisor.id}`}>

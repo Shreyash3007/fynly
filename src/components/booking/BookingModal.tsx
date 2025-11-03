@@ -112,10 +112,10 @@ export function BookingModal({ advisor, isOpen, onClose }: BookingModalProps) {
                   <button
                     key={mins}
                     onClick={() => setDuration(mins)}
-                    className={`px-4 py-2 rounded-lg border-2 transition-colors ${
+                    className={`px-4 py-2.5 rounded-lg border-2 transition-all transform hover:scale-105 font-medium ${
                       duration === mins
-                        ? 'border-mint-500 bg-mint-50 text-mint-700'
-                        : 'border-graphite-300 text-graphite-700 hover:border-graphite-400'
+                        ? 'border-mint-500 bg-gradient-mint text-white shadow-glow-mint scale-105'
+                        : 'border-graphite-300 text-graphite-700 hover:border-mint-300 hover:bg-mint-50'
                     }`}
                   >
                     {mins} min
@@ -129,7 +129,7 @@ export function BookingModal({ advisor, isOpen, onClose }: BookingModalProps) {
               <label className="block text-sm font-medium text-graphite-700 mb-2">
                 Select Date
               </label>
-              <div className="grid grid-cols-7 gap-2 max-h-64 overflow-y-auto">
+              <div className="grid grid-cols-7 gap-2 max-h-64 overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-mint-300 scrollbar-track-graphite-100 pr-1">
                 {availableDates.map((date) => {
                   const dateStr = format(date, 'yyyy-MM-dd')
                   const hasSlots = advisor.availableSlots.some((slot) => slot.date === dateStr)
@@ -140,15 +140,15 @@ export function BookingModal({ advisor, isOpen, onClose }: BookingModalProps) {
                       key={dateStr}
                       onClick={() => handleDateSelect(date)}
                       disabled={!hasSlots || isPast(date)}
-                      className={`p-2 rounded-lg text-sm transition-colors ${
+                      className={`p-2 rounded-lg text-sm transition-all transform hover:scale-105 ${
                         isSelected
-                          ? 'bg-mint-500 text-white'
+                          ? 'bg-gradient-mint text-white shadow-glow-mint scale-105'
                           : hasSlots && !isPast(date)
-                            ? 'bg-graphite-100 hover:bg-graphite-200 text-graphite-900'
-                            : 'bg-graphite-50 text-graphite-400 cursor-not-allowed'
+                            ? 'bg-graphite-100 hover:bg-mint-100 text-graphite-900 hover:border-2 hover:border-mint-300'
+                            : 'bg-graphite-50 text-graphite-400 cursor-not-allowed opacity-50'
                       }`}
                     >
-                      <div>{format(date, 'd')}</div>
+                      <div className="font-semibold">{format(date, 'd')}</div>
                       <div className="text-xs">{format(date, 'EEE')}</div>
                     </button>
                   )
@@ -162,17 +162,17 @@ export function BookingModal({ advisor, isOpen, onClose }: BookingModalProps) {
                 <label className="block text-sm font-medium text-graphite-700 mb-2">
                   Select Time
                 </label>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-3 gap-2 max-h-48 overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-mint-300 scrollbar-track-graphite-100">
                   {availableSlots.map((slot) => {
                     const slotStr = `${slot.startTime}-${slot.endTime}`
                     return (
                       <button
                         key={slotStr}
                         onClick={() => setSelectedSlot(slotStr)}
-                        className={`px-4 py-2 rounded-lg border-2 transition-colors ${
+                        className={`px-4 py-2.5 rounded-lg border-2 transition-all transform hover:scale-105 font-medium ${
                           selectedSlot === slotStr
-                            ? 'border-mint-500 bg-mint-50 text-mint-700'
-                            : 'border-graphite-300 text-graphite-700 hover:border-graphite-400'
+                            ? 'border-mint-500 bg-gradient-mint text-white shadow-glow-mint scale-105'
+                            : 'border-graphite-300 text-graphite-700 hover:border-mint-300 hover:bg-mint-50'
                         }`}
                       >
                         {slot.startTime}

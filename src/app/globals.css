@@ -36,6 +36,23 @@
   @apply bg-graphite-400;
 }
 
+/* Thin scrollbar for modals */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-thumb-mint-300::-webkit-scrollbar-thumb {
+  @apply bg-mint-300 rounded-full;
+}
+
+.scrollbar-thumb-mint-300::-webkit-scrollbar-thumb:hover {
+  @apply bg-mint-400;
+}
+
+.scrollbar-track-graphite-100::-webkit-scrollbar-track {
+  @apply bg-graphite-100 rounded;
+}
+
 /* Glassmorphism utilities */
 .glass {
   background: rgba(255, 255, 255, 0.9);

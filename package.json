@@ -14,7 +14,7 @@
     "test": "jest",
     "test:e2e": "playwright test",
     "test:watch": "jest --watch",
-    "prepare": "husky install"
+    "prepare": "node -e \"try { require('husky').install() } catch (e) {}\""
   },
   "dependencies": {
     "@faker-js/faker": "^8.3.1",

@@ -62,6 +62,7 @@ export function Modal({
         className={clsx(
           'relative z-10 w-full bg-white rounded-xl shadow-2xl',
           'animate-fade-in animate-slide-up',
+          'flex flex-col max-h-[90vh]',
           {
             'max-w-sm': size === 'sm',
             'max-w-md': size === 'md',
@@ -73,7 +74,7 @@ export function Modal({
       >
         {/* Header */}
         {(title || showCloseButton) && (
-          <div className="flex items-center justify-between p-6 border-b border-graphite-200">
+          <div className="flex items-center justify-between p-6 border-b border-graphite-200 flex-shrink-0">
             {title && <h2 className="text-xl font-semibold text-graphite-900">{title}</h2>}
             {showCloseButton && (
               <button
@@ -94,8 +95,10 @@ export function Modal({
           </div>
         )}
 
-        {/* Body */}
-        <div className="p-6">{children}</div>
+        {/* Body - Scrollable */}
+        <div className="p-6 overflow-y-auto flex-1 overscroll-contain">
+          {children}
+        </div>
       </div>
     </div>
   )
