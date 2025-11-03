@@ -121,15 +121,19 @@ function generateAdvisors() {
     }
 
     // Generate reviews
-    advisor['reviews'] = Array.from({ length: Math.min(reviewsCount, 10) }, () => ({
-      id: faker.string.uuid(),
-      investorName: faker.person.firstName(),
-      rating: faker.number.int({ min: 3, max: 5 }),
-      comment: faker.lorem.sentence({ min: 10, max: 30 }),
-      date: faker.date.past({ years: 1 }).toISOString(),
-    }))
+    // Add reviews property
+    const advisorWithReviews = {
+      ...advisor,
+      reviews: Array.from({ length: Math.min(reviewsCount, 10) }, () => ({
+        id: faker.string.uuid(),
+        investorName: faker.person.firstName(),
+        rating: faker.number.int({ min: 3, max: 5 }),
+        comment: faker.lorem.sentence({ min: 10, max: 30 }),
+        date: faker.date.past({ years: 1 }).toISOString(),
+      })),
+    }
 
-    advisors.push(advisor)
+    advisors.push(advisorWithReviews as any)
   }
 
   return advisors.sort((a, b) => b.reputationScore - a.reputationScore)
