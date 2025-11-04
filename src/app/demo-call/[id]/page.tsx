@@ -15,7 +15,6 @@ import { Modal } from '@/components/ui/Modal'
 import { Card, CardBody } from '@/components/ui/Card'
 import Image from 'next/image'
 import { format } from 'date-fns'
-import { useState as _useState } from 'react'
 
 function PostCallSummary({ bookingId, onDone }: { bookingId: string; onDone: () => void }) {
   const [rating, setRating] = useState<number>(5)
@@ -100,11 +99,21 @@ export default function DemoCallPage() {
   const advisorId = user?.role === 'advisor' ? user.id : mockUsers.advisor.id
   const { data: investorBookings } = useSWR(`/api/bookings?userId=${investorId}&role=investor`, fetcher)
   const { data: advisorBookings } = useSWR(`/api/bookings?userId=${advisorId}&role=advisor`, fetcher)
-  const combined = [...(investorBookings?.data || []), ...(advisorBookings?.data || [])]
-  const booking = combined.find((b: any) => b.id === params.id) || {
+  const { data: allBookingsData } = useSWR('/api/bookings?userId=all&role=all', fetcher, { 
+    revalidateOnFocus: false 
+  })
+  
+  // Combine all sources to find booking
+  const combined = [
+    ...(investorBookings?.data || []), 
+    ...(advisorBookings?.data || []),
+    ...(allBookingsData?.data || [])
+  ]
+  
+  const booking = combined.find((b: any) => b.id === String(params.id)) || {
     id: String(params.id),
-    advisorId: 'advisor-001',
-    investorId,
+    advisorId: advisorId || 'advisor-001',
+    investorId: investorId || 'investor-001',
     status: 'confirmed',
     meetingTime: new Date(Date.now() + 5 * 60 * 1000).toISOString(),
     duration: 60,

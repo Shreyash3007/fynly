@@ -20,18 +20,27 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Advisor not found' }, { status: 404 })
     }
 
-    const investorIds = (investors || []).slice(0, count).map((i) => i.id)
-    while (investorIds.length < count) {
+    // Check existing bookings for this advisor to avoid duplicates
+    const existingForAdvisor = (bookings || []).filter((b: any) => b.advisorId === advisorId)
+    const needed = Math.max(0, count - existingForAdvisor.length)
+    
+    if (needed === 0) {
+      return NextResponse.json({ data: existingForAdvisor.slice(0, count), message: 'Already seeded' })
+    }
+
+    const investorIds = (investors || []).slice(0, needed).map((i) => i.id)
+    while (investorIds.length < needed) {
       investorIds.push(`investor-${String(investorIds.length + 1).padStart(3, '0')}`)
     }
 
     const now = new Date()
+    const timestamp = Date.now()
     const newBookings = investorIds.map((invId, idx) => {
       const when = new Date(now)
       when.setDate(now.getDate() + (idx % 7))
       when.setHours(11 + (idx % 4) * 2, 0, 0, 0)
       return {
-        id: `booking-${Date.now()}-${idx}`,
+        id: `booking-${timestamp}-${idx}`,
         advisorId,
         investorId: invId,
         status: 'confirmed' as const,
@@ -51,13 +60,17 @@ export async function POST(request: NextRequest) {
       writeFileSync(join(dataDir, 'bookings.json'), JSON.stringify(updated, null, 2))
     } catch (e) {
       // read-only filesystem, return new data anyway
+      console.warn('Seed write skipped (read-only FS). Bookings will be available in this request only.')
     }
 
-    return NextResponse.json({ data: newBookings })
+    // Return all bookings for this advisor (existing + new)
+    const allForAdvisor = [...existingForAdvisor, ...newBookings].slice(0, count)
+    return NextResponse.json({ data: allForAdvisor, seeded: newBookings.length })
   } catch (error) {
     console.error('Seed bookings error:', error)
     return NextResponse.json({ error: 'Failed to seed bookings' }, { status: 500 })
   }
 }
+
 
 

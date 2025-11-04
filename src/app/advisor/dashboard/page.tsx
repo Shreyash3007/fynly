@@ -28,7 +28,7 @@ export default function AdvisorDashboardPage() {
   }, [user, setUser, mockUsers])
 
   const advisorId = user?.id || mockUsers.advisor.id
-  const { data } = useSWR(
+  const { data, mutate } = useSWR(
     advisorId ? `/api/bookings?userId=${advisorId}&role=advisor` : null,
     fetcher
   )
@@ -37,19 +37,29 @@ export default function AdvisorDashboardPage() {
   // Auto-seed demo bookings if none
   useEffect(() => {
     async function seed() {
-      if (advisorId && bookings.length < 10) {
+      if (advisorId && bookings.length === 0) {
         try {
-          await fetch('/api/bookings/seed', {
+          const res = await fetch('/api/bookings/seed', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ advisorId, count: 10 }),
           })
-        } catch {}
+          if (res.ok) {
+            // Refresh bookings after a short delay to allow cache update
+            setTimeout(() => {
+              mutate()
+            }, 500)
+          }
+        } catch (e) {
+          console.error('Seed error:', e)
+        }
       }
     }
-    seed()
+    if (advisorId) {
+      seed()
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [advisorId])
+  }, [advisorId, bookings.length, mutate])
 
   // Fetch advisor profile for reviews block
   const { data: advisorDetail } = useSWR(

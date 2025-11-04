@@ -13,16 +13,55 @@ export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams
     const userId = searchParams.get('userId')
-    const role = searchParams.get('role') as 'investor' | 'advisor'
+    const role = searchParams.get('role') as 'investor' | 'advisor' | 'all'
+
+    // Special case: return all bookings for demo-call lookup
+    if (userId === 'all' && role === 'all') {
+      const { bookings } = loadData()
+      return NextResponse.json({ data: bookings || [] })
+    }
 
     if (!userId || !role) {
       return NextResponse.json({ error: 'userId and role are required' }, { status: 400 })
     }
 
-    const bookings =
+    let bookings =
       role === 'investor'
         ? getBookingsByInvestor(userId)
         : getBookingsByAdvisor(userId)
+
+    // Auto-seed for advisor if no bookings (demo feature)
+    if (role === 'advisor' && bookings.length === 0) {
+      const { advisors, investors } = loadData()
+      const advisor = advisors?.find((a) => a.id === userId)
+      if (advisor) {
+        // Generate 10 demo bookings on-the-fly
+        const now = new Date()
+        const investorIds = (investors || []).slice(0, 10).map((i) => i.id)
+        while (investorIds.length < 10) {
+          investorIds.push(`investor-${String(investorIds.length + 1).padStart(3, '0')}`)
+        }
+        const timestamp = Date.now()
+        bookings = investorIds.map((invId, idx) => {
+          const when = new Date(now)
+          when.setDate(now.getDate() + (idx % 7))
+          when.setHours(11 + (idx % 4) * 2, 0, 0, 0)
+          return {
+            id: `booking-${timestamp}-${idx}`,
+            advisorId: userId,
+            investorId: invId,
+            status: 'confirmed' as const,
+            meetingTime: when.toISOString(),
+            duration: 60,
+            amount: advisor.hourlyRate,
+            recordingUrl: null,
+            notes: null,
+            rating: null,
+            createdAt: new Date().toISOString(),
+          }
+        })
+      }
+    }
 
     return NextResponse.json({ data: bookings })
   } catch (error) {
