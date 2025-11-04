@@ -80,7 +80,10 @@ export function PaymentOverlay({
       setTimeout(() => {
         setStep('success')
         setIsProcessing(false)
-        setTimeout(onSuccess, 1200)
+        // Redirect to confirmation page instead of calling onSuccess immediately
+        setTimeout(() => {
+          window.location.href = `/booking/confirmation/${bookingId}`
+        }, 1500)
       }, 1500)
     } catch (error) {
       console.error('Payment error:', error)

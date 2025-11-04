@@ -16,11 +16,40 @@ export async function GET(request: NextRequest) {
     }
 
     const { news, successStories, advisors, investors } = loadData()
-    const investor = investors?.find((i) => i.id === userId)
-    const bookings = getBookingsByInvestor(userId)
-
+    let investor = investors?.find((i) => i.id === userId)
+    
+    // Handle both investor-001 and investor-demo-001 for demo
+    if (!investor && userId === 'investor-001') {
+      investor = investors?.find((i) => i.id === 'investor-demo-001')
+    }
+    
+    // If still not found, create mock investor data
     if (!investor) {
-      return NextResponse.json({ error: 'Investor not found' }, { status: 404 })
+      investor = {
+        id: userId,
+        name: 'Demo Investor',
+        email: `${userId}@demo.fynly.com`,
+        avatar: `https://i.pravatar.cc/150?u=${userId}`,
+        portfolio: {
+          equity: 50,
+          fixedIncome: 30,
+          gold: 10,
+          realEstate: 5,
+          crypto: 5,
+          riskLevel: 'moderate',
+          totalValue: '₹1,000,000'
+        },
+        investmentGoals: ['Wealth Growth', 'Retirement Planning'],
+        riskTolerance: 'Moderate',
+        createdAt: new Date().toISOString(),
+      }
+    }
+    
+    const bookings = getBookingsByInvestor(userId)
+    // Also check for bookings with investor-demo-001 if userId is investor-001
+    if (userId === 'investor-001') {
+      const demoBookings = getBookingsByInvestor('investor-demo-001')
+      bookings.push(...demoBookings)
     }
 
     const upcomingBookings = bookings

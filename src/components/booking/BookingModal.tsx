@@ -76,7 +76,10 @@ export function BookingModal({ advisor, isOpen, onClose }: BookingModalProps) {
   }
 
   const handlePaymentSuccess = () => {
-    setStep('success')
+    // Payment overlay now redirects to confirmation page
+    // Just close the modal
+    setStep('calendar')
+    onClose()
   }
 
   const handleClose = () => {

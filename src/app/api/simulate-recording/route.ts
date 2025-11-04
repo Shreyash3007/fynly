@@ -20,16 +20,21 @@ export async function POST(request: NextRequest) {
     // Generate simulated recording URL
     const recordingUrl = `https://demo.fynly.com/recordings/${bookingId}-${Date.now()}.mp4`
 
-    // Update booking with recording URL
-    const { bookings } = loadData()
-    const updatedBookings = (bookings || []).map((booking) =>
-      booking.id === bookingId
-        ? { ...booking, recordingUrl }
-        : booking
-    )
+    // Update booking with recording URL (demo - may not persist in serverless)
+    try {
+      const { bookings } = loadData()
+      const updatedBookings = (bookings || []).map((booking) =>
+        booking.id === bookingId
+          ? { ...booking, recordingUrl }
+          : booking
+      )
 
-    const dataDir = join(process.cwd(), 'data', 'seed')
-    writeFileSync(join(dataDir, 'bookings.json'), JSON.stringify(updatedBookings, null, 2))
+      const dataDir = join(process.cwd(), 'data', 'seed')
+      writeFileSync(join(dataDir, 'bookings.json'), JSON.stringify(updatedBookings, null, 2))
+    } catch (e) {
+      // Read-only filesystem - continue as if successful for demo
+      console.warn('Recording URL update skipped (read-only FS)')
+    }
 
     return NextResponse.json({
       data: {

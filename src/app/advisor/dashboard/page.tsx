@@ -28,7 +28,7 @@ export default function AdvisorDashboardPage() {
   }, [user, setUser, mockUsers])
 
   const advisorId = user?.id || mockUsers.advisor.id
-  const { data, mutate } = useSWR(
+  const { data, mutate, isLoading: bookingsLoading } = useSWR(
     advisorId ? `/api/bookings?userId=${advisorId}&role=advisor` : null,
     fetcher
   )
@@ -101,75 +101,88 @@ export default function AdvisorDashboardPage() {
   }, [bookings])
 
   const moveBooking = async (booking: any, bucket: 'today' | 'week' | 'later') => {
-    // Simulate reschedule by cancelling original then creating new
-    const base = new Date()
-    const newTime = new Date(base)
-    if (bucket === 'today') {
-      newTime.setHours(18, 0, 0, 0)
-    } else if (bucket === 'week') {
-      newTime.setDate(base.getDate() + 3)
-      newTime.setHours(11, 0, 0, 0)
-    } else {
-      newTime.setDate(base.getDate() + 10)
-      newTime.setHours(16, 0, 0, 0)
-    }
+    try {
+      const base = new Date()
+      const newTime = new Date(base)
+      if (bucket === 'today') {
+        newTime.setHours(18, 0, 0, 0)
+      } else if (bucket === 'week') {
+        newTime.setDate(base.getDate() + 3)
+        newTime.setHours(11, 0, 0, 0)
+      } else {
+        newTime.setDate(base.getDate() + 10)
+        newTime.setHours(16, 0, 0, 0)
+      }
 
-    // cancel original
-    await fetch('/api/webhook/simulate', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ bookingId: booking.id, paymentId: `sim-${Date.now()}`, status: 'cancelled' }),
-    })
-    // create new with same investor
-    await fetch('/api/bookings', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        advisorId,
-        investorId: booking.investorId,
-        meetingTime: newTime.toISOString(),
-        duration: booking.duration || 60,
-        notes: `Rescheduled from ${booking.id}`,
-      }),
-    })
+      // Create new booking with rescheduled time
+      await fetch('/api/bookings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          advisorId,
+          investorId: booking.investorId,
+          meetingTime: newTime.toISOString(),
+          duration: booking.duration || 60,
+          notes: `Rescheduled from ${booking.id} (moved to ${bucket})`,
+        }),
+      })
+      
+      // Refresh bookings
+      setTimeout(() => mutate(), 300)
+    } catch (error) {
+      console.error('Move booking error:', error)
+      alert('Failed to reschedule. Please try again.')
+    }
   }
 
   const rescheduleBooking = async (booking: any, days: number) => {
-    const newTime = new Date(booking.meetingTime)
-    newTime.setDate(newTime.getDate() + days)
-    await fetch('/api/webhook/simulate', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ bookingId: booking.id, paymentId: `sim-${Date.now()}`, status: 'cancelled' }),
-    })
-    await fetch('/api/bookings', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        advisorId,
-        investorId: booking.investorId,
-        meetingTime: newTime.toISOString(),
-        duration: booking.duration || 60,
-        notes: `Rescheduled +${days}d from ${booking.id}`,
-      }),
-    })
+    try {
+      const newTime = new Date(booking.meetingTime)
+      newTime.setDate(newTime.getDate() + days)
+      
+      await fetch('/api/bookings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          advisorId,
+          investorId: booking.investorId,
+          meetingTime: newTime.toISOString(),
+          duration: booking.duration || 60,
+          notes: `Rescheduled +${days}d from ${booking.id}`,
+        }),
+      })
+      
+      setTimeout(() => mutate(), 300)
+    } catch (error) {
+      console.error('Reschedule error:', error)
+      alert('Failed to reschedule. Please try again.')
+    }
   }
 
   const createFollowUp = async (booking?: any) => {
-    const nextTime = new Date()
-    nextTime.setDate(nextTime.getDate() + 3)
-    nextTime.setHours(11, 0, 0, 0)
-    await fetch('/api/bookings', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        advisorId,
-        investorId: booking?.investorId || 'investor-demo-001',
-        meetingTime: nextTime.toISOString(),
-        duration: 60,
-        notes: 'Follow-up (auto) generated via Advisor Dashboard',
-      }),
-    })
+    try {
+      const nextTime = new Date()
+      nextTime.setDate(nextTime.getDate() + 3)
+      nextTime.setHours(11, 0, 0, 0)
+      
+      await fetch('/api/bookings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          advisorId,
+          investorId: booking?.investorId || 'investor-001',
+          meetingTime: nextTime.toISOString(),
+          duration: 60,
+          notes: 'Follow-up (auto) generated via Advisor Dashboard',
+        }),
+      })
+      
+      setTimeout(() => mutate(), 300)
+      alert('Follow-up session scheduled!')
+    } catch (error) {
+      console.error('Follow-up error:', error)
+      alert('Failed to schedule follow-up. Please try again.')
+    }
   }
 
   return (
@@ -233,8 +246,10 @@ export default function AdvisorDashboardPage() {
               {(['today','week','later'] as const).map(bucket => (
                 <div key={bucket} className="bg-white rounded-lg border border-graphite-200">
                   <div className="px-4 py-3 border-b border-graphite-200 font-semibold capitalize">{bucket === 'week' ? 'This Week' : bucket}</div>
-                  <div className="p-3 space-y-3">
-                    {(pipeline as any)[bucket].length === 0 ? (
+                  <div className="p-3 space-y-3 max-h-96 overflow-y-auto">
+                    {bookingsLoading ? (
+                      <p className="text-sm text-graphite-600">Loading...</p>
+                    ) : (pipeline as any)[bucket].length === 0 ? (
                       <p className="text-sm text-graphite-600">No sessions</p>
                     ) : (
                       (pipeline as any)[bucket].map((b: any) => (

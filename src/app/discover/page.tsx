@@ -12,8 +12,9 @@ import { AIMatchCard } from '@/components/advisor/AIMatchCard'
 import { Input } from '@/components/ui/Input'
 import { Button } from '@/components/ui/Button'
 import { Badge } from '@/components/ui/Badge'
-import { Card } from '@/components/ui/Card'
+import { Card, CardBody } from '@/components/ui/Card'
 import { Heatmap } from '@/components/ui/Heatmap'
+import { EmptyState } from '@/components/ui/EmptyState'
 import useSWR, { useSWRConfig } from 'swr'
 import { useRouter } from 'next/navigation'
 import type { Advisor } from '@/types'
@@ -34,7 +35,13 @@ export default function DiscoverPage() {
   const router = useRouter()
   const { user, setUser, mockUsers } = useDemoAuth()
   const { mutate } = useSWRConfig()
-  const [searchQuery, setSearchQuery] = useState('')
+  // Load search query from localStorage for persistence
+  const [searchQuery, setSearchQuery] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('demo-search-query') || ''
+    }
+    return ''
+  })
   const [debouncedQuery, setDebouncedQuery] = useState('')
   const [filters, setFilters] = useState({
     expertise: [] as string[],
@@ -55,11 +62,18 @@ export default function DiscoverPage() {
     }
   }, [user, setUser, mockUsers])
 
-  // Debounce search
+  // Debounce search and persist to localStorage
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedQuery(searchQuery)
       setPage(1)
+      if (typeof window !== 'undefined') {
+        if (searchQuery) {
+          localStorage.setItem('demo-search-query', searchQuery)
+        } else {
+          localStorage.removeItem('demo-search-query')
+        }
+      }
     }, 300)
     return () => clearTimeout(timer)
   }, [searchQuery])
@@ -370,9 +384,37 @@ export default function DiscoverPage() {
               </>
             ) : (
               <Card>
-                <div className="p-12 text-center">
-                  <p className="text-graphite-600">No advisors found. Try adjusting your filters.</p>
-                </div>
+                <CardBody>
+                  <EmptyState
+                    icon={
+                      <svg className="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                      </svg>
+                    }
+                    title="No advisors found"
+                    description="Try adjusting your search or filters to find more advisors."
+                    action={{
+                      label: 'Clear Filters',
+                      onClick: () => {
+                        setFilters({ expertise: [], priceMin: '', priceMax: '', ratingMin: '', verified: undefined })
+                        setSearchQuery('')
+                        if (typeof window !== 'undefined') {
+                          localStorage.removeItem('demo-search-query')
+                        }
+                      }
+                    }}
+                    secondaryAction={{
+                      label: 'View All Advisors',
+                      onClick: () => {
+                        setSearchQuery('')
+                        setFilters({ expertise: [], priceMin: '', priceMax: '', ratingMin: '', verified: undefined })
+                        if (typeof window !== 'undefined') {
+                          localStorage.removeItem('demo-search-query')
+                        }
+                      }
+                    }}
+                  />
+                </CardBody>
               </Card>
             )}
 

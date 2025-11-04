@@ -13,15 +13,46 @@ import { Button } from '@/components/ui/Button'
 import { Badge } from '@/components/ui/Badge'
 import { Modal } from '@/components/ui/Modal'
 import { Card, CardBody } from '@/components/ui/Card'
-import Image from 'next/image'
 import { format } from 'date-fns'
 
-function PostCallSummary({ bookingId, onDone }: { bookingId: string; onDone: () => void }) {
+function PostCallSummary({ 
+  bookingId, 
+  onDone,
+  advisorId,
+  investorId 
+}: { 
+  bookingId: string
+  onDone: () => void
+  advisorId: string
+  investorId: string
+}) {
   const [rating, setRating] = useState<number>(5)
   const [feedback, setFeedback] = useState('')
   const [scheduling, setScheduling] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
+
+  const handleSubmit = async () => {
+    if (submitted) return
+    setSubmitted(true)
+    
+    // Submit feedback (non-blocking)
+    fetch('/api/bookings', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        advisorId,
+        investorId,
+        meetingTime: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
+        duration: 60,
+        notes: `Feedback: ${rating}★ - ${feedback}`,
+      }),
+    }).catch(() => {})
+
+    onDone()
+  }
 
   const scheduleNext = async () => {
+    if (scheduling) return
     try {
       setScheduling(true)
       const nextTime = new Date()
@@ -33,17 +64,17 @@ function PostCallSummary({ bookingId, onDone }: { bookingId: string; onDone: () 
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          advisorId: 'advisor-001',
-          investorId: 'investor-001',
+          advisorId,
+          investorId,
           meetingTime: nextTime.toISOString(),
           duration: 60,
-          notes: `Follow-up session (auto-scheduled). Previous rating: ${rating}. ${feedback}`,
+          notes: `Follow-up session (auto-scheduled). Previous rating: ${rating}★. ${feedback}`,
         }),
       })
 
-      onDone()
+      setTimeout(onDone, 1000)
     } catch (e) {
-      onDone()
+      setTimeout(onDone, 1000)
     }
   }
 
@@ -73,8 +104,12 @@ function PostCallSummary({ bookingId, onDone }: { bookingId: string; onDone: () 
           <textarea value={feedback} onChange={(e)=>setFeedback(e.target.value)} rows={3} className="w-full px-3 py-2 rounded-lg border border-graphite-700 bg-graphite-900 text-white" placeholder="What went well? What can be improved?" />
         </div>
         <div className="flex gap-3">
-          <Button variant="outline" onClick={onDone}>Finish</Button>
-          <Button variant="primary" onClick={scheduleNext} disabled={scheduling}>{scheduling ? 'Scheduling…' : 'Schedule Next Session'}</Button>
+          <Button variant="outline" onClick={handleSubmit} disabled={submitted}>
+            {submitted ? 'Submitted' : 'Submit & Finish'}
+          </Button>
+          <Button variant="primary" onClick={scheduleNext} disabled={scheduling || submitted}>
+            {scheduling ? 'Scheduling…' : 'Schedule Next Session'}
+          </Button>
         </div>
       </div>
     </div>
@@ -143,20 +178,16 @@ export default function DemoCallPage() {
     setCallEnded(true)
     setIsJoined(false)
 
-    // Simulate recording generation
+    // Simulate recording generation (non-blocking)
     if (recordingConsent && booking) {
-      try {
-        await fetch('/api/simulate-recording', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ bookingId: booking.id }),
-        })
-      } catch (error) {
+      fetch('/api/simulate-recording', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ bookingId: booking.id }),
+      }).catch((error) => {
         console.error('Recording error:', error)
-      }
+      })
     }
-
-    // Show post-call summary for rating and next steps
   }
 
   const formatDuration = (seconds: number) => {
@@ -238,7 +269,14 @@ export default function DemoCallPage() {
             </div>
           </div>
         ) : callEnded ? (
-          <PostCallSummary bookingId={String(params.id)} onDone={() => router.push('/dashboard')} />
+          <PostCallSummary 
+            bookingId={String(params.id)} 
+            advisorId={booking.advisorId}
+            investorId={booking.investorId}
+            onDone={() => {
+              setTimeout(() => router.push('/dashboard'), 500)
+            }} 
+          />
         ) : (
           <div className="grid grid-cols-2 gap-4 max-w-4xl w-full px-4">
             {/* Local Video */}
