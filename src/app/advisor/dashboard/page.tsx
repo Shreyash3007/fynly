@@ -9,6 +9,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import useSWR from 'swr'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useDemoAuth } from '@/components/providers/DemoProvider'
 import { Card, CardBody } from '@/components/ui/Card'
 import { Tour } from '@/components/tour/Tour'
@@ -74,14 +75,17 @@ export default function AdvisorDashboardPage() {
     new Set((bookings as any[]).map((b: any) => String(b.investorId)))
   ).slice(0, 10)
 
-  const upcoming = bookings
-    .filter((b: any) => b.status === 'confirmed' && new Date(b.meetingTime) > new Date())
-    .sort((a: any, b: any) => new Date(a.meetingTime).getTime() - new Date(b.meetingTime).getTime())
-
+  // Calculate dates for pipeline buckets (recalculate on each render for accuracy)
   const today = new Date()
   const startOfToday = new Date(today.getFullYear(), today.getMonth(), today.getDate())
   const endOfWeek = new Date(startOfToday)
   endOfWeek.setDate(endOfWeek.getDate() + (7 - endOfWeek.getDay()))
+
+  const upcoming = useMemo(() => {
+    return bookings
+      .filter((b: any) => b.status === 'confirmed' && new Date(b.meetingTime) > new Date())
+      .sort((a: any, b: any) => new Date(a.meetingTime).getTime() - new Date(b.meetingTime).getTime())
+  }, [bookings])
 
   const pipeline = useMemo(() => {
     const result = { today: [] as any[], week: [] as any[], later: [] as any[] }
@@ -92,7 +96,7 @@ export default function AdvisorDashboardPage() {
       else result.later.push(b)
     }
     return result
-  }, [upcoming])
+  }, [upcoming, startOfToday, endOfWeek])
 
   const totalCompletedAmount = useMemo(() => {
     return bookings
@@ -304,8 +308,8 @@ export default function AdvisorDashboardPage() {
                 {managedInvestorIds.map((invId: string) => (
                   <div key={invId} className="p-3 rounded-lg border border-graphite-200 flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full overflow-hidden bg-graphite-200">
-                        <img src={`https://i.pravatar.cc/80?u=${invId}`} alt={invId} className="w-full h-full object-cover" />
+                      <div className="w-10 h-10 rounded-full overflow-hidden bg-graphite-200 relative">
+                        <Image src={`https://i.pravatar.cc/80?u=${invId}`} alt={invId} fill className="object-cover" />
                       </div>
                       <div>
                         <div className="font-medium text-graphite-900">{invId.replace('investor-', 'Investor ')}</div>

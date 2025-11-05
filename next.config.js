@@ -10,10 +10,6 @@ const nextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },
-  // Optimize bundle size
-  experimental: {
-    optimizeCss: true,
-  },
 }
 
 module.exports = nextConfig

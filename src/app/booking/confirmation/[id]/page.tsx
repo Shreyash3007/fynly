@@ -8,6 +8,7 @@
 import { useEffect, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import useSWR from 'swr'
 import { format } from 'date-fns'
 import { useDemoAuth } from '@/components/providers/DemoProvider'
@@ -83,11 +84,12 @@ export default function BookingConfirmationPage() {
                 {/* Advisor Info */}
                 {advisor && (
                   <div className="flex items-center gap-4 pb-6 border-b border-graphite-200">
-                    <div className="w-16 h-16 rounded-full overflow-hidden bg-graphite-200">
-                      <img
+                    <div className="w-16 h-16 rounded-full overflow-hidden bg-graphite-200 relative">
+                      <Image
                         src={advisor.avatar}
                         alt={advisor.name}
-                        className="w-full h-full object-cover"
+                        fill
+                        className="object-cover"
                       />
                     </div>
                     <div className="flex-1">
