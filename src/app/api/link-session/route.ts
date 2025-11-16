@@ -123,19 +123,22 @@ export async function POST(request: NextRequest) {
       const submission = submissionsArray.find((s) => s.id === submissionId)
       if (!submission) return
 
-      const updatedResponses = {
-        ...(submission.responses as Record<string, unknown>),
+      const currentResponses = submission.responses as Record<string, unknown>
+      const updatedResponses: Record<string, unknown> = {
+        ...currentResponses,
         user_id: validatedInput.user_id,
-        session_id: undefined, // Remove session_id
       }
-      delete updatedResponses.session_id
+      // Remove session_id if it exists
+      if ('session_id' in updatedResponses) {
+        delete updatedResponses.session_id
+      }
 
       // Also need to create/update investor record if needed
       // For MVP, we'll just update the submission responses
       return supabase
         .from('submissions')
         .update({
-          responses: updatedResponses,
+          responses: updatedResponses as Record<string, unknown>,
           updated_at: new Date().toISOString(),
         })
         .eq('id', submissionId)
