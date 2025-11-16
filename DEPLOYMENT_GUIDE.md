@@ -72,11 +72,12 @@ NEXT_PUBLIC_APP_URL=https://your-app.vercel.app
 
 **Optional (for payments):**
 ```
-NEXT_PUBLIC_RAZORPAY_KEY_ID=your_razorpay_key_id
-RAZORPAY_KEY_ID=your_razorpay_key_id
-RAZORPAY_KEY_SECRET=your_razorpay_key_secret
+NEXT_PUBLIC_RAZORPAY_KEY_ID=rzp_test_RgKgEIEVHvX9Dq
+RAZORPAY_KEY_ID=rzp_test_RgKgEIEVHvX9Dq
+RAZORPAY_KEY_SECRET=U68rkYGX66W5e2FWGVJOSU0Z
 RAZORPAY_WEBHOOK_SECRET=your_webhook_secret
 ```
+**Note:** You need to set up the webhook in Razorpay Dashboard and get the webhook secret (see Step 5 below).
 
 **Important:** Replace `https://your-app.vercel.app` with your actual Vercel deployment URL after first deployment.
 
