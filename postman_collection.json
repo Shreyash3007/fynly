@@ -1,0 +1,330 @@
+{
+  "info": {
+    "name": "Fynly MVP v1.0 API",
+    "description": "API collection for Fynly MVP v1.0 - Financial Health Assessment Platform",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Score Calculation",
+      "item": [
+        {
+          "name": "Calculate PFHR Score",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"monthly_income\": 500000,\n  \"monthly_expenses\": 300000,\n  \"emergency_fund\": 1000000,\n  \"total_debt\": 500000,\n  \"monthly_debt_payment\": 20000,\n  \"savings_rate\": 40,\n  \"investment_amount\": 200000,\n  \"investment_knowledge\": \"intermediate\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/score/calculate",
+              "host": ["{{base_url}}"],
+              "path": ["api", "score", "calculate"]
+            },
+            "description": "Calculate Personal Financial Health & Readiness (PFHR) score from user inputs. Returns score, category, breakdown, and submission_id."
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"monthly_income\": 500000,\n  \"monthly_expenses\": 300000,\n  \"emergency_fund\": 1000000,\n  \"total_debt\": 500000,\n  \"monthly_debt_payment\": 20000,\n  \"savings_rate\": 40,\n  \"investment_amount\": 200000,\n  \"investment_knowledge\": \"intermediate\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/score/calculate",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "score", "calculate"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"score\": 75.5,\n  \"category\": \"healthy\",\n  \"breakdown\": {\n    \"emergency_fund_score\": 85.0,\n    \"debt_score\": 80.0,\n    \"savings_rate_score\": 70.0,\n    \"investment_readiness_score\": 75.0,\n    \"financial_knowledge_score\": 60.0\n  },\n  \"submission_id\": \"123e4567-e89b-12d3-a456-426614174000\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Report Management",
+      "item": [
+        {
+          "name": "Create Report Order",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_id}}",
+                "description": "User ID or auth token"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"submission_id\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"user_id\": \"user-123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/report/create",
+              "host": ["{{base_url}}"],
+              "path": ["api", "report", "create"]
+            },
+            "description": "Create a Razorpay order for PDF report purchase (₹9). Requires authentication."
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"submission_id\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"user_id\": \"user-123\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/report/create",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "report", "create"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"order_id\": \"order_test123456\",\n  \"amount\": 900,\n  \"currency\": \"INR\",\n  \"payment_id\": \"payment-db-uuid\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Generate Report PDF",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_id}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"submission_id\": \"123e4567-e89b-12d3-a456-426614174000\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/report/generate",
+              "host": ["{{base_url}}"],
+              "path": ["api", "report", "generate"]
+            },
+            "description": "Manually trigger PDF generation for a submission. Requires authentication and ownership."
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"submission_id\": \"123e4567-e89b-12d3-a456-426614174000\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/report/generate",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "report", "generate"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pdf_url\": \"https://supabase.co/storage/v1/object/public/reports/user-123/report-uuid.pdf\",\n  \"report_id\": \"report-uuid\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get Report by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_id}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/report/{{report_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "report", "{{report_id}}"]
+            },
+            "description": "Retrieve PDF report URL by report ID. Requires authentication and ownership."
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/report/{{report_id}}",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "report", "{{report_id}}"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pdf_url\": \"https://supabase.co/storage/v1/object/public/reports/user-123/report-uuid.pdf\",\n  \"report_id\": \"report-uuid\",\n  \"submission_id\": \"submission-uuid\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Webhooks",
+      "item": [
+        {
+          "name": "Razorpay Webhook (Payment Captured)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Razorpay-Signature",
+                "value": "{{webhook_signature}}",
+                "description": "HMAC-SHA256 signature of request body"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"event\": \"payment.captured\",\n  \"payload\": {\n    \"payment\": {\n      \"entity\": {\n        \"id\": \"pay_test123456\",\n        \"order_id\": \"order_test123456\",\n        \"amount\": 900,\n        \"currency\": \"INR\",\n        \"status\": \"captured\"\n      }\n    }\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/webhooks/razorpay",
+              "host": ["{{base_url}}"],
+              "path": ["api", "webhooks", "razorpay"]
+            },
+            "description": "Razorpay webhook handler for payment events. Requires valid HMAC-SHA256 signature in X-Razorpay-Signature header.\n\n**Note**: This is a sample payload. In production, Razorpay will send the actual webhook with a valid signature.\n\nTo test locally, you can generate a signature using:\n```javascript\nconst crypto = require('crypto');\nconst signature = crypto.createHmac('sha256', 'your_webhook_secret').update(JSON.stringify(body)).digest('hex');\n```"
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"event\": \"payment.captured\",\n  \"payload\": {\n    \"payment\": {\n      \"entity\": {\n        \"id\": \"pay_test123456\",\n        \"order_id\": \"order_test123456\",\n        \"amount\": 900,\n        \"currency\": \"INR\",\n        \"status\": \"captured\"\n      }\n    }\n  }\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/webhooks/razorpay",
+                  "host": ["{{base_url}}"],
+                  "path": ["api", "webhooks", "razorpay"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"received\": true\n}"
+            }
+          ]
+        },
+        {
+          "name": "Razorpay Webhook (Payment Failed)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Razorpay-Signature",
+                "value": "{{webhook_signature}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"event\": \"payment.failed\",\n  \"payload\": {\n    \"payment\": {\n      \"entity\": {\n        \"order_id\": \"order_test123456\",\n        \"status\": \"failed\"\n      }\n    }\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/webhooks/razorpay",
+              "host": ["{{base_url}}"],
+              "path": ["api", "webhooks", "razorpay"]
+            },
+            "description": "Razorpay webhook handler for failed payment events."
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "user_id",
+      "value": "user-123",
+      "type": "string"
+    },
+    {
+      "key": "report_id",
+      "value": "report-uuid",
+      "type": "string"
+    },
+    {
+      "key": "webhook_signature",
+      "value": "sample_signature_here",
+      "type": "string",
+      "description": "Generate using HMAC-SHA256 of request body with webhook secret"
+    }
+  ]
+}
+

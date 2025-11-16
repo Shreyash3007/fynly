@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --fynly-primary: #1877f2;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
