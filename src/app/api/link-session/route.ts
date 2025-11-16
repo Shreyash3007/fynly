@@ -115,10 +115,12 @@ export async function POST(request: NextRequest) {
 
     // Update submissions to link to user_id
     // Update responses JSONB to include user_id and remove session_id
-    const submissionIds = submissions.map((s) => s.id)
+    // Type assertion: submissions is guaranteed to be an array at this point
+    const submissionsArray = submissions as Array<{ id: string; responses: unknown }>
+    const submissionIds = submissionsArray.map((s) => s.id)
     const updatePromises = submissionIds.map(async (submissionId) => {
       // Get current responses
-      const submission = submissions.find((s) => s.id === submissionId)
+      const submission = submissionsArray.find((s) => s.id === submissionId)
       if (!submission) return
 
       const updatedResponses = {
