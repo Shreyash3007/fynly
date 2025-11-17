@@ -6,7 +6,10 @@
 import { POST } from '@/app/api/webhooks/razorpay/route'
 import { NextRequest } from 'next/server'
 import { verifyRazorpaySignature } from '@/lib/razorpay'
-import { getSupabaseServerClient, resetSupabaseServerClient } from '@/lib/supabase-server'
+import {
+  getSupabaseServerClient,
+  resetSupabaseServerClient,
+} from '@/lib/supabase-server'
 
 // Mock signature verification
 jest.mock('@/lib/razorpay', () => ({
@@ -67,13 +70,16 @@ describe('/api/webhooks/razorpay', () => {
         },
       })
 
-      const request = new NextRequest('http://localhost:3000/api/webhooks/razorpay', {
-        method: 'POST',
-        body: webhookPayload,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      const request = new NextRequest(
+        'http://localhost:3000/api/webhooks/razorpay',
+        {
+          method: 'POST',
+          body: webhookPayload,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
 
       const response = await POST(request)
       const responseData = await response.json()
@@ -97,14 +103,17 @@ describe('/api/webhooks/razorpay', () => {
 
       ;(verifyRazorpaySignature as jest.Mock).mockReturnValue(false)
 
-      const request = new NextRequest('http://localhost:3000/api/webhooks/razorpay', {
-        method: 'POST',
-        body: webhookPayload,
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Razorpay-Signature': 'invalid_signature',
-        },
-      })
+      const request = new NextRequest(
+        'http://localhost:3000/api/webhooks/razorpay',
+        {
+          method: 'POST',
+          body: webhookPayload,
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Razorpay-Signature': 'invalid_signature',
+          },
+        }
+      )
 
       const response = await POST(request)
       const responseData = await response.json()
@@ -155,14 +164,17 @@ describe('/api/webhooks/razorpay', () => {
         }),
       })
 
-      const request = new NextRequest('http://localhost:3000/api/webhooks/razorpay', {
-        method: 'POST',
-        body: webhookPayload,
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Razorpay-Signature': 'valid_signature',
-        },
-      })
+      const request = new NextRequest(
+        'http://localhost:3000/api/webhooks/razorpay',
+        {
+          method: 'POST',
+          body: webhookPayload,
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Razorpay-Signature': 'valid_signature',
+          },
+        }
+      )
 
       const response = await POST(request)
       const responseData = await response.json()
@@ -211,14 +223,17 @@ describe('/api/webhooks/razorpay', () => {
 
       mockSupabaseClient.from.mockReturnValueOnce(mockUpdateChain)
 
-      const request = new NextRequest('http://localhost:3000/api/webhooks/razorpay', {
-        method: 'POST',
-        body: webhookPayload,
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Razorpay-Signature': 'valid_signature',
-        },
-      })
+      const request = new NextRequest(
+        'http://localhost:3000/api/webhooks/razorpay',
+        {
+          method: 'POST',
+          body: webhookPayload,
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Razorpay-Signature': 'valid_signature',
+          },
+        }
+      )
 
       const response = await POST(request)
       expect(response.status).toBe(200)
@@ -270,14 +285,17 @@ describe('/api/webhooks/razorpay', () => {
 
       mockSupabaseClient.from.mockReturnValueOnce(mockUpdateChain)
 
-      const request = new NextRequest('http://localhost:3000/api/webhooks/razorpay', {
-        method: 'POST',
-        body: webhookPayload,
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Razorpay-Signature': 'valid_signature',
-        },
-      })
+      const request = new NextRequest(
+        'http://localhost:3000/api/webhooks/razorpay',
+        {
+          method: 'POST',
+          body: webhookPayload,
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Razorpay-Signature': 'valid_signature',
+          },
+        }
+      )
 
       const response = await POST(request)
       expect(response.status).toBe(200)
@@ -321,14 +339,17 @@ describe('/api/webhooks/razorpay', () => {
 
       ;(verifyRazorpaySignature as jest.Mock).mockReturnValue(true)
 
-      const request = new NextRequest('http://localhost:3000/api/webhooks/razorpay', {
-        method: 'POST',
-        body: webhookPayload,
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Razorpay-Signature': 'valid_signature',
-        },
-      })
+      const request = new NextRequest(
+        'http://localhost:3000/api/webhooks/razorpay',
+        {
+          method: 'POST',
+          body: webhookPayload,
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Razorpay-Signature': 'valid_signature',
+          },
+        }
+      )
 
       const response = await POST(request)
       const responseData = await response.json()
@@ -338,4 +359,3 @@ describe('/api/webhooks/razorpay', () => {
     })
   })
 })
-

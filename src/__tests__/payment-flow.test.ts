@@ -209,7 +209,7 @@ describe('Payment Flow Integration', () => {
       // Step 3: Verify PDF generation was triggered
       // Note: PDF generation is async, so we check if it was called
       // In a real scenario, we'd wait for the async operation
-      await new Promise((resolve) => setTimeout(resolve, 100))
+      await new Promise(resolve => setTimeout(resolve, 100))
 
       // Verify payment was updated
       const updateCall = mockSupabaseClient.from('payments').update
@@ -448,4 +448,3 @@ describe('Payment Flow Integration', () => {
     })
   })
 })
-

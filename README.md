@@ -167,6 +167,7 @@ See `src/__tests__/` for all test files.
 ### CI/CD Testing
 
 Tests run automatically on:
+
 - Push to `main` or `develop` branches
 - Pull requests to `main` or `develop`
 
@@ -201,7 +202,6 @@ RLS policies are included in the SQL scripts. For production:
 ### Deploy to Vercel
 
 1. **Connect Repository**
-
    - Push your code to GitHub
    - Import project in [Vercel Dashboard](https://vercel.com)
    - Connect your GitHub repository
@@ -209,7 +209,6 @@ RLS policies are included in the SQL scripts. For production:
 2. **Configure Environment Variables**
 
    In Vercel Dashboard → Settings → Environment Variables, add:
-
    - `NEXT_PUBLIC_SUPABASE_URL`
    - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
    - `SUPABASE_SERVICE_ROLE_KEY`
@@ -220,12 +219,10 @@ RLS policies are included in the SQL scripts. For production:
    - `NEXT_PUBLIC_APP_URL` (your Vercel deployment URL)
 
 3. **Deploy**
-
    - Push to `main` branch to trigger automatic deployment
    - Or manually deploy from Vercel Dashboard
 
 4. **Configure Webhook URL**
-
    - In Razorpay Dashboard → Settings → Webhooks
    - Add webhook URL: `https://your-app.vercel.app/api/webhooks/razorpay`
    - Select events: `payment.captured`, `payment.failed`
@@ -274,6 +271,7 @@ See `src/lib/pdf.ts` for implementation details and operational notes.
 Calculate PFHR score from user inputs.
 
 **Request Body:**
+
 ```json
 {
   "monthly_income": 500000,
@@ -288,6 +286,7 @@ Calculate PFHR score from user inputs.
 ```
 
 **Response:**
+
 ```json
 {
   "score": 75.5,
@@ -308,12 +307,14 @@ Calculate PFHR score from user inputs.
 Create Razorpay order for PDF report purchase. Requires authentication.
 
 **Headers:**
+
 ```
 Authorization: Bearer <user_id>
 Content-Type: application/json
 ```
 
 **Request Body:**
+
 ```json
 {
   "submission_id": "uuid",
@@ -322,6 +323,7 @@ Content-Type: application/json
 ```
 
 **Response:**
+
 ```json
 {
   "order_id": "order_xxx",
@@ -336,12 +338,14 @@ Content-Type: application/json
 Manually trigger PDF generation for a submission. Requires authentication and ownership.
 
 **Headers:**
+
 ```
 Authorization: Bearer <user_id>
 Content-Type: application/json
 ```
 
 **Request Body:**
+
 ```json
 {
   "submission_id": "uuid"
@@ -349,6 +353,7 @@ Content-Type: application/json
 ```
 
 **Response:**
+
 ```json
 {
   "pdf_url": "https://...",
@@ -361,11 +366,13 @@ Content-Type: application/json
 Retrieve PDF report URL (authenticated, owner-only).
 
 **Headers:**
+
 ```
 Authorization: Bearer <user_id>
 ```
 
 **Response:**
+
 ```json
 {
   "pdf_url": "https://...",
@@ -379,12 +386,14 @@ Authorization: Bearer <user_id>
 Razorpay webhook handler for payment events. Requires valid HMAC-SHA256 signature.
 
 **Headers:**
+
 ```
 X-Razorpay-Signature: <hmac_sha256_signature>
 Content-Type: application/json
 ```
 
 **Request Body:**
+
 ```json
 {
   "event": "payment.captured",
@@ -403,6 +412,7 @@ Content-Type: application/json
 ```
 
 **Response:**
+
 ```json
 {
   "received": true

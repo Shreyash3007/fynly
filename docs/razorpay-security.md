@@ -42,4 +42,3 @@ Currently uses temporary Bearer token authentication. **TODO**: Replace with pro
 ## Testing
 
 All endpoints are tested with mocked Razorpay and Supabase clients to avoid exposing keys during testing.
-

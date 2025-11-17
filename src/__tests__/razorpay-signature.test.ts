@@ -15,11 +15,7 @@ describe('Razorpay Signature Verification', () => {
       .update(payload)
       .digest('hex')
 
-    const isValid = verifyRazorpaySignature(
-      payload,
-      expectedSignature,
-      secret
-    )
+    const isValid = verifyRazorpaySignature(payload, expectedSignature, secret)
 
     expect(isValid).toBe(true)
   })
@@ -29,11 +25,7 @@ describe('Razorpay Signature Verification', () => {
     const secret = 'test_secret_key'
     const invalidSignature = 'invalid_signature_hash'
 
-    const isValid = verifyRazorpaySignature(
-      payload,
-      invalidSignature,
-      secret
-    )
+    const isValid = verifyRazorpaySignature(payload, invalidSignature, secret)
 
     expect(isValid).toBe(false)
   })
@@ -84,4 +76,3 @@ describe('Razorpay Signature Verification', () => {
     expect(isValid).toBe(false)
   })
 })
-

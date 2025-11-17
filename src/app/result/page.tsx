@@ -21,4 +21,3 @@ export default function ResultPage({ searchParams }: ResultPageProps) {
   // Redirect to dynamic route
   redirect(`/result/${submissionId}`)
 }
-

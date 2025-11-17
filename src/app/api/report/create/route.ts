@@ -1,18 +1,18 @@
 /**
  * Fynly MVP v1.0 - Report Creation API Route
  * POST /api/report/create
- * 
+ *
  * Creates a Razorpay order for report generation (₹9.00 = 900 paise)
- * 
+ *
  * Request Body:
  * {
  *   submission_id: string (UUID),
  *   user_id?: string (optional, for authenticated users)
  * }
- * 
+ *
  * Headers:
  *   Authorization: Bearer <token> (temporary - replace with proper Supabase auth flow)
- * 
+ *
  * Response:
  * {
  *   order_id: string,
@@ -37,7 +37,7 @@ const CreateReportSchema = z.object({
 /**
  * Extracts user ID from Authorization header or request body
  * TODO: Replace with proper Supabase auth flow in production
- * 
+ *
  * @param request - Next.js request object
  * @returns user_id if authenticated, null otherwise
  */
@@ -50,7 +50,11 @@ async function getAuthenticatedUserId(
     const token = authHeader.substring(7)
     // TODO: Verify token with Supabase Auth
     // For now, accept token as user_id (temporary implementation)
-    if (token.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i)) {
+    if (
+      token.match(
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+      )
+    ) {
       return token
     }
   }
@@ -122,7 +126,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         {
           error: 'Payment gateway error',
-          details: razorpayError?.error?.description || 'Failed to create order',
+          details:
+            razorpayError?.error?.description || 'Failed to create order',
         },
         { status: 500 }
       )
@@ -183,7 +188,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         {
           error: 'Invalid input',
-          details: error.errors.map((e) => e.message).join(', '),
+          details: error.errors.map(e => e.message).join(', '),
         },
         { status: 400 }
       )
@@ -209,4 +214,3 @@ export async function GET() {
     { status: 405 }
   )
 }
-

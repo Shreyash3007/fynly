@@ -56,6 +56,7 @@ git push -u origin main
 ## Verify Deployment
 
 After pushing, check:
+
 - [https://github.com/Shreyash3007/fynly](https://github.com/Shreyash3007/fynly) - All files should be visible
 - CI/CD should run automatically (check Actions tab)
 
@@ -65,4 +66,3 @@ After pushing, check:
 2. **Configure Supabase database** (run SQL scripts)
 3. **Set environment variables in Vercel**
 4. **Test the deployment**
-

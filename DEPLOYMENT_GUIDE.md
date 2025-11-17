@@ -63,6 +63,7 @@ Go to Vercel Dashboard → Your Project → Settings → Environment Variables
 Add these variables:
 
 **Required:**
+
 ```
 NEXT_PUBLIC_SUPABASE_URL=https://vmhcewicmfffzrjeyxnm.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZtaGNld2ljbWZmZnpyamV5eG5tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMyNzE2OTcsImV4cCI6MjA3ODg0NzY5N30.QZl4xIi4RopkB4oiTlz2d-W2gqBNva6TNNIby4gv6do
@@ -71,12 +72,14 @@ NEXT_PUBLIC_APP_URL=https://your-app.vercel.app
 ```
 
 **Optional (for payments):**
+
 ```
 NEXT_PUBLIC_RAZORPAY_KEY_ID=rzp_test_RgKgEIEVHvX9Dq
 RAZORPAY_KEY_ID=rzp_test_RgKgEIEVHvX9Dq
 RAZORPAY_KEY_SECRET=U68rkYGX66W5e2FWGVJOSU0Z
 RAZORPAY_WEBHOOK_SECRET=your_webhook_secret
 ```
+
 **Note:** You need to set up the webhook in Razorpay Dashboard and get the webhook secret (see Step 5 below).
 
 **Important:** Replace `https://your-app.vercel.app` with your actual Vercel deployment URL after first deployment.
@@ -189,8 +192,8 @@ Visit `http://localhost:3000`
 ## Support
 
 For issues:
+
 - Check `README.md` for detailed documentation
 - Review `SECURITY.md` for security best practices
 - Check Vercel and Supabase logs
 - Review test files for usage examples
-

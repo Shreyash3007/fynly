@@ -41,7 +41,7 @@ export function PurchaseCTA({ submissionId }: PurchaseCTAProps) {
 
   useEffect(() => {
     const supabase = createClient(supabaseUrl, supabaseAnonKey)
-    
+
     // Check auth status
     supabase.auth.getSession().then(({ data: { session } }) => {
       setIsAuthenticated(!!session)
@@ -206,4 +206,3 @@ export function PurchaseCTA({ submissionId }: PurchaseCTAProps) {
     </>
   )
 }
-

@@ -78,13 +78,12 @@ export function ScoreGauge({
         {/* Score text */}
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center">
-            <div
-              className="text-4xl font-bold"
-              style={{ color }}
-            >
+            <div className="text-4xl font-bold" style={{ color }}>
               {score.toFixed(1)}
             </div>
-            <div className="text-sm text-fynly-neutral-600 mt-1">PFHR Score</div>
+            <div className="text-sm text-fynly-neutral-600 mt-1">
+              PFHR Score
+            </div>
           </div>
         </div>
       </div>
@@ -97,14 +96,9 @@ export function ScoreGauge({
             color,
           }}
         >
-          {score <= 33
-            ? 'Fragile'
-            : score <= 66
-            ? 'Developing'
-            : 'Healthy'}
+          {score <= 33 ? 'Fragile' : score <= 66 ? 'Developing' : 'Healthy'}
         </span>
       </div>
     </div>
   )
 }
-

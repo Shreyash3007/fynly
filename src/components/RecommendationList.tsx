@@ -23,9 +23,10 @@ interface Recommendation {
  * Strengths: scores >= 70
  * Risks: scores < 50
  */
-function getRecommendations(
-  breakdown: PFHRBreakdown
-): { strengths: Recommendation[]; risks: Recommendation[] } {
+function getRecommendations(breakdown: PFHRBreakdown): {
+  strengths: Recommendation[]
+  risks: Recommendation[]
+} {
   const fieldLabels: Record<keyof PFHRBreakdown, string> = {
     emergency_fund_score: 'Emergency Fund',
     debt_score: 'Debt Management',
@@ -126,4 +127,3 @@ export function RecommendationList({ breakdown }: RecommendationListProps) {
     </div>
   )
 }
-

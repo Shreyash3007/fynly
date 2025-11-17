@@ -1,18 +1,18 @@
 /**
  * Fynly MVP v1.0 - Session Linking API Route
  * POST /api/link-session
- * 
+ *
  * Links an anonymous session_id to an authenticated user_id
- * 
+ *
  * Request Body:
  * {
  *   session_id: string,
  *   user_id: string (UUID, from authenticated user)
  * }
- * 
+ *
  * Headers:
  *   Authorization: Bearer <token> (temporary - replace with proper Supabase auth flow)
- * 
+ *
  * Response:
  * {
  *   success: boolean,
@@ -34,7 +34,7 @@ const LinkSessionSchema = z.object({
 /**
  * Extracts user ID from Authorization header
  * TODO: Replace with proper Supabase auth flow in production
- * 
+ *
  * @param request - Next.js request object
  * @returns user_id if authenticated, null otherwise
  */
@@ -45,7 +45,11 @@ async function getAuthenticatedUserId(
   if (authHeader?.startsWith('Bearer ')) {
     const token = authHeader.substring(7)
     // TODO: Verify token with Supabase Auth
-    if (token.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i)) {
+    if (
+      token.match(
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+      )
+    ) {
       return token
     }
   }
@@ -116,11 +120,14 @@ export async function POST(request: NextRequest) {
     // Update submissions to link to user_id
     // Update responses JSONB to include user_id and remove session_id
     // Type assertion: submissions is guaranteed to be an array at this point
-    const submissionsArray = submissions as Array<{ id: string; responses: unknown }>
-    const submissionIds = submissionsArray.map((s) => s.id)
-    const updatePromises = submissionIds.map(async (submissionId) => {
+    const submissionsArray = submissions as Array<{
+      id: string
+      responses: unknown
+    }>
+    const submissionIds = submissionsArray.map(s => s.id)
+    const updatePromises = submissionIds.map(async submissionId => {
       // Get current responses
-      const submission = submissionsArray.find((s) => s.id === submissionId)
+      const submission = submissionsArray.find(s => s.id === submissionId)
       if (!submission) return
 
       const currentResponses = submission.responses as Record<string, unknown>
@@ -140,15 +147,15 @@ export async function POST(request: NextRequest) {
         responses: updatedResponses,
         updated_at: new Date().toISOString(),
       }
-      return (supabase
+      return supabase
         .from('submissions')
         .update(updatePayload as never)
-        .eq('id', submissionId) as any)
+        .eq('id', submissionId) as any
     })
 
     const updateResults = await Promise.all(updatePromises)
     const failedUpdates = updateResults.filter(
-      (result) => result?.error !== undefined
+      result => result?.error !== undefined
     )
 
     if (failedUpdates.length > 0) {
@@ -180,7 +187,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         {
           error: 'Invalid input',
-          details: error.errors.map((e) => e.message).join(', '),
+          details: error.errors.map(e => e.message).join(', '),
         },
         { status: 400 }
       )
@@ -206,4 +213,3 @@ export async function GET() {
     { status: 405 }
   )
 }
-

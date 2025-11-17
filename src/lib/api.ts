@@ -21,7 +21,7 @@ export interface ScoreResponse {
 
 /**
  * Posts score calculation request to API
- * 
+ *
  * @param inputs - PFHR scoring inputs (all values in cents)
  * @returns Score response with submission_id
  * @throws Error if API request fails
@@ -38,10 +38,11 @@ export async function postScore(inputs: ScoreInput): Promise<ScoreResponse> {
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}))
     throw new Error(
-      errorData.details || errorData.error || `API request failed: ${response.status}`
+      errorData.details ||
+        errorData.error ||
+        `API request failed: ${response.status}`
     )
   }
 
   return response.json()
 }
-

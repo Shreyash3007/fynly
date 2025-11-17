@@ -1,7 +1,7 @@
 /**
  * Fynly MVP v1.0 - Razorpay Integration Wrapper
  * Server-side Razorpay client using environment variables
- * 
+ *
  * SECURITY: Razorpay keys must be server-only environment variables.
  * Never expose RAZORPAY_KEY_ID or RAZORPAY_KEY_SECRET to client-side code.
  */
@@ -14,7 +14,7 @@ let razorpayClient: Razorpay | null = null
 /**
  * Gets or creates a Razorpay client instance
  * Uses RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET from environment variables
- * 
+ *
  * @returns Razorpay client instance
  * @throws Error if Razorpay keys are not configured
  */
@@ -58,7 +58,7 @@ export function resetRazorpayClient() {
 
 /**
  * Verifies Razorpay webhook signature using HMAC-SHA256
- * 
+ *
  * @param payload - Raw request body as string
  * @param signature - Signature from X-Razorpay-Signature header
  * @param secret - Razorpay webhook secret (RAZORPAY_WEBHOOK_SECRET)
@@ -81,4 +81,3 @@ export function verifyRazorpaySignature(
     Buffer.from(expectedSignature)
   )
 }
-

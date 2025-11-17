@@ -28,12 +28,14 @@ This document outlines security measures, secret handling, and best practices fo
 ### Secret Classification
 
 #### Public (Client-Side)
+
 - `NEXT_PUBLIC_SUPABASE_URL` - Safe to expose
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY` - Protected by RLS policies
 - `NEXT_PUBLIC_RAZORPAY_KEY_ID` - Public key, safe to expose
 - `NEXT_PUBLIC_APP_URL` - Public URL
 
 #### Private (Server-Side Only)
+
 - `SUPABASE_SERVICE_ROLE_KEY` - **CRITICAL**: Bypasses RLS, never expose
 - `RAZORPAY_KEY_SECRET` - Payment processing secret
 - `RAZORPAY_WEBHOOK_SECRET` - Webhook signature verification
@@ -85,6 +87,7 @@ RLS policies enforce data access at the database level. Even if someone obtains 
 ### Current Implementation
 
 **Development Mode**: RLS policies are permissive for easier development:
+
 ```sql
 CREATE POLICY "Allow all for development"
   ON submissions FOR SELECT
@@ -110,6 +113,7 @@ CREATE POLICY "Users can view own submissions"
 ### RLS Policy Review
 
 Review and update RLS policies in:
+
 - `sql/create_tables.sql`
 - `sql/add_payments_table.sql`
 - `sql/add_reports_table.sql`
@@ -171,7 +175,10 @@ const token = authHeader?.substring(7) // Extract Bearer token
 import { createClient } from '@supabase/supabase-js'
 
 const supabase = createClient(url, anonKey)
-const { data: { user }, error } = await supabase.auth.getUser(token)
+const {
+  data: { user },
+  error,
+} = await supabase.auth.getUser(token)
 ```
 
 ## Environment Variables
@@ -208,6 +215,7 @@ const validatedInput = ScoreInputSchema.parse(body)
 ### Rate Limiting
 
 **Production Recommendation**: Implement rate limiting:
+
 - Use Vercel Edge Middleware
 - Or use a service like Upstash Redis
 
@@ -288,4 +296,3 @@ If a secret is exposed:
 ## Contact
 
 For security concerns, contact the development team immediately.
-

@@ -5,7 +5,10 @@
 
 import { POST } from '@/app/api/link-session/route'
 import { NextRequest } from 'next/server'
-import { getSupabaseServerClient, resetSupabaseServerClient } from '@/lib/supabase-server'
+import {
+  getSupabaseServerClient,
+  resetSupabaseServerClient,
+} from '@/lib/supabase-server'
 
 // Mock Supabase client
 jest.mock('@/lib/supabase-server', () => ({
@@ -70,17 +73,20 @@ describe('/api/link-session', () => {
         }),
       })
 
-      const request = new NextRequest('http://localhost:3000/api/link-session', {
-        method: 'POST',
-        body: JSON.stringify({
-          session_id: sessionId,
-          user_id: userId,
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${userId}`,
-        },
-      })
+      const request = new NextRequest(
+        'http://localhost:3000/api/link-session',
+        {
+          method: 'POST',
+          body: JSON.stringify({
+            session_id: sessionId,
+            user_id: userId,
+          }),
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${userId}`,
+          },
+        }
+      )
 
       const response = await POST(request)
       const responseData = await response.json()
@@ -103,17 +109,20 @@ describe('/api/link-session', () => {
         }),
       })
 
-      const request = new NextRequest('http://localhost:3000/api/link-session', {
-        method: 'POST',
-        body: JSON.stringify({
-          session_id: sessionId,
-          user_id: userId,
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${userId}`,
-        },
-      })
+      const request = new NextRequest(
+        'http://localhost:3000/api/link-session',
+        {
+          method: 'POST',
+          body: JSON.stringify({
+            session_id: sessionId,
+            user_id: userId,
+          }),
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${userId}`,
+          },
+        }
+      )
 
       const response = await POST(request)
       const responseData = await response.json()
@@ -126,15 +135,18 @@ describe('/api/link-session', () => {
 
   describe('Invalid Input', () => {
     it('should return 400 for missing session_id', async () => {
-      const request = new NextRequest('http://localhost:3000/api/link-session', {
-        method: 'POST',
-        body: JSON.stringify({
-          user_id: 'user-123e4567-e89b-12d3-a456-426614174000',
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      const request = new NextRequest(
+        'http://localhost:3000/api/link-session',
+        {
+          method: 'POST',
+          body: JSON.stringify({
+            user_id: 'user-123e4567-e89b-12d3-a456-426614174000',
+          }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
 
       const response = await POST(request)
       const responseData = await response.json()
@@ -144,16 +156,19 @@ describe('/api/link-session', () => {
     })
 
     it('should return 401 for missing authentication', async () => {
-      const request = new NextRequest('http://localhost:3000/api/link-session', {
-        method: 'POST',
-        body: JSON.stringify({
-          session_id: 'session_123',
-          user_id: 'user-123e4567-e89b-12d3-a456-426614174000',
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      const request = new NextRequest(
+        'http://localhost:3000/api/link-session',
+        {
+          method: 'POST',
+          body: JSON.stringify({
+            session_id: 'session_123',
+            user_id: 'user-123e4567-e89b-12d3-a456-426614174000',
+          }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
 
       const response = await POST(request)
       const responseData = await response.json()
@@ -163,17 +178,20 @@ describe('/api/link-session', () => {
     })
 
     it('should return 403 if user_id does not match authenticated user', async () => {
-      const request = new NextRequest('http://localhost:3000/api/link-session', {
-        method: 'POST',
-        body: JSON.stringify({
-          session_id: 'session_123',
-          user_id: 'user-different',
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer user-authenticated',
-        },
-      })
+      const request = new NextRequest(
+        'http://localhost:3000/api/link-session',
+        {
+          method: 'POST',
+          body: JSON.stringify({
+            session_id: 'session_123',
+            user_id: 'user-different',
+          }),
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer user-authenticated',
+          },
+        }
+      )
 
       const response = await POST(request)
       const responseData = await response.json()
@@ -183,4 +201,3 @@ describe('/api/link-session', () => {
     })
   })
 })
-

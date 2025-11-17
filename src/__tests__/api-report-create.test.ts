@@ -6,7 +6,10 @@
 import { POST } from '@/app/api/report/create/route'
 import { NextRequest } from 'next/server'
 import { getRazorpayClient, resetRazorpayClient } from '@/lib/razorpay'
-import { getSupabaseServerClient, resetSupabaseServerClient } from '@/lib/supabase-server'
+import {
+  getSupabaseServerClient,
+  resetSupabaseServerClient,
+} from '@/lib/supabase-server'
 
 // Mock Razorpay client
 jest.mock('@/lib/razorpay', () => ({
@@ -97,17 +100,20 @@ describe('/api/report/create', () => {
         }),
       })
 
-      const request = new NextRequest('http://localhost:3000/api/report/create', {
-        method: 'POST',
-        body: JSON.stringify({
-          submission_id: submissionId,
-          user_id: userId,
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${userId}`,
-        },
-      })
+      const request = new NextRequest(
+        'http://localhost:3000/api/report/create',
+        {
+          method: 'POST',
+          body: JSON.stringify({
+            submission_id: submissionId,
+            user_id: userId,
+          }),
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${userId}`,
+          },
+        }
+      )
 
       const response = await POST(request)
       const responseData = await response.json()
@@ -172,16 +178,19 @@ describe('/api/report/create', () => {
         }),
       })
 
-      const request = new NextRequest('http://localhost:3000/api/report/create', {
-        method: 'POST',
-        body: JSON.stringify({
-          submission_id: submissionId,
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${userId}`,
-        },
-      })
+      const request = new NextRequest(
+        'http://localhost:3000/api/report/create',
+        {
+          method: 'POST',
+          body: JSON.stringify({
+            submission_id: submissionId,
+          }),
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${userId}`,
+          },
+        }
+      )
 
       const response = await POST(request)
       expect(response.status).toBe(200)
@@ -194,13 +203,16 @@ describe('/api/report/create', () => {
 
   describe('Invalid Input', () => {
     it('should return 400 for missing submission_id', async () => {
-      const request = new NextRequest('http://localhost:3000/api/report/create', {
-        method: 'POST',
-        body: JSON.stringify({}),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      const request = new NextRequest(
+        'http://localhost:3000/api/report/create',
+        {
+          method: 'POST',
+          body: JSON.stringify({}),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
 
       const response = await POST(request)
       const responseData = await response.json()
@@ -210,15 +222,18 @@ describe('/api/report/create', () => {
     })
 
     it('should return 400 for invalid submission_id format', async () => {
-      const request = new NextRequest('http://localhost:3000/api/report/create', {
-        method: 'POST',
-        body: JSON.stringify({
-          submission_id: 'invalid-uuid',
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      const request = new NextRequest(
+        'http://localhost:3000/api/report/create',
+        {
+          method: 'POST',
+          body: JSON.stringify({
+            submission_id: 'invalid-uuid',
+          }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
 
       const response = await POST(request)
       const responseData = await response.json()
@@ -228,15 +243,18 @@ describe('/api/report/create', () => {
     })
 
     it('should return 401 for missing authentication', async () => {
-      const request = new NextRequest('http://localhost:3000/api/report/create', {
-        method: 'POST',
-        body: JSON.stringify({
-          submission_id: '123e4567-e89b-12d3-a456-426614174000',
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      const request = new NextRequest(
+        'http://localhost:3000/api/report/create',
+        {
+          method: 'POST',
+          body: JSON.stringify({
+            submission_id: '123e4567-e89b-12d3-a456-426614174000',
+          }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
 
       const response = await POST(request)
       const responseData = await response.json()
@@ -251,17 +269,20 @@ describe('/api/report/create', () => {
         error: { message: 'Not found' },
       })
 
-      const request = new NextRequest('http://localhost:3000/api/report/create', {
-        method: 'POST',
-        body: JSON.stringify({
-          submission_id: '123e4567-e89b-12d3-a456-426614174000',
-          user_id: 'user-123e4567-e89b-12d3-a456-426614174000',
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer user-123e4567-e89b-12d3-a456-426614174000',
-        },
-      })
+      const request = new NextRequest(
+        'http://localhost:3000/api/report/create',
+        {
+          method: 'POST',
+          body: JSON.stringify({
+            submission_id: '123e4567-e89b-12d3-a456-426614174000',
+            user_id: 'user-123e4567-e89b-12d3-a456-426614174000',
+          }),
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer user-123e4567-e89b-12d3-a456-426614174000',
+          },
+        }
+      )
 
       const response = await POST(request)
       const responseData = await response.json()
@@ -291,17 +312,20 @@ describe('/api/report/create', () => {
         },
       })
 
-      const request = new NextRequest('http://localhost:3000/api/report/create', {
-        method: 'POST',
-        body: JSON.stringify({
-          submission_id: submissionId,
-          user_id: userId,
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${userId}`,
-        },
-      })
+      const request = new NextRequest(
+        'http://localhost:3000/api/report/create',
+        {
+          method: 'POST',
+          body: JSON.stringify({
+            submission_id: submissionId,
+            user_id: userId,
+          }),
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${userId}`,
+          },
+        }
+      )
 
       const response = await POST(request)
       const responseData = await response.json()
@@ -311,4 +335,3 @@ describe('/api/report/create', () => {
     })
   })
 })
-

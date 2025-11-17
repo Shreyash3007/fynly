@@ -11,6 +11,7 @@ export interface InputFieldProps
   error?: string
   currency?: boolean
   helperText?: string
+  type?: React.InputHTMLAttributes<HTMLInputElement>['type']
 }
 
 /**
@@ -76,4 +77,3 @@ export function InputField({
     </div>
   )
 }
-

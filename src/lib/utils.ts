@@ -104,3 +104,25 @@ export function roundTo(value: number, decimals: number = 2): number {
   const factor = Math.pow(10, decimals)
   return Math.round(value * factor) / factor
 }
+
+/**
+ * Type-safe empty value checker
+ * Safely determines if a value is empty (undefined, null, or empty string)
+ * Works with all form field types including enums, numbers, booleans, and strings
+ *
+ * @param value - Value to check (can be any type)
+ * @returns true if value is undefined, null, or empty string
+ *
+ * @example
+ * isEmpty(undefined) // returns true
+ * isEmpty(null) // returns true
+ * isEmpty('') // returns true
+ * isEmpty('hello') // returns false
+ * isEmpty(0) // returns false
+ * isEmpty(false) // returns false
+ */
+export function isEmpty(value: unknown): boolean {
+  if (value === undefined || value === null) return true
+  if (typeof value === 'string' && value.trim() === '') return true
+  return false
+}

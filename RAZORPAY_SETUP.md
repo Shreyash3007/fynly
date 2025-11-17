@@ -32,7 +32,7 @@ RAZORPAY_KEY_SECRET=U68rkYGX66W5e2FWGVJOSU0Z
 
 3. **Create New Webhook**
    - **Webhook URL**: `https://your-app.vercel.app/api/webhooks/razorpay`
-   - **Events to listen**: 
+   - **Events to listen**:
      - ✅ `payment.captured`
      - ✅ `payment.failed`
    - Click **Create Webhook**
@@ -87,6 +87,7 @@ Since you're using `rzp_test_*` keys, you're in **Test Mode**:
 ### Production Mode
 
 When ready for production:
+
 1. Switch to live keys (`rzp_live_*`)
 2. Update environment variables in Vercel
 3. Test with real payments (small amounts first)
@@ -94,8 +95,8 @@ When ready for production:
 ## 📞 Support
 
 If you encounter issues:
+
 - Check Vercel function logs for webhook errors
 - Verify webhook secret matches in both Razorpay and Vercel
 - Ensure webhook URL is accessible (HTTPS required)
 - Check Razorpay Dashboard → Webhooks → Logs for delivery status
-

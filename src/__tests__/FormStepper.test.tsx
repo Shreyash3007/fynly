@@ -116,11 +116,19 @@ describe('FormStepper', () => {
 
       // Fill step 4
       await waitFor(() => {
-        expect(screen.getByLabelText(/investment experience/i)).toBeInTheDocument()
+        expect(
+          screen.getByLabelText(/investment experience/i)
+        ).toBeInTheDocument()
       })
-      await user.selectOptions(screen.getByLabelText(/investment experience/i), 'intermediate')
-      await user.selectOptions(screen.getByLabelText(/risk tolerance/i), 'moderate')
-      
+      await user.selectOptions(
+        screen.getByLabelText(/investment experience/i),
+        'intermediate'
+      )
+      await user.selectOptions(
+        screen.getByLabelText(/risk tolerance/i),
+        'moderate'
+      )
+
       // Check consent checkbox
       const consentCheckbox = screen.getByLabelText(/i consent/i)
       await user.click(consentCheckbox)
@@ -156,7 +164,7 @@ describe('FormStepper', () => {
       const user = userEvent.setup()
       mockPostScore.mockImplementation(
         () =>
-          new Promise((resolve) => {
+          new Promise(resolve => {
             setTimeout(() => {
               resolve({
                 score: 75,
@@ -197,10 +205,18 @@ describe('FormStepper', () => {
       await user.click(screen.getByText('Next'))
 
       await waitFor(() => {
-        expect(screen.getByLabelText(/investment experience/i)).toBeInTheDocument()
+        expect(
+          screen.getByLabelText(/investment experience/i)
+        ).toBeInTheDocument()
       })
-      await user.selectOptions(screen.getByLabelText(/investment experience/i), 'intermediate')
-      await user.selectOptions(screen.getByLabelText(/risk tolerance/i), 'moderate')
+      await user.selectOptions(
+        screen.getByLabelText(/investment experience/i),
+        'intermediate'
+      )
+      await user.selectOptions(
+        screen.getByLabelText(/risk tolerance/i),
+        'moderate'
+      )
       await user.click(screen.getByLabelText(/i consent/i))
 
       await user.click(screen.getByText('Submit Assessment'))
@@ -236,10 +252,18 @@ describe('FormStepper', () => {
       await user.click(screen.getByText('Next'))
 
       await waitFor(() => {
-        expect(screen.getByLabelText(/investment experience/i)).toBeInTheDocument()
+        expect(
+          screen.getByLabelText(/investment experience/i)
+        ).toBeInTheDocument()
       })
-      await user.selectOptions(screen.getByLabelText(/investment experience/i), 'intermediate')
-      await user.selectOptions(screen.getByLabelText(/risk tolerance/i), 'moderate')
+      await user.selectOptions(
+        screen.getByLabelText(/investment experience/i),
+        'intermediate'
+      )
+      await user.selectOptions(
+        screen.getByLabelText(/risk tolerance/i),
+        'moderate'
+      )
       await user.click(screen.getByLabelText(/i consent/i))
 
       await user.click(screen.getByText('Submit Assessment'))
@@ -297,10 +321,18 @@ describe('FormStepper', () => {
       await user.click(screen.getByText('Next'))
 
       await waitFor(() => {
-        expect(screen.getByLabelText(/investment experience/i)).toBeInTheDocument()
+        expect(
+          screen.getByLabelText(/investment experience/i)
+        ).toBeInTheDocument()
       })
-      await user.selectOptions(screen.getByLabelText(/investment experience/i), 'intermediate')
-      await user.selectOptions(screen.getByLabelText(/risk tolerance/i), 'moderate')
+      await user.selectOptions(
+        screen.getByLabelText(/investment experience/i),
+        'intermediate'
+      )
+      await user.selectOptions(
+        screen.getByLabelText(/risk tolerance/i),
+        'moderate'
+      )
       // Don't check consent
 
       // Submit button should be disabled or show error
@@ -315,7 +347,9 @@ describe('FormStepper', () => {
 
       // Should show accuracy message with percentage
       expect(
-        screen.getByText(/accuracy: \d+% — add more details to increase accuracy/i)
+        screen.getByText(
+          /accuracy: \d+% — add more details to increase accuracy/i
+        )
       ).toBeInTheDocument()
     })
 
@@ -375,10 +409,18 @@ describe('FormStepper', () => {
       await user.click(screen.getByText('Next'))
 
       await waitFor(() => {
-        expect(screen.getByLabelText(/investment experience/i)).toBeInTheDocument()
+        expect(
+          screen.getByLabelText(/investment experience/i)
+        ).toBeInTheDocument()
       })
-      await user.selectOptions(screen.getByLabelText(/investment experience/i), 'intermediate')
-      await user.selectOptions(screen.getByLabelText(/risk tolerance/i), 'moderate')
+      await user.selectOptions(
+        screen.getByLabelText(/investment experience/i),
+        'intermediate'
+      )
+      await user.selectOptions(
+        screen.getByLabelText(/risk tolerance/i),
+        'moderate'
+      )
       await user.click(screen.getByLabelText(/i consent/i))
 
       await user.click(screen.getByText('Submit Assessment'))
@@ -390,4 +432,3 @@ describe('FormStepper', () => {
     })
   })
 })
-

@@ -73,4 +73,3 @@ describe('ScoreGauge', () => {
     expect(screen.getByText('75.6')).toBeInTheDocument()
   })
 })
-

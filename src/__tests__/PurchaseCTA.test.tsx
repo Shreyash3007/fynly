@@ -115,7 +115,9 @@ describe('PurchaseCTA', () => {
         ).toBeInTheDocument()
       })
 
-      const purchaseButton = screen.getByText(/unlock full financial health report/i)
+      const purchaseButton = screen.getByText(
+        /unlock full financial health report/i
+      )
       await user.click(purchaseButton)
 
       await waitFor(() => {
@@ -164,7 +166,9 @@ describe('PurchaseCTA', () => {
         ).toBeInTheDocument()
       })
 
-      const purchaseButton = screen.getByText(/unlock full financial health report/i)
+      const purchaseButton = screen.getByText(
+        /unlock full financial health report/i
+      )
       await user.click(purchaseButton)
 
       await waitFor(() => {
@@ -202,7 +206,9 @@ describe('PurchaseCTA', () => {
         ).toBeInTheDocument()
       })
 
-      const purchaseButton = screen.getByText(/unlock full financial health report/i)
+      const purchaseButton = screen.getByText(
+        /unlock full financial health report/i
+      )
       await user.click(purchaseButton)
 
       await waitFor(() => {
@@ -224,7 +230,7 @@ describe('PurchaseCTA', () => {
       // Delay the fetch response
       global.fetch = jest.fn().mockImplementation(
         () =>
-          new Promise((resolve) => {
+          new Promise(resolve => {
             setTimeout(() => {
               resolve({
                 ok: true,
@@ -247,7 +253,9 @@ describe('PurchaseCTA', () => {
         ).toBeInTheDocument()
       })
 
-      const purchaseButton = screen.getByText(/unlock full financial health report/i)
+      const purchaseButton = screen.getByText(
+        /unlock full financial health report/i
+      )
       await user.click(purchaseButton)
 
       // Should show loading state
@@ -255,4 +263,3 @@ describe('PurchaseCTA', () => {
     })
   })
 })
-

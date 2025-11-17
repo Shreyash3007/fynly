@@ -1,17 +1,17 @@
 /**
  * Fynly MVP v1.0 - Razorpay Webhook Handler
  * POST /api/webhooks/razorpay
- * 
+ *
  * Handles Razorpay payment webhook events
  * Verifies signature and updates payment status
- * 
+ *
  * Webhook Events:
  * - payment.captured: Payment successful, update status to 'paid'
  * - payment.failed: Payment failed, update status to 'failed'
- * 
+ *
  * Headers:
  *   X-Razorpay-Signature: HMAC-SHA256 signature
- * 
+ *
  * Response:
  *   200 OK if signature is valid and processing succeeds
  *   400 Bad Request if signature is invalid
@@ -56,7 +56,12 @@ async function handlePaymentCaptured(
   }
 
   // Type assertion for payment data
-  const paymentData = payment as { id: string; submission_id: string | null; status: string; razorpay_payment_id: string | null }
+  const paymentData = payment as {
+    id: string
+    submission_id: string | null
+    status: string
+    razorpay_payment_id: string | null
+  }
 
   // IDEMPOTENCY CHECK: If payment is already marked as paid, return success
   if (paymentData.status === 'paid') {
@@ -81,13 +86,13 @@ async function handlePaymentCaptured(
           .then(({ generatePdfForSubmission }) => {
             return generatePdfForSubmission(paymentData.submission_id!)
           })
-          .then((pdfUrl) => {
+          .then(pdfUrl => {
             logger.info('PDF generated on idempotent webhook', {
               submission_id: paymentData.submission_id,
               pdf_url: pdfUrl,
             })
           })
-          .catch((err) => {
+          .catch(err => {
             logger.error('PDF generation failed on idempotent webhook', err)
           })
       }
@@ -123,13 +128,13 @@ async function handlePaymentCaptured(
       .then(({ generatePdfForSubmission }) => {
         return generatePdfForSubmission(paymentData.submission_id!)
       })
-      .then((pdfUrl) => {
+      .then(pdfUrl => {
         logger.info('PDF generated successfully', {
           submission_id: paymentData.submission_id,
           pdf_url: pdfUrl,
         })
       })
-      .catch((err) => {
+      .catch(err => {
         logger.error('PDF generation failed', err)
       })
   }
@@ -222,10 +227,7 @@ export async function POST(request: NextRequest) {
         signature: signature.substring(0, 10) + '...', // Log partial for debugging
         // SECURITY NOTE: Do not log full signature or webhook secret
       })
-      return NextResponse.json(
-        { error: 'Invalid signature' },
-        { status: 400 }
-      )
+      return NextResponse.json({ error: 'Invalid signature' }, { status: 400 })
     }
 
     // Parse webhook event
@@ -291,4 +293,3 @@ export async function GET() {
     { status: 405 }
   )
 }
-

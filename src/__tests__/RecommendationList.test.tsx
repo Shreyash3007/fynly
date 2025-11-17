@@ -54,7 +54,9 @@ describe('RecommendationList', () => {
 
     render(<RecommendationList breakdown={breakdown} />)
 
-    const strengthItems = screen.getAllByText(/Debt Management|Savings Rate|Emergency Fund/)
+    const strengthItems = screen.getAllByText(
+      /Debt Management|Savings Rate|Emergency Fund/
+    )
     // Debt Management (95) should appear first
     expect(strengthItems[0]).toHaveTextContent('Debt Management')
   })
@@ -70,7 +72,9 @@ describe('RecommendationList', () => {
 
     render(<RecommendationList breakdown={breakdown} />)
 
-    const riskItems = screen.getAllByText(/Debt Management|Savings Rate|Emergency Fund/)
+    const riskItems = screen.getAllByText(
+      /Debt Management|Savings Rate|Emergency Fund/
+    )
     // Debt Management (20) should appear first
     expect(riskItems[0]).toHaveTextContent('Debt Management')
   })
@@ -86,7 +90,9 @@ describe('RecommendationList', () => {
 
     render(<RecommendationList breakdown={breakdown} />)
 
-    const strengthItems = screen.getAllByText(/Emergency Fund|Debt Management|Savings Rate|Investment Readiness|Financial Knowledge/)
+    const strengthItems = screen.getAllByText(
+      /Emergency Fund|Debt Management|Savings Rate|Investment Readiness|Financial Knowledge/
+    )
     // Should only show 3 strengths
     expect(strengthItems.length).toBeLessThanOrEqual(3)
   })
@@ -102,7 +108,9 @@ describe('RecommendationList', () => {
 
     render(<RecommendationList breakdown={breakdown} />)
 
-    const riskItems = screen.getAllByText(/Emergency Fund|Debt Management|Savings Rate|Investment Readiness|Financial Knowledge/)
+    const riskItems = screen.getAllByText(
+      /Emergency Fund|Debt Management|Savings Rate|Investment Readiness|Financial Knowledge/
+    )
     // Should only show 3 risks
     expect(riskItems.length).toBeLessThanOrEqual(3)
   })
@@ -171,4 +179,3 @@ describe('RecommendationList', () => {
     expect(screen.getByText('40.8')).toBeInTheDocument() // rounded to 1 decimal
   })
 })
-

@@ -5,13 +5,14 @@
 
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { useRouter } from 'next/navigation'
 import { postScore } from '@/lib/api'
 import { ScoreInputSchema } from '@/lib/schemas'
+import { isEmpty } from '@/lib/utils'
 import { InputField } from './InputField'
 import type { ScoreInput } from '@/lib/schemas'
 
@@ -19,7 +20,7 @@ import type { ScoreInput } from '@/lib/schemas'
 const AssessmentFormSchema = ScoreInputSchema.extend({
   // Optional fields for accuracy calculation
   autosave_pct: z.number().min(0).max(100).optional(),
-  consent: z.boolean().refine((val) => val === true, {
+  consent: z.boolean().refine(val => val === true, {
     message: 'You must provide consent to continue',
   }),
 })
@@ -73,14 +74,14 @@ function calculateAccuracy(data: Partial<AssessmentFormData>): number {
   ]
   const optionalFields = ['autosave_pct']
 
-  const requiredFilled = requiredFields.filter((field) => {
+  const requiredFilled = requiredFields.filter(field => {
     const value = data[field as keyof AssessmentFormData]
-    return value !== undefined && value !== null && value !== ''
+    return !isEmpty(value)
   }).length
 
-  const optionalFilled = optionalFields.filter((field) => {
+  const optionalFilled = optionalFields.filter(field => {
     const value = data[field as keyof AssessmentFormData]
-    return value !== undefined && value !== null && value !== ''
+    return !isEmpty(value)
   }).length
 
   const totalFields = requiredFields.length + optionalFields.length
@@ -179,15 +180,15 @@ export function FormStepper() {
       {/* Progress indicator */}
       <div className="mb-8">
         <div className="flex justify-between mb-2">
-          {STEPS.map((step) => (
+          {STEPS.map(step => (
             <div
               key={step.id}
               className={`flex-1 ${
                 step.id < currentStep
                   ? 'border-t-2 border-fynly-primary'
                   : step.id === currentStep
-                  ? 'border-t-2 border-fynly-primary'
-                  : 'border-t-2 border-fynly-neutral-200'
+                    ? 'border-t-2 border-fynly-primary'
+                    : 'border-t-2 border-fynly-neutral-200'
               }`}
             />
           ))}
@@ -206,18 +207,17 @@ export function FormStepper() {
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         {/* Render fields for current step */}
-        {currentStepData.fields.map((fieldName) => {
+        {currentStepData.fields.map(fieldName => {
           if (fieldName === 'monthly_income') {
             return (
               <InputField
                 key={fieldName}
                 label="Monthly Income"
                 currency
-                type="number"
                 step="0.01"
                 {...register('monthly_income', {
                   valueAsNumber: true,
-                  setValueAs: (v) => (v === '' ? undefined : parseFloat(v)),
+                  setValueAs: v => (v === '' ? undefined : parseFloat(v)),
                 })}
                 error={errors.monthly_income?.message}
                 helperText="Enter your total monthly income"
@@ -232,11 +232,10 @@ export function FormStepper() {
                 key={fieldName}
                 label="Monthly Expenses"
                 currency
-                type="number"
                 step="0.01"
                 {...register('monthly_expenses', {
                   valueAsNumber: true,
-                  setValueAs: (v) => (v === '' ? undefined : parseFloat(v)),
+                  setValueAs: v => (v === '' ? undefined : parseFloat(v)),
                 })}
                 error={errors.monthly_expenses?.message}
                 helperText="Enter your total monthly expenses"
@@ -251,11 +250,10 @@ export function FormStepper() {
                 key={fieldName}
                 label="Emergency Fund"
                 currency
-                type="number"
                 step="0.01"
                 {...register('emergency_fund', {
                   valueAsNumber: true,
-                  setValueAs: (v) => (v === '' ? undefined : parseFloat(v)),
+                  setValueAs: v => (v === '' ? undefined : parseFloat(v)),
                 })}
                 error={errors.emergency_fund?.message}
                 helperText="Total savings/emergency fund amount"
@@ -270,11 +268,10 @@ export function FormStepper() {
                 key={fieldName}
                 label="Total Debt"
                 currency
-                type="number"
                 step="0.01"
                 {...register('total_debt', {
                   valueAsNumber: true,
-                  setValueAs: (v) => (v === '' ? undefined : parseFloat(v)),
+                  setValueAs: v => (v === '' ? undefined : parseFloat(v)),
                 })}
                 error={errors.total_debt?.message}
                 helperText="Total outstanding debt (credit cards, loans, etc.)"
@@ -289,11 +286,10 @@ export function FormStepper() {
                 key={fieldName}
                 label="Monthly Debt Payments"
                 currency
-                type="number"
                 step="0.01"
                 {...register('monthly_debt_payments', {
                   valueAsNumber: true,
-                  setValueAs: (v) => (v === '' ? undefined : parseFloat(v)),
+                  setValueAs: v => (v === '' ? undefined : parseFloat(v)),
                 })}
                 error={errors.monthly_debt_payments?.message}
                 helperText="Total monthly payments towards debt"
@@ -308,11 +304,10 @@ export function FormStepper() {
                 key={fieldName}
                 label="Portfolio Value"
                 currency
-                type="number"
                 step="0.01"
                 {...register('portfolio_value', {
                   valueAsNumber: true,
-                  setValueAs: (v) => (v === '' ? undefined : parseFloat(v)),
+                  setValueAs: v => (v === '' ? undefined : parseFloat(v)),
                 })}
                 error={errors.portfolio_value?.message}
                 helperText="Current investment portfolio value"
@@ -332,7 +327,7 @@ export function FormStepper() {
                 max="100"
                 {...register('autosave_pct', {
                   valueAsNumber: true,
-                  setValueAs: (v) => (v === '' ? undefined : parseFloat(v)),
+                  setValueAs: v => (v === '' ? undefined : parseFloat(v)),
                 })}
                 error={errors.autosave_pct?.message}
                 helperText="Percentage of income automatically saved (0-100)"
@@ -350,7 +345,7 @@ export function FormStepper() {
                 max="120"
                 {...register('age', {
                   valueAsNumber: true,
-                  setValueAs: (v) => (v === '' ? undefined : parseInt(v, 10)),
+                  setValueAs: v => (v === '' ? undefined : parseInt(v, 10)),
                 })}
                 error={errors.age?.message}
                 helperText="Must be 18 or older"
@@ -511,4 +506,3 @@ export function FormStepper() {
     </div>
   )
 }
-

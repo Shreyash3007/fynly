@@ -5,7 +5,10 @@
 
 import { POST } from '@/app/api/score/route'
 import { NextRequest } from 'next/server'
-import { getSupabaseServerClient, resetSupabaseServerClient } from '@/lib/supabase-server'
+import {
+  getSupabaseServerClient,
+  resetSupabaseServerClient,
+} from '@/lib/supabase-server'
 import type { PFHRInputs } from '@/lib/types'
 
 // Mock Supabase client
@@ -95,13 +98,17 @@ describe('/api/score/calculate', () => {
       expect(responseData.score).toBeLessThanOrEqual(100)
 
       // Verify category is valid
-      expect(['fragile', 'developing', 'healthy']).toContain(responseData.category)
+      expect(['fragile', 'developing', 'healthy']).toContain(
+        responseData.category
+      )
 
       // Verify breakdown structure
       expect(responseData.breakdown).toHaveProperty('emergency_fund_score')
       expect(responseData.breakdown).toHaveProperty('debt_score')
       expect(responseData.breakdown).toHaveProperty('savings_rate_score')
-      expect(responseData.breakdown).toHaveProperty('investment_readiness_score')
+      expect(responseData.breakdown).toHaveProperty(
+        'investment_readiness_score'
+      )
       expect(responseData.breakdown).toHaveProperty('financial_knowledge_score')
 
       // Verify submission_id
@@ -465,4 +472,3 @@ describe('/api/score/calculate', () => {
     })
   })
 })
-

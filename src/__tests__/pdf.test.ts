@@ -20,9 +20,7 @@ const mockGetSubmissionById = getSubmissionById as jest.MockedFunction<
   typeof getSubmissionById
 >
 const mockGetSupabaseServerClient =
-  getSupabaseServerClient as jest.MockedFunction<
-    typeof getSupabaseServerClient
-  >
+  getSupabaseServerClient as jest.MockedFunction<typeof getSupabaseServerClient>
 
 describe('PDF Generation', () => {
   beforeEach(() => {
@@ -33,7 +31,8 @@ describe('PDF Generation', () => {
     const submissionId = 'submission-123'
     const userId = 'user-123'
     const reportId = 'report-123'
-    const mockPdfUrl = 'https://supabase.co/storage/v1/object/public/reports/user-123/report-123.pdf'
+    const mockPdfUrl =
+      'https://supabase.co/storage/v1/object/public/reports/user-123/report-123.pdf'
 
     // Mock submission data
     mockGetSubmissionById.mockResolvedValue({
@@ -81,9 +80,7 @@ describe('PDF Generation', () => {
       }),
     }
 
-    mockGetSupabaseServerClient.mockReturnValue(
-      mockSupabaseClient as any
-    )
+    mockGetSupabaseServerClient.mockReturnValue(mockSupabaseClient as any)
 
     // Generate PDF
     const pdfUrl = await generatePdfForSubmission(submissionId)
@@ -107,7 +104,8 @@ describe('PDF Generation', () => {
 
     // Verify report record was inserted
     expect(mockSupabaseClient.from).toHaveBeenCalledWith('reports')
-    const insertCall = mockSupabaseClient.from('reports').insert.mock.calls[0][0]
+    const insertCall =
+      mockSupabaseClient.from('reports').insert.mock.calls[0][0]
     expect(insertCall).toHaveProperty('submission_id', submissionId)
     expect(insertCall).toHaveProperty('user_id', userId)
     expect(insertCall).toHaveProperty('pdf_url', mockPdfUrl)
@@ -120,9 +118,9 @@ describe('PDF Generation', () => {
   it('should throw error if submission not found', async () => {
     mockGetSubmissionById.mockResolvedValue(null)
 
-    await expect(
-      generatePdfForSubmission('non-existent-id')
-    ).rejects.toThrow('Submission non-existent-id not found')
+    await expect(generatePdfForSubmission('non-existent-id')).rejects.toThrow(
+      'Submission non-existent-id not found'
+    )
   })
 
   it('should throw error if submission missing score', async () => {
@@ -135,9 +133,9 @@ describe('PDF Generation', () => {
       submitted_at: new Date().toISOString(),
     })
 
-    await expect(
-      generatePdfForSubmission('submission-123')
-    ).rejects.toThrow('missing score/breakdown data')
+    await expect(generatePdfForSubmission('submission-123')).rejects.toThrow(
+      'missing score/breakdown data'
+    )
   })
 
   it('should throw error if submission missing user_id', async () => {
@@ -156,9 +154,9 @@ describe('PDF Generation', () => {
       submitted_at: new Date().toISOString(),
     })
 
-    await expect(
-      generatePdfForSubmission('submission-123')
-    ).rejects.toThrow('has no associated user_id')
+    await expect(generatePdfForSubmission('submission-123')).rejects.toThrow(
+      'has no associated user_id'
+    )
   })
 
   it('should handle storage upload errors', async () => {
@@ -195,16 +193,17 @@ describe('PDF Generation', () => {
       storage: mockStorage,
     } as any)
 
-    await expect(
-      generatePdfForSubmission(submissionId)
-    ).rejects.toThrow('Failed to upload PDF')
+    await expect(generatePdfForSubmission(submissionId)).rejects.toThrow(
+      'Failed to upload PDF'
+    )
   })
 
   it('should generate PDF with correct content structure', async () => {
     const submissionId = 'submission-123'
     const userId = 'user-123'
     const reportId = 'report-123'
-    const mockPdfUrl = 'https://supabase.co/storage/v1/object/public/reports/user-123/report-123.pdf'
+    const mockPdfUrl =
+      'https://supabase.co/storage/v1/object/public/reports/user-123/report-123.pdf'
 
     const breakdown = {
       emergency_fund_score: 85,
@@ -256,9 +255,7 @@ describe('PDF Generation', () => {
       }),
     }
 
-    mockGetSupabaseServerClient.mockReturnValue(
-      mockSupabaseClient as any
-    )
+    mockGetSupabaseServerClient.mockReturnValue(mockSupabaseClient as any)
 
     await generatePdfForSubmission(submissionId)
 
@@ -271,4 +268,3 @@ describe('PDF Generation', () => {
     expect(pdfHeader).toBe('%PDF')
   })
 })
-

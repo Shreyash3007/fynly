@@ -1,9 +1,9 @@
 /**
  * Fynly MVP v1.0 - Report Retrieval API Route
  * GET /api/report/[report_id]
- * 
+ *
  * Returns PDF URL for a report (authenticated, owner-only)
- * 
+ *
  * Response:
  * {
  *   pdf_url: string,
@@ -27,7 +27,11 @@ async function getAuthenticatedUserId(
   if (authHeader?.startsWith('Bearer ')) {
     const token = authHeader.substring(7)
     // TODO: Verify token with Supabase Auth
-    if (token.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i)) {
+    if (
+      token.match(
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+      )
+    ) {
       return token
     }
   }
@@ -74,7 +78,13 @@ export async function GET(
     }
 
     // Type assertion for report data
-    const reportData = report as { id: string; submission_id: string; pdf_url: string; user_id: string | null; status: string }
+    const reportData = report as {
+      id: string
+      submission_id: string
+      pdf_url: string
+      user_id: string | null
+      status: string
+    }
 
     // Verify user owns the report
     if (reportData.user_id !== userId) {
@@ -124,4 +134,3 @@ export async function GET(
     )
   }
 }
-

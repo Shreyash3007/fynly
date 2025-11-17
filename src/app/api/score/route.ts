@@ -1,9 +1,9 @@
 /**
  * Fynly MVP v1.0 - Score Calculation API Route
  * POST /api/score/calculate
- * 
+ *
  * Validates input, computes PFHR score, and saves to Supabase submissions table
- * 
+ *
  * Request Body:
  * {
  *   monthly_income: number (cents),
@@ -16,7 +16,7 @@
  *   risk_tolerance: 'conservative' | 'moderate' | 'aggressive',
  *   age: number
  * }
- * 
+ *
  * Response:
  * {
  *   score: number (0-100),
@@ -207,7 +207,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       {
         error: 'Internal server error',
-        details: process.env.NODE_ENV === 'development' ? String(error) : undefined,
+        details:
+          process.env.NODE_ENV === 'development' ? String(error) : undefined,
       },
       { status: 500 }
     )
@@ -221,4 +222,3 @@ export async function GET() {
     { status: 405 }
   )
 }
-

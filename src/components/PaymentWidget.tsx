@@ -117,7 +117,11 @@ export function PaymentWidget({
 
   // Initialize checkout when script is loaded or orderId changes
   useEffect(() => {
-    if (scriptLoaded.current && window.Razorpay && !checkoutInitialized.current) {
+    if (
+      scriptLoaded.current &&
+      window.Razorpay &&
+      !checkoutInitialized.current
+    ) {
       initializeCheckout()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -125,4 +129,3 @@ export function PaymentWidget({
 
   return null // This component doesn't render anything
 }
-

@@ -1,7 +1,7 @@
 /**
  * Fynly MVP v1.0 - Server-Side Supabase Client
  * Creates Supabase client using service role key (server-only)
- * 
+ *
  * SECURITY: This client uses SUPABASE_SERVICE_ROLE_KEY which bypasses RLS.
  * Only use in server-side API routes, never expose to client.
  */
@@ -14,7 +14,7 @@ let supabaseServerClient: ReturnType<typeof createClient> | null = null
 /**
  * Gets or creates a server-side Supabase client
  * Uses service role key for privileged operations
- * 
+ *
  * @returns Supabase client instance
  * @throws Error if service role key is not configured
  */
@@ -57,4 +57,3 @@ export function getSupabaseServerClient() {
 export function resetSupabaseServerClient() {
   supabaseServerClient = null
 }
-

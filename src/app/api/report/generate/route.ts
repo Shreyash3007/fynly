@@ -1,15 +1,15 @@
 /**
  * Fynly MVP v1.0 - Report Generation API Route
  * POST /api/report/generate
- * 
+ *
  * Manually triggers PDF generation for a submission
  * Requires authentication
- * 
+ *
  * Request Body:
  * {
  *   submission_id: string (UUID)
  * }
- * 
+ *
  * Response:
  * {
  *   pdf_url: string,
@@ -39,7 +39,11 @@ async function getAuthenticatedUserId(
   if (authHeader?.startsWith('Bearer ')) {
     const token = authHeader.substring(7)
     // TODO: Verify token with Supabase Auth
-    if (token.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i)) {
+    if (
+      token.match(
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+      )
+    ) {
       return token
     }
   }
@@ -136,7 +140,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         {
           error: 'Invalid input',
-          details: error.errors.map((e) => e.message).join(', '),
+          details: error.errors.map(e => e.message).join(', '),
         },
         { status: 400 }
       )
@@ -174,4 +178,3 @@ export async function GET() {
     { status: 405 }
   )
 }
-
