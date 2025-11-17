@@ -18,6 +18,7 @@ jest.mock('@/lib/supabase-server', () => ({
 }))
 
 // Mock Next.js cookies
+import { cookies } from 'next/headers'
 jest.mock('next/headers', () => ({
   cookies: jest.fn(),
 }))
@@ -70,8 +71,7 @@ describe('/api/score/calculate', () => {
         error: null,
       })
 
-      const { cookies } = require('next/headers')
-      cookies.mockResolvedValue({
+      ;(cookies as jest.Mock).mockResolvedValue({
         get: jest.fn().mockReturnValue(null), // No auth cookie
       })
 
@@ -147,8 +147,7 @@ describe('/api/score/calculate', () => {
         error: null,
       })
 
-      const { cookies } = require('next/headers')
-      cookies.mockResolvedValue({
+      ;(cookies as jest.Mock).mockResolvedValue({
         get: jest.fn().mockReturnValue(null),
       })
 
@@ -190,8 +189,7 @@ describe('/api/score/calculate', () => {
         error: null,
       })
 
-      const { cookies } = require('next/headers')
-      cookies.mockResolvedValue({
+      ;(cookies as jest.Mock).mockResolvedValue({
         get: jest.fn().mockReturnValue(null),
       })
 
@@ -349,8 +347,7 @@ describe('/api/score/calculate', () => {
         error: { message: 'Database connection failed', code: 'PGRST116' },
       })
 
-      const { cookies } = require('next/headers')
-      cookies.mockResolvedValue({
+      ;(cookies as jest.Mock).mockResolvedValue({
         get: jest.fn().mockReturnValue(null),
       })
 
@@ -389,8 +386,7 @@ describe('/api/score/calculate', () => {
         error: null,
       })
 
-      const { cookies } = require('next/headers')
-      cookies.mockResolvedValue({
+      ;(cookies as jest.Mock).mockResolvedValue({
         get: jest.fn().mockReturnValue(null),
       })
 
@@ -431,8 +427,7 @@ describe('/api/score/calculate', () => {
         error: null,
       })
 
-      const { cookies } = require('next/headers')
-      cookies.mockResolvedValue({
+      ;(cookies as jest.Mock).mockResolvedValue({
         get: jest.fn().mockReturnValue(null),
       })
 

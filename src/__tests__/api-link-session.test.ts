@@ -20,18 +20,6 @@ const mockSupabaseClient = {
   from: jest.fn(),
 }
 
-const mockSelect = {
-  select: jest.fn(),
-}
-
-const mockEq = {
-  eq: jest.fn(),
-}
-
-const mockUpdate = {
-  update: jest.fn(),
-}
-
 describe('/api/link-session', () => {
   beforeEach(() => {
     jest.clearAllMocks()

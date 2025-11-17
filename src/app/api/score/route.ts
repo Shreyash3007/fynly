@@ -28,7 +28,7 @@
 
 import { NextRequest, NextResponse } from 'next/server'
 import { computePFHR } from '@/lib/score'
-import { ScoreInputSchema, validateScoreInput } from '@/lib/schemas'
+import { validateScoreInput } from '@/lib/schemas'
 import { getSupabaseServerClient } from '@/lib/supabase-server'
 import { logger } from '@/lib/utils'
 import { cookies } from 'next/headers'
@@ -103,7 +103,7 @@ export async function POST(request: NextRequest) {
     // Prepare submission data for database
     // Note: We need to create or find an investor record first
     // For MVP, we'll create a minimal investor record if user_id is null
-    let investorId: string | null = null
+    const investorId: string | null = null
 
     if (!userId) {
       // For anonymous users, we could create a temporary investor record

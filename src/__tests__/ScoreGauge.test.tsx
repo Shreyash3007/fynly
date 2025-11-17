@@ -30,21 +30,21 @@ describe('ScoreGauge', () => {
   })
 
   it('should use red color for fragile scores', () => {
-    const { container } = render(<ScoreGauge score={25} />)
+    render(<ScoreGauge score={25} />)
     const scoreText = screen.getByText('25.0')
     // Check that color is applied (red)
     expect(scoreText).toHaveStyle({ color: expect.stringContaining('#EF4444') })
   })
 
   it('should use yellow/amber color for developing scores', () => {
-    const { container } = render(<ScoreGauge score={50} />)
+    render(<ScoreGauge score={50} />)
     const scoreText = screen.getByText('50.0')
     // Check that color is applied (amber)
     expect(scoreText).toHaveStyle({ color: expect.stringContaining('#F59E0B') })
   })
 
   it('should use green color for healthy scores', () => {
-    const { container } = render(<ScoreGauge score={80} />)
+    render(<ScoreGauge score={80} />)
     const scoreText = screen.getByText('80.0')
     // Check that color is applied (green)
     expect(scoreText).toHaveStyle({ color: expect.stringContaining('#10B981') })

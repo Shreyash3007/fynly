@@ -143,7 +143,7 @@ export function PurchaseCTA({ submissionId }: PurchaseCTAProps) {
     )
   }
 
-  const handlePaymentSuccess = async (paymentId: string, orderId: string) => {
+  const handlePaymentSuccess = async (_paymentId: string, _orderId: string) => {
     // Payment successful - webhook will handle PDF generation
     // Redirect to success page or show success message
     router.push(`/result/${submissionId}?payment=success`)

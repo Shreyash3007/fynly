@@ -7,6 +7,7 @@
  */
 
 import Razorpay from 'razorpay'
+import crypto from 'crypto'
 import { logger } from './utils'
 
 let razorpayClient: Razorpay | null = null
@@ -69,7 +70,6 @@ export function verifyRazorpaySignature(
   signature: string,
   secret: string
 ): boolean {
-  const crypto = require('crypto')
   const expectedSignature = crypto
     .createHmac('sha256', secret)
     .update(payload)

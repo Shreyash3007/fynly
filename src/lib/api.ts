@@ -4,7 +4,6 @@
  */
 
 import type { ScoreInput } from './schemas'
-import type { PFHRResult } from './types'
 
 export interface ScoreResponse {
   score: number

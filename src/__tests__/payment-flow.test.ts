@@ -8,7 +8,6 @@ import { POST as handleWebhook } from '@/app/api/webhooks/razorpay/route'
 import { NextRequest } from 'next/server'
 import { getRazorpayClient, verifyRazorpaySignature } from '@/lib/razorpay'
 import { getSupabaseServerClient } from '@/lib/supabase-server'
-import { generatePdfForSubmission } from '@/lib/pdf'
 
 // Mock dependencies
 jest.mock('@/lib/razorpay', () => ({
@@ -39,25 +38,6 @@ const mockSupabaseClient = {
   },
 }
 
-const mockInsert = {
-  insert: jest.fn(),
-}
-
-const mockSelect = {
-  select: jest.fn(),
-}
-
-const mockEq = {
-  eq: jest.fn(),
-}
-
-const mockSingle = {
-  single: jest.fn(),
-}
-
-const mockUpdate = {
-  update: jest.fn(),
-}
 
 describe('Payment Flow Integration', () => {
   beforeEach(() => {

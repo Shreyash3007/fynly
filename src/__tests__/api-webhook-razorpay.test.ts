@@ -40,10 +40,6 @@ const mockSingle = {
   single: jest.fn(),
 }
 
-const mockUpdate = {
-  update: jest.fn(),
-}
-
 describe('/api/webhooks/razorpay', () => {
   beforeEach(() => {
     jest.clearAllMocks()

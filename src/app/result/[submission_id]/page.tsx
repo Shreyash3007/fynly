@@ -31,7 +31,7 @@ export default async function ResultPage({ params }: ResultPageProps) {
             Your Financial Health Score
           </h1>
           <p className="text-fynly-neutral-600">
-            Based on your assessment, here's your personalized financial health
+            Based on your assessment, here&apos;s your personalized financial health
             report
           </p>
         </div>

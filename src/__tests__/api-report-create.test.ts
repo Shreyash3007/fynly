@@ -45,10 +45,6 @@ const mockSingle = {
   single: jest.fn(),
 }
 
-const mockInsert = {
-  insert: jest.fn(),
-}
-
 describe('/api/report/create', () => {
   beforeEach(() => {
     jest.clearAllMocks()

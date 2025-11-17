@@ -4,7 +4,7 @@
  */
 
 import React from 'react'
-import { render, screen, waitFor, fireEvent } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { FormStepper } from '@/components/FormStepper'
 import { postScore } from '@/lib/api'
