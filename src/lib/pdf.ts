@@ -72,7 +72,7 @@ export async function generatePdfForSubmission(
   } = supabase.storage.from('reports').getPublicUrl(filePath)
 
   // Insert report record
-  const { data: report, error: reportError } = await supabase
+  const { data: report, error: reportError } = await (supabase
     .from('reports')
     .insert({
       submission_id: submissionId,
@@ -80,9 +80,9 @@ export async function generatePdfForSubmission(
       pdf_url: publicUrl,
       status: 'completed',
       generated_at: new Date().toISOString(),
-    })
+    } as any)
     .select('id')
-    .single()
+    .single() as any)
 
   if (reportError || !report) {
     logger.error('Failed to insert report record', reportError)

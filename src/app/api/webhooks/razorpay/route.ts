@@ -93,15 +93,15 @@ async function handlePaymentCaptured(
   }
 
   // Update payment status to 'paid'
-  const { error: updateError } = await supabase
+  const { error: updateError } = await (supabase
     .from('payments')
     .update({
       status: 'paid',
       razorpay_payment_id: paymentId,
       paid_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
-    })
-    .eq('id', payment.id)
+    } as any)
+    .eq('id', payment.id) as any)
 
   if (updateError) {
     logger.error('Failed to update payment status', updateError)
@@ -164,13 +164,13 @@ async function handlePaymentFailed(
   }
 
   // Update payment status to 'failed'
-  const { error: updateError } = await supabase
+  const { error: updateError } = await (supabase
     .from('payments')
     .update({
       status: 'failed',
       updated_at: new Date().toISOString(),
-    })
-    .eq('id', payment.id)
+    } as any)
+    .eq('id', payment.id) as any)
 
   if (updateError) {
     logger.error('Failed to update payment status to failed', updateError)

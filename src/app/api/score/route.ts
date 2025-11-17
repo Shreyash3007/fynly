@@ -132,11 +132,11 @@ export async function POST(request: NextRequest) {
       submitted_at: new Date().toISOString(),
     }
 
-    const { data: submission, error: insertError } = await supabase
+    const { data: submission, error: insertError } = await (supabase
       .from('submissions')
-      .insert(submissionData)
+      .insert(submissionData as any)
       .select('id')
-      .single()
+      .single() as any)
 
     if (insertError) {
       logger.error('Failed to insert submission to Supabase', insertError)

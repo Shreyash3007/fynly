@@ -73,8 +73,11 @@ export async function GET(
       )
     }
 
+    // Type assertion for report data
+    const reportData = report as { id: string; submission_id: string; pdf_url: string; user_id: string | null; status: string }
+
     // Verify user owns the report
-    if (report.user_id !== userId) {
+    if (reportData.user_id !== userId) {
       return NextResponse.json(
         {
           error: 'Unauthorized',
@@ -85,12 +88,12 @@ export async function GET(
     }
 
     // Check if report is ready
-    if (report.status !== 'completed') {
+    if (reportData.status !== 'completed') {
       return NextResponse.json(
         {
           error: 'Report not ready',
-          details: `Report status: ${report.status}`,
-          status: report.status,
+          details: `Report status: ${reportData.status}`,
+          status: reportData.status,
         },
         { status: 202 } // Accepted but not ready
       )
@@ -103,9 +106,9 @@ export async function GET(
 
     return NextResponse.json(
       {
-        pdf_url: report.pdf_url,
-        report_id: report.id,
-        submission_id: report.submission_id,
+        pdf_url: reportData.pdf_url,
+        report_id: reportData.id,
+        submission_id: reportData.submission_id,
       },
       { status: 200 }
     )

@@ -135,13 +135,15 @@ export async function POST(request: NextRequest) {
 
       // Also need to create/update investor record if needed
       // For MVP, we'll just update the submission responses
-      return supabase
+      // Use type assertion to bypass strict Supabase typing for JSONB field
+      const updatePayload = {
+        responses: updatedResponses,
+        updated_at: new Date().toISOString(),
+      }
+      return (supabase
         .from('submissions')
-        .update({
-          responses: updatedResponses as Record<string, unknown>,
-          updated_at: new Date().toISOString(),
-        })
-        .eq('id', submissionId)
+        .update(updatePayload as never)
+        .eq('id', submissionId) as any)
     })
 
     const updateResults = await Promise.all(updatePromises)

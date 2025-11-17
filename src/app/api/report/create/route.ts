@@ -141,11 +141,11 @@ export async function POST(request: NextRequest) {
       created_at: new Date().toISOString(),
     }
 
-    const { data: payment, error: paymentError } = await supabase
+    const { data: payment, error: paymentError } = await (supabase
       .from('payments')
-      .insert(paymentData)
+      .insert(paymentData as any)
       .select('id')
-      .single()
+      .single() as any)
 
     if (paymentError || !payment) {
       logger.error('Failed to insert payment record', paymentError)
