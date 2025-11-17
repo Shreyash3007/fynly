@@ -55,19 +55,22 @@ async function handlePaymentCaptured(
     return { success: false, error: 'Payment record not found' }
   }
 
+  // Type assertion for payment data
+  const paymentData = payment as { id: string; submission_id: string | null; status: string; razorpay_payment_id: string | null }
+
   // IDEMPOTENCY CHECK: If payment is already marked as paid, return success
-  if (payment.status === 'paid') {
+  if (paymentData.status === 'paid') {
     logger.info('Payment already processed (idempotency)', {
-      payment_id: payment.id,
+      payment_id: paymentData.id,
       order_id: orderId,
-      existing_payment_id: payment.razorpay_payment_id,
+      existing_payment_id: paymentData.razorpay_payment_id,
     })
     // Still trigger PDF generation if not already done (check if report exists)
-    if (payment.submission_id) {
+    if (paymentData.submission_id) {
       const { data: existingReport } = await supabase
         .from('reports')
         .select('id')
-        .eq('submission_id', payment.submission_id)
+        .eq('submission_id', paymentData.submission_id)
         .eq('status', 'completed')
         .limit(1)
         .single()
@@ -76,11 +79,11 @@ async function handlePaymentCaptured(
         // PDF not generated yet, trigger it
         import('@/lib/pdf')
           .then(({ generatePdfForSubmission }) => {
-            return generatePdfForSubmission(payment.submission_id)
+            return generatePdfForSubmission(paymentData.submission_id!)
           })
           .then((pdfUrl) => {
             logger.info('PDF generated on idempotent webhook', {
-              submission_id: payment.submission_id,
+              submission_id: paymentData.submission_id,
               pdf_url: pdfUrl,
             })
           })
@@ -93,15 +96,16 @@ async function handlePaymentCaptured(
   }
 
   // Update payment status to 'paid'
+  const updatePayload = {
+    status: 'paid',
+    razorpay_payment_id: paymentId,
+    paid_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  }
   const { error: updateError } = await (supabase
     .from('payments')
-    .update({
-      status: 'paid',
-      razorpay_payment_id: paymentId,
-      paid_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    } as any)
-    .eq('id', payment.id) as any)
+    .update(updatePayload as never)
+    .eq('id', paymentData.id) as any)
 
   if (updateError) {
     logger.error('Failed to update payment status', updateError)
@@ -109,19 +113,19 @@ async function handlePaymentCaptured(
   }
 
   // Trigger PDF generation (async, don't wait)
-  if (payment.submission_id) {
+  if (paymentData.submission_id) {
     logger.info('Payment captured, triggering PDF generation', {
-      payment_id: payment.id,
-      submission_id: payment.submission_id,
+      payment_id: paymentData.id,
+      submission_id: paymentData.submission_id,
     })
     // Import and call PDF generation (fire and forget)
     import('@/lib/pdf')
       .then(({ generatePdfForSubmission }) => {
-        return generatePdfForSubmission(payment.submission_id)
+        return generatePdfForSubmission(paymentData.submission_id!)
       })
       .then((pdfUrl) => {
         logger.info('PDF generated successfully', {
-          submission_id: payment.submission_id,
+          submission_id: paymentData.submission_id,
           pdf_url: pdfUrl,
         })
       })
@@ -163,14 +167,18 @@ async function handlePaymentFailed(
     return { success: false, error: 'Payment record not found' }
   }
 
+  // Type assertion for payment data
+  const paymentData = payment as { id: string }
+
   // Update payment status to 'failed'
+  const updatePayload = {
+    status: 'failed',
+    updated_at: new Date().toISOString(),
+  }
   const { error: updateError } = await (supabase
     .from('payments')
-    .update({
-      status: 'failed',
-      updated_at: new Date().toISOString(),
-    } as any)
-    .eq('id', payment.id) as any)
+    .update(updatePayload as never)
+    .eq('id', paymentData.id) as any)
 
   if (updateError) {
     logger.error('Failed to update payment status to failed', updateError)

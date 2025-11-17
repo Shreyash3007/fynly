@@ -86,8 +86,11 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Type assertion for submission data
+    const submissionData = submission as { id: string; responses: unknown }
+
     // Verify user owns the submission
-    const submissionUserId = (submission.responses as any)?.user_id
+    const submissionUserId = (submissionData.responses as any)?.user_id
     if (submissionUserId !== userId) {
       return NextResponse.json(
         {
@@ -111,15 +114,18 @@ export async function POST(request: NextRequest) {
       .limit(1)
       .single()
 
+    // Type assertion for report data
+    const reportData = report as { id: string } | null
+
     logger.info('PDF generated via API', {
       submission_id: validatedInput.submission_id,
-      report_id: report?.id,
+      report_id: reportData?.id,
     })
 
     return NextResponse.json(
       {
         pdf_url: pdfUrl,
-        report_id: report?.id || null,
+        report_id: reportData?.id || null,
       },
       { status: 200 }
     )
